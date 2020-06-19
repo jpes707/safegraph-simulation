@@ -6,7 +6,7 @@ import pandas as pd
 import os
 import time
 
-cbg_data = pd.read_csv(r'E:\safegraph-simulation\safegraph-data\safegraph_open_census_data\metadata\cbg_geographic_data.csv')
+cbg_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_open_census_data', 'metadata', 'cbg_geographic_data.csv'))
 
 def display_data(data):  # [[lat, long, weight], [lat, long, weight], ... [lat, long, weight]]
     # create map
@@ -19,7 +19,7 @@ def display_data(data):  # [[lat, long, weight], [lat, long, weight], ... [lat, 
     
     folium.LayerControl(collapsed=False).add_to(folium_map)
 
-    temp_path = os.path.join('.', 'tmpfile.html')
+    temp_path = os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'map.html'))
     folium_map.save(temp_path)
     webbrowser.open(temp_path)
     time.sleep(1)

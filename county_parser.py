@@ -1,9 +1,10 @@
 import pandas as pd
 import requests
+import os
 
-WEEK = '2020-06-01'
-LOCALITY = 'Imperial'  # County, Borough, or Parish
-STATE_ABBR = 'CA'
+WEEK = input('Week (example: 2020-05-25): ')
+STATE_ABBR = input('State abbreviation (example: VA): ')
+LOCALITY = input('Locality (example: Fairfax): ')  # County, Borough, or Parish
 
 if STATE_ABBR == 'AK':
     LOCALITY_TYPE = 'borough'
@@ -19,10 +20,10 @@ zip_code_set = {str(s[:5]) for s in res.split('">')[1:]}
 print('Zip codes:', zip_code_set)
 
 print('Reading data...')
-data = pd.read_csv(r'./safegraph-data/safegraph_weekly_patterns_v2/main-file/{}-weekly-patterns.csv/{}-weekly-patterns.csv'.format(WEEK, WEEK), error_bad_lines=False)
+data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_weekly_patterns_v2', 'main-file', '{}-weekly-patterns'.format(WEEK), '{}-weekly-patterns.csv'.format(WEEK)), error_bad_lines=False)
 print('Processing data...')
 county_data = data[data.postal_code.astype(str).isin(zip_code_set)]
 print('Writing data...')
 print(county_data)
-county_data.to_csv(r'./safegraph-data/safegraph_weekly_patterns_v2/main-file/{}-weekly-patterns.csv/{}-{}-{}-{}.csv'.format(WEEK, LOCALITY.lower(), LOCALITY_TYPE, STATE_ABBR.lower(), WEEK))
+county_data.to_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_weekly_patterns_v2', 'main-file', '{}-weekly-patterns'.format(WEEK), '{}-{}-{}-{}.csv'.format(LOCALITY.lower(), LOCALITY_TYPE, STATE_ABBR.lower(), WEEK)))
 print('Complete!')
