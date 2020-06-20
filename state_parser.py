@@ -9,5 +9,5 @@ data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'saf
 print('Processing data...')
 state_data = data[data.region == STATE_ABBR]
 print('Writing data...')
-state_data.to_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_weekly_patterns_v2', 'main-file', '{}-weekly-patterns'.format(WEEK), 'state-{}--{}.csv'.format(STATE_ABBR.lower(), WEEK)))
+state_data.to_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_weekly_patterns_v2', 'main-file', '{}-weekly-patterns'.format(WEEK), 'state-{}-{}.csv'.format(STATE_ABBR.lower(), WEEK)))
 print('Complete!')
