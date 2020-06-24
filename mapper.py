@@ -5,16 +5,24 @@ import webbrowser
 import pandas as pd
 import os
 import time
+import tempfile
+import statistics
+import math
+from scipy import stats
 
-cbg_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_open_census_data', 'metadata', 'cbg_geographic_data.csv'))
+map_cbg_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_open_census_data', 'metadata', 'cbg_geographic_data.csv'))
 
-def display_data(data):  # [[lat, long, weight], [lat, long, weight], ... [lat, long, weight]]
+
+def display_data(data, map_lat=38.8300, map_long=-77.2800, zoom_level=11, labels=[]):  # [[lat, long, weight], [lat, long, weight], ... [lat, long, weight]]
     # create map
-    folium_map = folium.Map([38.8300, -77.2800], tiles='stamentoner', zoom_start=11)
+    folium_map = folium.Map([map_lat, map_long], tiles='stamentoner', zoom_start=11)
 
     for idx, topic in enumerate(data):
         h = HeatMap(topic)
-        h.layer_name = 'topic_{}'.format(idx)
+        if labels:
+            h.layer_name = labels[idx]
+        else:
+            h.layer_name = 'topic_{}'.format(idx)
         folium_map.add_child(h)
     
     folium.LayerControl(collapsed=False).add_to(folium_map)
@@ -26,12 +34,12 @@ def display_data(data):  # [[lat, long, weight], [lat, long, weight], ... [lat, 
     os.remove(temp_path)
 
 
-def lda_to_map(lda_data):  # lda.top_topics(lda_corpus)
+def cbgs_to_map(input_data, labels=[]):  # [[(0.20465624, '510594825022'), (0.12849134, '510594826011'), ...], [(0.13041233, '510594825022'), (0.10988416, '510594826011'), ...], ...]
     mapping_data = []
-    for topic in lda_data:
+    for topic in input_data:
         topic_data = []
-        for tup in topic[0]:
-            row = cbg_data.loc[cbg_data.census_block_group == int(tup[1])]
-            topic_data.append([float(row.latitude), float(row.longitude), float(tup[0]) * 1000])
+        for tup in topic:
+            row = map_cbg_data.loc[map_cbg_data.census_block_group == int(tup[1])]
+            topic_data.append([float(row.latitude), float(row.longitude), float(tup[0]) * 100])
         mapping_data.append(topic_data)
-    display_data(mapping_data)
+    display_data(mapping_data, labels=labels)
