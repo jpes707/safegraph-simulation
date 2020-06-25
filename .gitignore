@@ -1,5 +1,6 @@
 .DS_Store
 .gdb_history
 safegraph-data/
+demographics-outputs/
 __pycache__/
 .*

@@ -18,7 +18,7 @@ def display_data(data, map_lat=38.8300, map_long=-77.2800, zoom_level=11, labels
     folium_map = folium.Map([map_lat, map_long], tiles='stamentoner', zoom_start=11)
 
     for idx, topic in enumerate(data):
-        h = HeatMap(topic)
+        h = HeatMap(topic, show=False)
         if labels:
             h.layer_name = labels[idx]
         else:
@@ -39,7 +39,7 @@ def cbgs_to_map(input_data, labels=[]):  # [[(0.20465624, '510594825022'), (0.12
     for topic in input_data:
         topic_data = []
         for tup in topic:
-            row = map_cbg_data.loc[map_cbg_data.census_block_group == int(tup[1])]
-            topic_data.append([float(row.latitude), float(row.longitude), float(tup[0]) * 100])
+            row = map_cbg_data.loc[map_cbg_data.census_block_group == int(tup[0])]
+            topic_data.append([float(row.latitude), float(row.longitude), float(tup[1]) * 100])
         mapping_data.append(topic_data)
     display_data(mapping_data, labels=labels)

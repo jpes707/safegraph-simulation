@@ -4,7 +4,7 @@ import os
 
 WEEK = input('Week (example: 2020-05-25): ')
 STATE_ABBR = input('State abbreviation (example: VA): ')
-LOCALITY = input('Locality (example: Fairfax): ')  # County, Borough, or Parish
+LOCALITY = input('Locality (example: Fairfax): ') # County, Borough, or Parish
 
 if STATE_ABBR == 'AK':
     LOCALITY_TYPE = 'borough'
@@ -25,5 +25,5 @@ print('Processing data...')
 county_data = data[data.postal_code.astype(str).isin(zip_code_set)]
 print('Writing data...')
 print(county_data)
-county_data.to_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_weekly_patterns_v2', 'main-file', '{}-weekly-patterns'.format(WEEK), '{}-{}-{}-{}.csv'.format(LOCALITY.lower(), LOCALITY_TYPE, STATE_ABBR.lower(), WEEK)))
+county_data.to_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_weekly_patterns_v2', 'main-file', '{}-weekly-patterns'.format(WEEK), '{}-{}-{}-{}.csv'.format(LOCALITY.replace(' ', '-').lower(), LOCALITY_TYPE, STATE_ABBR.lower(), WEEK)))
 print('Complete!')
