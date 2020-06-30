@@ -40,6 +40,6 @@ def cbgs_to_map(input_data, labels=[]):  # [[(0.20465624, '510594825022'), (0.12
         topic_data = []
         for tup in topic:
             row = map_cbg_data.loc[map_cbg_data.census_block_group == int(tup[0])]
-            topic_data.append([float(row.latitude), float(row.longitude), float(tup[1]) * 100])
+            topic_data.append([float(row.latitude), float(row.longitude), float(tup[1]) * 1000])
         mapping_data.append(topic_data)
     display_data(mapping_data, labels=labels)
