@@ -42,7 +42,7 @@ locality_name = (LOCALITY + ' ' + LOCALITY_TYPE).title()
 full_name = '{}, {}'.format(locality_name, STATE_ABBR.upper())
 
 area = locality_name.lower().replace(' ', '-') + '-' + STATE_ABBR.lower()
-lda_model, lda_corpus = lda(area, WEEK)
+lda_model, lda_corpus, _, _ = lda(area, WEEK)
 top_topics = [elem[1] for elem in lda_model.show_topics(formatted=False, num_topics=NUM_TOPICS)]
 cbgs = {tup[0] for topic in top_topics for tup in topic}
 

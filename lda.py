@@ -34,7 +34,7 @@ def lda(area, week):
     # id_to_cbg = dict(lda_dictionary.token2id)
     lda_model = gensim.models.HdpModel(lda_corpus, id2word=lda_dictionary)
     # lda_model = gensim.models.LdaModel(lda_corpus, num_topics=NUM_TOPICS, id2word=lda_dictionary)
-    return lda_model, lda_corpus, place_to_bow, place_to_counts
+    return lda_model, lda_corpus, place_to_bow, place_to_counts, lda_dictionary
     
 
 def main():
@@ -47,7 +47,7 @@ def main():
     if week == '':
         week = '2020-06-01'
     
-    lda_model, lda_corpus, place_to_bow, place_to_counts = lda(area, week)
+    lda_model, _, place_to_bow, place_to_counts, _ = lda(area, week)
     print('Complete! Displaying visualization in web browser...')
     print()
     num_topics = len(lda_model.get_topics())
