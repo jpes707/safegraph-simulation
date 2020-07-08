@@ -12,6 +12,7 @@ MINIMUM_RAW_VISITOR_COUNT = 30
 SIMULATION_DAYS = 10
 SIMULATION_HOURS_PER_DAY = 16
 SIMULATION_TICKS_PER_HOUR = 60
+PROPORTION_OF_POPULATION = 0.2  # 0.2 => 20% of the actual population is simulated
 
 start_time = time.time()
 total_simulation_time = SIMULATION_HOURS_PER_DAY * SIMULATION_TICKS_PER_HOUR
@@ -26,7 +27,7 @@ def adj_sig_figs(a, n=3):  # truncate the number a to have n significant figures
 
 
 def print_elapsed_time():
-    print('Total time elapsed: {}s'.format(adj_sig_figs(time.time() - start_time)))
+    print('Total time elapsed: {}s'.format(adj_sig_figs(time.time() - start_time, 4)))
 
 
 STATE_ABBR = input('State abbreviation (default: VA): ')
@@ -96,19 +97,42 @@ for cbg in cbgs_to_topics:
     cbg_topic_probabilities[cbg] = current_probabilities
 
 print_elapsed_time()
+print('Reading population data...')
+
+census_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_open_census_data', 'data', 'cbg_b00.csv'), error_bad_lines=False)
+cbgs_to_populations = {}
+special_dict = {}  # for cbgs with no population given by the census
+total_population = 0
+for idx, row in census_data.iterrows():
+    check_str = str(int(row['census_block_group'])).zfill(12)
+    if check_str in cbg_id_set:
+        if str(row['B00001e1']) in {'nan', '0.0'}:
+            cbg_id_set.remove(check_str)
+            cbg_ids.remove(check_str)
+            continue
+        cbg_population = int(int(row['B00001e1']) * PROPORTION_OF_POPULATION)
+        total_population += cbg_population
+        cbgs_to_populations[check_str] = cbg_population
+
+print_elapsed_time()
 print('Reading social distancing data...')
 
 social_distancing_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_social_distancing_metrics', WEEK[:4], WEEK[5:7], WEEK[8:], '{}-social-distancing.csv'.format(WEEK)), error_bad_lines=False)
-cbgs_to_populations = {}
-total_population = 0
+cbgs_leaving_probs = {}  # probability that a member of a cbg will leave their house each tick
+population_proportions = []  # proportions list of device count / cbg population
+seen_cbgs = set()
 for idx, row in social_distancing_data.iterrows():
     check_str = str(int(row['origin_census_block_group'])).zfill(12)
     if check_str in cbg_id_set:
-        non_home_cbg_population = int(row['device_count']) - int(row['completely_home_device_count'])
-        total_population += non_home_cbg_population
-        cbgs_to_populations[check_str] = non_home_cbg_population
+        day_leaving_prob = 1 - (int(row['completely_home_device_count']) / int(row['device_count']))
+        cbgs_leaving_probs[check_str] = day_leaving_prob / total_simulation_time
+        seen_cbgs.add(check_str)
+for cbg in cbg_id_set - seen_cbgs:
+    cbg_id_set.remove(cbg)
+    cbg_ids.remove(cbg)
+    total_population -= cbgs_to_populations[cbg]
 
-cbg_probabilities = []
+cbg_probabilities = []  # probability of a single cbg being selected
 for cbg in cbg_ids:
     if cbg not in cbgs_to_populations:
         cbgs_to_populations[cbg] = 0
@@ -118,25 +142,11 @@ for cbg in cbg_ids:
 print_elapsed_time()
 print('Preparing simulation...')
 
-agents = {}  # agent_id: [topic, infected_status]
+agents = {}  # agent_id: [topic, infected_status, critical_date, home_cbg_code]
 cbgs_to_agents = {cbg: set() for cbg in cbg_ids}  # cbg: {agent id, agent id, ...}
 inactive_agent_ids = set()
 active_agent_ids = {t: set() for t in range(total_simulation_time)}  # expiration time: {(agent id, poi id), (agent id, poi id), ...}
 poi_current_visitors = {poi: set() for poi_list in lda_documents for poi in poi_list}  # poi id: {agent id, agent id, ...}
-
-'''
-for iteration in range(total_population):
-    rand = random.random()
-    for elem in cbg_proportions:
-        if rand < elem[0]:
-            current_cbg = elem[1]
-            agent_id = 'agent_' + str(iteration)
-            agent_topic = 5  # change soon
-            agents[agent_id] = [agent_topic, 0]
-            cbgs_to_agents[current_cbg].add(agent_id)
-            inactive_agent_ids.add(agent_id)
-            break
-'''
 
 draw = list(numpy.random.choice(cbg_ids, total_population, p=cbg_probabilities))
 topic_numbers = [i for i in range(NUM_TOPICS)]
@@ -145,28 +155,27 @@ for iteration, current_cbg in enumerate(draw):
     probs = numpy.array(cbg_topic_probabilities[current_cbg])
     probs /= probs.sum()
     agent_topic = numpy.random.choice(topic_numbers, 1, p=probs)[0]
-    agents[agent_id] = [agent_topic, 'I' if random.random() < 0.05 else 'S', 7]  # topic, infection status, critical date
+    agents[agent_id] = [agent_topic, 'I' if random.random() < 0.05 else 'S', 7, current_cbg]  # topic, infection status, critical date, cbg
     cbgs_to_agents[current_cbg].add(agent_id)
     inactive_agent_ids.add(agent_id)
 
 aux_dict = {}  # to speed up numpy.choice with many probabilities
 for topic in range(len(topics_to_pois)):
-    shum = -1
-    jg = 0
-    while jg < 0.2:
-        jg = sum(topics_to_pois[topic][1][shum:])
-        shum -= 1
-    aux_dict[topic] = [topics_to_pois[topic][0][shum:], topics_to_pois[topic][1][shum:]]
+    mindex = -1
+    prob_sum = 0
+    while prob_sum < 0.2:
+        prob_sum = sum(topics_to_pois[topic][1][mindex:])
+        mindex -= 1
+    aux_dict[topic] = [topics_to_pois[topic][0][mindex:], topics_to_pois[topic][1][mindex:]]
     aux_dict[topic][1] = numpy.array(aux_dict[topic][1])
     aux_dict[topic][1] /= aux_dict[topic][1].sum()
-    topics_to_pois[topic][0] = topics_to_pois[topic][0][:shum] + ['aux']
-    topics_to_pois[topic][1] = numpy.array(topics_to_pois[topic][1][:shum] + [jg])
+    topics_to_pois[topic][0] = topics_to_pois[topic][0][:mindex] + ['aux']
+    topics_to_pois[topic][1] = numpy.array(topics_to_pois[topic][1][:mindex] + [prob_sum])
     topics_to_pois[topic][1] /= topics_to_pois[topic][1].sum()
 
 print_elapsed_time()
 print('Running simulation...')
 
-probability_of_leaving = 1/total_simulation_time
 probability_of_infection = 0.005 / SIMULATION_TICKS_PER_HOUR  # from https://hzw77-demo.readthedocs.io/en/round2/simulator_modeling.html
 
 # Infected status
@@ -199,7 +208,7 @@ for day in range(SIMULATION_DAYS):
 
         to_remove = set()
         for agent_id in inactive_agent_ids:
-            if random.random() < probability_of_leaving:
+            if random.random() < cbgs_leaving_probs[agents[agent_id][3]]:
                 topic = agents[agent_id][0]
                 destination = numpy.random.choice(topics_to_pois[topic][0], 1, p=topics_to_pois[topic][1])[0]
                 if destination == 'aux':

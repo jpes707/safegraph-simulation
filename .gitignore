@@ -2,5 +2,6 @@
 .gdb_history
 safegraph-data/
 demographics-outputs/
+experiments/
 __pycache__/
 .*
