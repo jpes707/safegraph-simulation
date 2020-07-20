@@ -21,3 +21,7 @@ Death percentages among those hospitalized: 18-49 years: 2.0%, 50-64 years: 9.8%
 Age may affect susceptibility: https://www.nature.com/articles/s41591-020-0962-9
 
 CDC recommends 10 days isolation after symptom onset, 3 days after recovery
+
+
+Transmission Risks and Probabilities Corresponding to Types of Locations
+http://ide.mit.edu/sites/default/files/publications/Full%20paper%204-26.pdf
