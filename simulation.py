@@ -1,3 +1,6 @@
+# LINKS:
+# https://www.who.int/news-room/commentaries/detail/transmission-of-sars-cov-2-implications-for-infection-prevention-precautions
+
 import pandas as pd
 import gensim
 import json
@@ -6,12 +9,15 @@ import os
 import numpy
 import time
 import math
+import itertools
+from scipy.stats import gamma
+from mathplotlib import pyplot as plt
 
 NUM_TOPICS = 50
 MINIMUM_RAW_VISITOR_COUNT = 30
-SIMULATION_DAYS = 10
+SIMULATION_DAYS = 14
 SIMULATION_HOURS_PER_DAY = 16
-SIMULATION_TICKS_PER_HOUR = 60
+SIMULATION_TICKS_PER_HOUR = 4
 PROPORTION_OF_POPULATION = 0.2  # 0.2 => 20% of the actual population is simulated
 
 start_time = time.time()
@@ -53,9 +59,11 @@ area = locality_name.lower().replace(' ', '-') + '-' + STATE_ABBR.lower()
 
 print('Running LDA...')
 
+# Read in data from files, filtering the data that corresponds to the area of interest
 data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_weekly_patterns_v2', 'main-file', '{}-weekly-patterns'.format(WEEK), '{}-{}.csv'.format(area, WEEK)), error_bad_lines=False)
 usable_data = data[(data.raw_visitor_counts >= MINIMUM_RAW_VISITOR_COUNT) & (data.visitor_home_cbgs != '{}')]
 
+# From usable POIs, load cbgs, CBGs are documents, POIs are words
 cbgs_to_places = {}
 for row in usable_data.itertuples():
     place_id = str(row.safegraph_place_id)
@@ -64,7 +72,9 @@ for row in usable_data.itertuples():
     for cbg in cbgs:
         if cbg not in cbgs_to_places:
             cbgs_to_places[cbg] = []
+        # SafeGraph reports visits of cbgs as 4 if the visit is between 2-4
         cbg_frequency = random.randint(2, 4) if cbgs[cbg] == 4 else cbgs[cbg]
+        # Generate POIs as words and multiply by the amount that CBG visited
         cbgs_to_places[cbg].extend([place_id] * cbg_frequency)
 
 cbg_ids = list(cbgs_to_places.keys())
@@ -73,8 +83,8 @@ lda_documents = list(cbgs_to_places.values())
 poi_set = {poi for poi_list in lda_documents for poi in poi_list}
 poi_count = len(poi_set)
 
-lda_dictionary = gensim.corpora.dictionary.Dictionary(lda_documents)
-lda_corpus = [lda_dictionary.doc2bow(cbg) for cbg in lda_documents]
+lda_dictionary = gensim.corpora.dictionary.Dictionary(lda_documents) # generate documents
+lda_corpus = [lda_dictionary.doc2bow(cbg) for cbg in lda_documents] # generate words
 cbg_to_bow = dict(zip(cbg_ids, lda_corpus))
 lda_model = gensim.models.LdaModel(lda_corpus, num_topics=NUM_TOPICS, id2word=lda_dictionary)
 
@@ -114,6 +124,25 @@ for idx, row in census_data.iterrows():
         total_population += cbg_population
         cbgs_to_populations[check_str] = cbg_population
 
+census_age_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_open_census_data', 'data', 'cbg_b01.csv'), error_bad_lines=False)
+cbgs_to_age_distribution = {} # {cbg: [% 18-49, % 50-64, % 65+] ...}
+code_18_to_49 = ['B01001e7', 'B01001e8', 'B01001e9', 'B01001e10', 'B01001e11', 'B01001e12', 'B01001e13', 'B01001e14', 'B01001e15', 'B01001e31', 'B01001e32', 'B01001e33', 'B01001e34', 'B01001e35', 'B01001e36', 'B01001e37', 'B01001e38', 'B01001e39']
+code_50_to_64 = ['B01001e16', 'B01001e17', 'B01001e18', 'B01001e19', 'B01001e40', 'B01001e41', 'B01001e42', 'B01001e43']
+code_65_plus = ['B01001e20', 'B01001e21', 'B01001e22', 'B01001e23', 'B01001e24', 'B01001e25', 'B01001e44', 'B01001e45', 'B01001e46', 'B01001e47', 'B01001e48', 'B01001e49']
+for idx, row in census_age_data.iterrows():
+    check_str = str(int(row['census_block_group'])).zfill(12)
+    if check_str in cbg_id_set:
+        pop_18_49 = sum([int(row[a]) for a in code_18_to_49])
+        pop_50_64 = sum([int(row[a]) for a in code_50_to_64])
+        pop_65_over = sum([int(row[a]) for a in code_65_plus])
+        pop_distribution = numpy.array([pop_18_49, pop_50_64, pop_65_over], dtype='f')
+        total_pop_18_over = pop_18_49 + pop_50_64 + pop_65_over
+        pop_distribution /= total_pop_18_over
+        cbgs_to_age_distribution[check_str] = pop_distribution
+
+# print(dict(itertools.islice(cbgs_to_age_distribution.items(), 10)))
+
+
 print_elapsed_time()
 print('Reading social distancing data...')
 
@@ -142,11 +171,29 @@ for cbg in cbg_ids:
 print_elapsed_time()
 print('Preparing simulation...')
 
+# SETUP SIMULATION
+# Generate agents for CBGs, create dictionary of active agents for each hour
+# Create POI dictionary to store agents
+# Randomly select a list of CBGs of the population size based on their respective probability to the population size
+# Within that list of CBGs, iterate for each CBG
+# Generate a randomly chosen topic based on the CBG percentage in each topic
+# Once a topic and cbg are chosen, use a 5% probability to decide whether or not that agent is infected
+
 agents = {}  # agent_id: [topic, infected_status, critical_date, home_cbg_code]
 cbgs_to_agents = {cbg: set() for cbg in cbg_ids}  # cbg: {agent id, agent id, ...}
 inactive_agent_ids = set()
 active_agent_ids = {t: set() for t in range(total_simulation_time)}  # expiration time: {(agent id, poi id), (agent id, poi id), ...}
 poi_current_visitors = {poi: set() for poi_list in lda_documents for poi in poi_list}  # poi id: {agent id, agent id, ...}
+
+# gamma distribution mu = 3 k = 4 (Median 5.1, Range 2-14), incubation period
+# https://www.acpjournals.org/doi/10.7326/M20-0504
+# https://www.who.int/news-room/commentaries/detail/transmission-of-sars-cov-2-implications-for-infection-prevention-precautions
+distribution_of_exposure = [0.11963505, 0.15081676, 0.16886706, 0.15579522, 0.12716776, 0.09538861,
+                            0.06725917, 0.04523642, 0.02931162, 0.0184288, 0.01130165, 0.00678746, 0.00400443]
+
+# temporary, normal distribution 4-10 days
+distribution_of_infected = [0.00443305, 0.05400558, 0.24203623, 0.39905028,
+                             0.24203623, 0.05400558, 0.00443305]
 
 draw = list(numpy.random.choice(cbg_ids, total_population, p=cbg_probabilities))
 topic_numbers = [i for i in range(NUM_TOPICS)]
@@ -155,20 +202,31 @@ for iteration, current_cbg in enumerate(draw):
     probs = numpy.array(cbg_topic_probabilities[current_cbg])
     probs /= probs.sum()
     agent_topic = numpy.random.choice(topic_numbers, 1, p=probs)[0]
-    agents[agent_id] = [agent_topic, 'I' if random.random() < 0.05 else 'S', 7, current_cbg]  # topic, infection status, critical date, cbg
+    rand_age = numpy.random.choice(['Y', 'M', 'O'], p=cbgs_to_age_distribution[current_cbg])
+    rand_infected = numpy.random.choice(numpy.arange(4, 11), p=distribution_of_infected)
+    agent_status = 'S'
+    rand = random.random()
+    if rand < 0.05:
+        rand /= 0.05
+        if rand < 0.4:
+            agent_status = 'Ia'
+        else:
+            agent_status = 'Ic'
+    agents[agent_id] = [agent_topic, agent_status, rand_infected, current_cbg, rand_age]  # topic, infection status, critical date, cbg, age
     cbgs_to_agents[current_cbg].add(agent_id)
     inactive_agent_ids.add(agent_id)
 
-aux_dict = {}  # to speed up numpy.choice with many probabilities
+aux_dict = {}  # to speed up numpy.choice with many probabilities {topic: list of cbgs} {cbg: poi_ids, probabilities}
 for topic in range(len(topics_to_pois)):
     mindex = -1
     prob_sum = 0
     while prob_sum < 0.2:
         prob_sum = sum(topics_to_pois[topic][1][mindex:])
         mindex -= 1
-    aux_dict[topic] = [topics_to_pois[topic][0][mindex:], topics_to_pois[topic][1][mindex:]]
+    aux_dict[topic] = [topics_to_pois[topic][0][mindex:], topics_to_pois[topic][1][mindex:]] # store poi ids, probabilities
     aux_dict[topic][1] = numpy.array(aux_dict[topic][1])
     aux_dict[topic][1] /= aux_dict[topic][1].sum()
+    # update old topics_to_pois with addition of aux
     topics_to_pois[topic][0] = topics_to_pois[topic][0][:mindex] + ['aux']
     topics_to_pois[topic][1] = numpy.array(topics_to_pois[topic][1][:mindex] + [prob_sum])
     topics_to_pois[topic][1] /= topics_to_pois[topic][1].sum()
@@ -176,12 +234,74 @@ for topic in range(len(topics_to_pois)):
 print_elapsed_time()
 print('Running simulation...')
 
-probability_of_infection = 0.005 / SIMULATION_TICKS_PER_HOUR  # from https://hzw77-demo.readthedocs.io/en/round2/simulator_modeling.html
+# probability_of_infection = 0.005 / SIMULATION_TICKS_PER_HOUR  # from https://hzw77-demo.readthedocs.io/en/round2/simulator_modeling.html
+age_susc = {'Y': 0.025, 'M': 0.045, 'O': 0.085}
+
+def infect(p, d, i):  # poi agents, day, infectioness
+    global agents
+    for other_agent_id in p:
+        rand = random.random()
+        probability_of_infection = age_susc[agents[other_agent_id][4]] / SIMULATION_TICKS_PER_HOUR
+        if agents[other_agent_id][1] == 'S' and rand < probability_of_infection * i:
+            agents[other_agent_id][1] = 'E'
+        rand = numpy.random.choice(numpy.arange(2, 15), p=distribution_of_exposure)
+        agents[other_agent_id][2] = d + rand
+
+
+def remove_expired_agents(t): # time
+    global inactive_agent_ids, poi_current_visitors
+    for tup in active_agent_ids[t]:
+        inactive_agent_ids.add(tup[0])
+        poi_current_visitors[tup[1]].remove(tup[0])
+
+
+def select_active_agents(t): # time
+    global inactive_agent_ids, active_agent_ids, poi_current_visitors
+    to_remove = set()
+    for agent_id in inactive_agent_ids:
+        if random.random() < cbgs_leaving_probs[agents[agent_id][3]]:
+            topic = agents[agent_id][0]
+            destination = numpy.random.choice(topics_to_pois[topic][0], 1, p=topics_to_pois[topic][1])[0]
+            if destination == 'aux':
+                destination = numpy.random.choice(aux_dict[topic][0], 1, p=aux_dict[topic][1])[0]
+            active_agent_ids[min(t + SIMULATION_TICKS_PER_HOUR, total_simulation_time - 1)].add(
+                (agent_id, destination))
+            poi_current_visitors[destination].add(agent_id)
+            to_remove.add(agent_id)
+    inactive_agent_ids -= to_remove
+
+
+def reset_all_agents():
+    global inactive_agent_ids, active_agent_ids, poi_current_visitors
+    for t in active_agent_ids:
+        if t >= total_simulation_time:
+            for tup in active_agent_ids[t]:
+                inactive_agent_ids.add(tup[0])
+                poi_current_visitors[tup[1]].remove(tup[0])
+        active_agent_ids[t] = set()
+
+
+def set_agent_flags(d):  # day
+    global agents
+    for key in agents:
+        if agents[key][1] == 'E' and agents[key][2] == d + 1:  # https://www.nature.com/articles/s41586-020-2196-x?fbclid=IwAR1voT8K7fAlVq39RPINfrT-qTc_N4XI01fRp09-agM1v5tfXrC6NOy8-0c
+            rand_s = random.random()
+            if rand_s < 0.4:
+                agents[key][1] = 'Ia'
+            else:
+                agents[key][1] = 'Ic'
+            rand = numpy.random.choice(numpy.arange(4, 11), p=distribution_of_infected)
+            agents[key][2] = d + rand  # will be infectious for 4-10 days
+        elif (agents[key][1] == 'Ia' or agents[key][1] == 'Ic') and agents[key][2] == d + 1:
+            agents[key][1] = 'R'
+
 
 # Infected status
 # S => Susceptible: never infected
-# E => Exposed: infected on a previous day, contagious
-# I => Infected: infected the same day, will be contagious tomorrow
+# E => Exposed: infected the same day, will be contagious tomorrow, no symptoms
+# I => Infected: infected on a previous day, contagious, 40% asymptomatic
+#     Ic -> Clinical, full symptoms, contagious
+#     Ia -> Asymptomatic, 75% relative infectioness
 # R => Recovered: immune to the virus, no longer contagious (not implemented yet)
 
 for day in range(SIMULATION_DAYS):
@@ -190,68 +310,29 @@ for day in range(SIMULATION_DAYS):
         for poi in poi_current_visitors:
             poi_agents = list(poi_current_visitors[poi])
             for agent_id in poi_agents:
-                if agents[agent_id][1] == 'I':
-                    for other_agent_id in poi_agents:
-                        rand = random.random()
-                        if agents[other_agent_id][1] == 'S' and rand < probability_of_infection:
-                            agents[other_agent_id][1] = 'E'
-                            rand /= probability_of_infection
-                            if rand < 0.5:
-                                agents[other_agent_id][2] = day + round(rand * 6 + 2)  # ensures rand is between 2 and 5
-                            else:
-                                agents[other_agent_id][2] = day + round(rand * 18 - 4)  # ensures rand is between 5 and 14
-
-        for tup in active_agent_ids[current_time]:
-            inactive_agent_ids.add(tup[0])
-            poi_current_visitors[tup[1]].remove(tup[0])
-        # del active_agent_ids[current_time]
-
-        to_remove = set()
-        for agent_id in inactive_agent_ids:
-            if random.random() < cbgs_leaving_probs[agents[agent_id][3]]:
-                topic = agents[agent_id][0]
-                destination = numpy.random.choice(topics_to_pois[topic][0], 1, p=topics_to_pois[topic][1])[0]
-                if destination == 'aux':
-                    destination = numpy.random.choice(aux_dict[topic][0], 1, p=aux_dict[topic][1])[0]
-                active_agent_ids[min(current_time + SIMULATION_TICKS_PER_HOUR, total_simulation_time - 1)].add((agent_id, destination))
-                poi_current_visitors[destination].add(agent_id)
-                to_remove.add(agent_id)
-        inactive_agent_ids -= to_remove
+                if agents[agent_id][1] == 'E':
+                    infect(poi_agents, day, 0.5)
+                elif agents[agent_id][1] == 'Ia':
+                    infect(poi_agents, day, 0.5)
+                elif agents[agent_id][1] == 'Ic':
+                    infect(poi_agents, day, 1)
+        remove_expired_agents(current_time)
+        select_active_agents(current_time)
 
         current_time += 1
         if not current_time % SIMULATION_TICKS_PER_HOUR:
             print('Hour {} complete.'.format(int(current_time / SIMULATION_TICKS_PER_HOUR)))
             print_elapsed_time()
-    
-    for current_time in active_agent_ids:
-        if current_time >= total_simulation_time:
-            for tup in active_agent_ids[current_time]:
-                inactive_agent_ids.add(tup[0])
-                poi_current_visitors[tup[1]].remove(tup[0])
-        active_agent_ids[current_time] = set()
+
+    reset_all_agents()
 
     print('Day {} complete. Infection status:'.format(day))
-    for i in ['S', 'E', 'I', 'R']:
+    total_infect = 0
+    for i in ['S', 'E', 'Ia', 'Ic', 'R']:
         print('{}: {}'.format(i, len([1 for tup in agents.values() if tup[1] == i])))
+        if i == 'Ia' or i == 'Ic':
+            total_infect += len([1 for tup in agents.values() if tup[1] == i])
+    print('I: {}'.format(total_infect))
     print()
-    
-    for key in agents:
-        if agents[key][1] == 'E' and agents[key][2] == day + 1:  # https://www.nature.com/articles/s41586-020-2196-x?fbclid=IwAR1voT8K7fAlVq39RPINfrT-qTc_N4XI01fRp09-agM1v5tfXrC6NOy8-0c
-            agents[key][1] = 'I'
-            rand = random.random()
-            if rand < 0.001349898:  # normal distribution from 4 to 10 of infectiousness, centered at 7
-                agents[key][2] = day + 5  # will be infectious for 4 days
-            elif rand < 0.022750132:
-                agents[key][2] = day + 6  # will be infectious for 5 days
-            elif rand < 0.160554782:
-                agents[key][2] = day + 7  # will be infectious for 6 days
-            elif rand < 0.5:
-                agents[key][2] = day + 8  # will be infectious for 7 days
-            elif rand < 0.8413447461:
-                agents[key][2] = day + 9  # will be infectious for 8 days
-            elif rand < 0.9772498681:
-                agents[key][2] = day + 10  # will be infectious for 9 days
-            else:
-                agents[key][2] = day + 11  # will be infectious for 10 days
-        elif agents[key][1] == 'I' and agents[key][2] == day + 1:
-            agents[key][1] = 'R'
+
+    set_agent_flags(day)
