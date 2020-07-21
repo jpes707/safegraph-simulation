@@ -11,7 +11,7 @@ import time
 import math
 import itertools
 from scipy.stats import gamma
-from mathplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 
 NUM_TOPICS = 50
 MINIMUM_RAW_VISITOR_COUNT = 30
@@ -185,15 +185,15 @@ inactive_agent_ids = set()
 active_agent_ids = {t: set() for t in range(total_simulation_time)}  # expiration time: {(agent id, poi id), (agent id, poi id), ...}
 poi_current_visitors = {poi: set() for poi_list in lda_documents for poi in poi_list}  # poi id: {agent id, agent id, ...}
 
-# gamma distribution mu = 3 k = 4 (Median 5.1, Range 2-14), incubation period
+# https://www.nature.com/articles/s41591-020-0962-9
 # https://www.acpjournals.org/doi/10.7326/M20-0504
 # https://www.who.int/news-room/commentaries/detail/transmission-of-sars-cov-2-implications-for-infection-prevention-precautions
-distribution_of_exposure = [0.11963505, 0.15081676, 0.16886706, 0.15579522, 0.12716776, 0.09538861,
-                            0.06725917, 0.04523642, 0.02931162, 0.0184288, 0.01130165, 0.00678746, 0.00400443]
+distribution_of_exposure = gamma(4, 0, 0.75) # k=4 μ=3
 
 # temporary, normal distribution 4-10 days
-distribution_of_infected = [0.00443305, 0.05400558, 0.24203623, 0.39905028,
-                             0.24203623, 0.05400558, 0.00443305]
+distribution_of_preclinical = gamma(4, 0, 0.525)  # k=4 μ=2.1
+distribution_of_clinical = gamma(4, 0, 0.725)  # k=4 μ=2.9
+distribution_of_subclinical = gamma(4, 0, 1.25)  # k=4 μ=5
 
 draw = list(numpy.random.choice(cbg_ids, total_population, p=cbg_probabilities))
 topic_numbers = [i for i in range(NUM_TOPICS)]
@@ -203,15 +203,17 @@ for iteration, current_cbg in enumerate(draw):
     probs /= probs.sum()
     agent_topic = numpy.random.choice(topic_numbers, 1, p=probs)[0]
     rand_age = numpy.random.choice(['Y', 'M', 'O'], p=cbgs_to_age_distribution[current_cbg])
-    rand_infected = numpy.random.choice(numpy.arange(4, 11), p=distribution_of_infected)
+    rand_infected = 0
     agent_status = 'S'
     rand = random.random()
     if rand < 0.05:
         rand /= 0.05
         if rand < 0.4:
             agent_status = 'Ia'
+            rand_infected = round(distribution_of_subclinical.rvs(1)[0])
         else:
-            agent_status = 'Ic'
+            agent_status = 'Ip'
+            rand_infected = round(distribution_of_preclinical.rvs(1)[0])
     agents[agent_id] = [agent_topic, agent_status, rand_infected, current_cbg, rand_age]  # topic, infection status, critical date, cbg, age
     cbgs_to_agents[current_cbg].add(agent_id)
     inactive_agent_ids.add(agent_id)
@@ -235,7 +237,7 @@ print_elapsed_time()
 print('Running simulation...')
 
 # probability_of_infection = 0.005 / SIMULATION_TICKS_PER_HOUR  # from https://hzw77-demo.readthedocs.io/en/round2/simulator_modeling.html
-age_susc = {'Y': 0.025, 'M': 0.045, 'O': 0.085}
+age_susc = {'Y': 0.025, 'M': 0.045, 'O': 0.085} # 
 
 def infect(p, d, i):  # poi agents, day, infectioness
     global agents
@@ -286,22 +288,28 @@ def set_agent_flags(d):  # day
     for key in agents:
         if agents[key][1] == 'E' and agents[key][2] == d + 1:  # https://www.nature.com/articles/s41586-020-2196-x?fbclid=IwAR1voT8K7fAlVq39RPINfrT-qTc_N4XI01fRp09-agM1v5tfXrC6NOy8-0c
             rand_s = random.random()
+            rand = 0
             if rand_s < 0.4:
                 agents[key][1] = 'Ia'
+                rand = round(distribution_of_subclinical.rvs(1)[0])
             else:
-                agents[key][1] = 'Ic'
-            rand = numpy.random.choice(numpy.arange(4, 11), p=distribution_of_infected)
-            agents[key][2] = d + rand  # will be infectious for 4-10 days
+                agents[key][1] = 'Ip'
+                rand = round(distribution_of_preclinical.rvs(1)[0])
+            agents[key][2] = d + rand
+        elif agents[key][1] == 'Ip' and agents[key][2] == d+1:
+            agents[key][1] = 'Ic'
+            agents[key][2] = round(distribution_of_clinical.rvs(1)[0])
         elif (agents[key][1] == 'Ia' or agents[key][1] == 'Ic') and agents[key][2] == d + 1:
             agents[key][1] = 'R'
 
 
 # Infected status
 # S => Susceptible: never infected
-# E => Exposed: infected the same day, will be contagious tomorrow, no symptoms
+# E => Exposed: infected the same day, will be contagious after incubation period
 # I => Infected: infected on a previous day, contagious, 40% asymptomatic
+#     Ip -> Preclinical, before clinical, not symptomatic, contagious
 #     Ic -> Clinical, full symptoms, contagious
-#     Ia -> Asymptomatic, 75% relative infectioness
+#     Ia -> Asymptomatic, 75% relative infectioness (50%)?, never show symptoms
 # R => Recovered: immune to the virus, no longer contagious (not implemented yet)
 
 for day in range(SIMULATION_DAYS):
@@ -310,10 +318,8 @@ for day in range(SIMULATION_DAYS):
         for poi in poi_current_visitors:
             poi_agents = list(poi_current_visitors[poi])
             for agent_id in poi_agents:
-                if agents[agent_id][1] == 'E':
-                    infect(poi_agents, day, 0.5)
-                elif agents[agent_id][1] == 'Ia':
-                    infect(poi_agents, day, 0.5)
+                if agents[agent_id][1] == 'Ia' or agents[agent_id][1] == 'Ip':
+                    infect(poi_agents, day, 0.5) # the infectioness can change, only an estimate
                 elif agents[agent_id][1] == 'Ic':
                     infect(poi_agents, day, 1)
         remove_expired_agents(current_time)
@@ -328,9 +334,9 @@ for day in range(SIMULATION_DAYS):
 
     print('Day {} complete. Infection status:'.format(day))
     total_infect = 0
-    for i in ['S', 'E', 'Ia', 'Ic', 'R']:
+    for i in ['S', 'E', 'Ia', 'Ip', 'Ic', 'R']:
         print('{}: {}'.format(i, len([1 for tup in agents.values() if tup[1] == i])))
-        if i == 'Ia' or i == 'Ic':
+        if i == 'Ia' or i == 'Ic' or i == 'Ip':
             total_infect += len([1 for tup in agents.values() if tup[1] == i])
     print('I: {}'.format(total_infect))
     print()
