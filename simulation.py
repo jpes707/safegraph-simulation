@@ -18,7 +18,7 @@ MINIMUM_RAW_VISITOR_COUNT = 30
 SIMULATION_DAYS = 14
 SIMULATION_HOURS_PER_DAY = 16
 SIMULATION_TICKS_PER_HOUR = 4
-PROPORTION_OF_POPULATION = 0.2  # 0.2 => 20% of the actual population is simulated
+PROPORTION_OF_POPULATION = 0.01  # 0.2 => 20% of the actual population is simulated
 
 start_time = time.time()
 total_simulation_time = SIMULATION_HOURS_PER_DAY * SIMULATION_TICKS_PER_HOUR
@@ -182,6 +182,7 @@ print('Preparing simulation...')
 agents = {}  # agent_id: [topic, infected_status, critical_date, home_cbg_code]
 cbgs_to_agents = {cbg: set() for cbg in cbg_ids}  # cbg: {agent id, agent id, ...}
 inactive_agent_ids = set()
+quarantined_agent_ids = set()
 active_agent_ids = {t: set() for t in range(total_simulation_time)}  # expiration time: {(agent id, poi id), (agent id, poi id), ...}
 poi_current_visitors = {poi: set() for poi_list in lda_documents for poi in poi_list}  # poi id: {agent id, agent id, ...}
 
@@ -246,7 +247,7 @@ def infect(p, d, i):  # poi agents, day, infectioness
         probability_of_infection = age_susc[agents[other_agent_id][4]] / SIMULATION_TICKS_PER_HOUR
         if agents[other_agent_id][1] == 'S' and rand < probability_of_infection * i:
             agents[other_agent_id][1] = 'E'
-        rand = numpy.random.choice(numpy.arange(2, 15), p=distribution_of_exposure)
+        rand = round(distribution_of_exposure.rvs(1)[0])
         agents[other_agent_id][2] = d + rand
 
 
@@ -302,6 +303,31 @@ def set_agent_flags(d):  # day
         elif (agents[key][1] == 'Ia' or agents[key][1] == 'Ic') and agents[key][2] == d + 1:
             agents[key][1] = 'R'
 
+def report_status():
+    total_infect = 0
+    stat = {'S': 0, 'E': 0, 'Ia': 0, 'Ip': 0, 'Ic': 0, 'R': 0, 'Q': 0}
+    for tup in agents.values():
+        stat[tup[1]] += 1
+    print('Susceptible: {}'.format(stat['S']))
+    print('Exposed: {}'.format(stat['E']))
+    print('Infected: {}'.format(stat['Ia']+stat['Ip']+stat['Ic']))
+    print('Recovered: {}'.format(stat['R']))
+    print('Quarantined: {}'.format(len(quarantined_agent_ids)))
+
+
+def quarantine(ag, days, d): # (agents, # days in quarantine, day) no leaving the house, contact tracing? (not implemented)
+    global quarantined_agent_ids, inactive_agent_ids
+    for a in ag:
+        quarantined_agent_ids.add((a, d + days))
+        inactive_agent_ids.remove(a)
+    for q in quarantined_agent_ids:
+        if q[1] == d:
+            quarantined_agent_ids.remove(q)
+            inactive_agent_ids.add(q[0])
+
+
+def isolate(a): # no contact with anyone, used for those infected?
+    return
 
 # Infected status
 # S => Susceptible: never infected
@@ -310,10 +336,12 @@ def set_agent_flags(d):  # day
 #     Ip -> Preclinical, before clinical, not symptomatic, contagious
 #     Ic -> Clinical, full symptoms, contagious
 #     Ia -> Asymptomatic, 75% relative infectioness (50%)?, never show symptoms
-# R => Recovered: immune to the virus, no longer contagious (not implemented yet)
+# R => Recovered: immune to the virus, no longer contagious
+
 
 for day in range(SIMULATION_DAYS):
     print('Day {}:'.format(day))
+    quarantined = set()
     for current_time in range(total_simulation_time):
         for poi in poi_current_visitors:
             poi_agents = list(poi_current_visitors[poi])
@@ -322,6 +350,7 @@ for day in range(SIMULATION_DAYS):
                     infect(poi_agents, day, 0.5) # the infectioness can change, only an estimate
                 elif agents[agent_id][1] == 'Ic':
                     infect(poi_agents, day, 1)
+                    quarantined.add(agent_id)
         remove_expired_agents(current_time)
         select_active_agents(current_time)
 
@@ -332,13 +361,10 @@ for day in range(SIMULATION_DAYS):
 
     reset_all_agents()
 
+    print('Total Agents:', len(quarantined_agent_ids)+len(inactive_agent_ids) + len(active_agent_ids))
+    #quarantine(quarantined, 7, day)
     print('Day {} complete. Infection status:'.format(day))
-    total_infect = 0
-    for i in ['S', 'E', 'Ia', 'Ip', 'Ic', 'R']:
-        print('{}: {}'.format(i, len([1 for tup in agents.values() if tup[1] == i])))
-        if i == 'Ia' or i == 'Ic' or i == 'Ip':
-            total_infect += len([1 for tup in agents.values() if tup[1] == i])
-    print('I: {}'.format(total_infect))
+    report_status()
     print()
 
     set_agent_flags(day)
