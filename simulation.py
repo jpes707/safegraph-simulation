@@ -242,11 +242,12 @@ age_susc = {'Y': 0.025, 'M': 0.045, 'O': 0.085}
 
 
 def infect(p, d, i):  # poi agents, day, infectioness
-    global agents
+    global agents, infection_counts_by_day
     for other_agent_id in p:
         rand = random.random()
         probability_of_infection = age_susc[agents[other_agent_id][4]] / SIMULATION_TICKS_PER_HOUR
         if agents[other_agent_id][1] == 'S' and rand < probability_of_infection * i:
+            infection_counts_by_day[-1] += 1
             agents[other_agent_id][1] = 'E'
         rand = round(distribution_of_exposure.rvs(1)[0])
         agents[other_agent_id][2] = d + rand
@@ -309,6 +310,7 @@ def set_agent_flags(d):  # day
 
 
 def report_status():
+    global infection_counts_by_day
     stat = {'S': 0, 'E': 0, 'Ia': 0, 'Ip': 0, 'Ic': 0, 'R': 0, 'Q': 0}
     for tup in agents.values():
         stat[tup[1]] += 1
@@ -348,8 +350,10 @@ def covid_test(a, p, ft): # agents, percent who take tests, feedback time
 #     Ia -> Asymptomatic, 75% relative infectioness (50%)?, never show symptoms
 # R => Recovered: immune to the virus, no longer contagious
 
+infection_counts_by_day = []
 for day in range(SIMULATION_DAYS):
     print('Day {}:'.format(day))
+    infection_counts_by_day.append(0)
     quarantined = set()
     for current_time in range(total_simulation_time):
         remove_expired_agents(current_time)
@@ -358,7 +362,7 @@ for day in range(SIMULATION_DAYS):
                 poi_agents = list(poi_current_visitors[poi])
                 for agent_id in poi_agents:
                     if agents[agent_id][1] == 'Ia' or agents[agent_id][1] == 'Ip':
-                        infect(poi_agents, day, 0.5) # the infectioness can change, only an estimate
+                        infect(poi_agents, day, 0.75) # the infectioness can change, only an estimate
                     elif agents[agent_id][1] == 'Ic':
                         infect(poi_agents, day, 1)
                         quarantined.add(agent_id)
@@ -372,6 +376,7 @@ for day in range(SIMULATION_DAYS):
     # quarantine(quarantined, 7, day)
     print('Day {} complete. Infection status:'.format(day))
     report_status()
+    print('New cases per day: {}'.format(list(zip([i for i in range(len(infection_counts_by_day))], infection_counts_by_day))))
     print()
 
     set_agent_flags(day)
