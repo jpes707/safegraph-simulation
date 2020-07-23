@@ -18,7 +18,7 @@ MINIMUM_RAW_VISITOR_COUNT = 30
 SIMULATION_DAYS = 14
 SIMULATION_HOURS_PER_DAY = 16
 SIMULATION_TICKS_PER_HOUR = 4
-PROPORTION_OF_POPULATION = 0.01  # 0.2 => 20% of the actual population is simulated
+PROPORTION_OF_POPULATION = 0.2  # 0.2 => 20% of the actual population is simulated
 
 start_time = time.time()
 total_simulation_time = SIMULATION_HOURS_PER_DAY * SIMULATION_TICKS_PER_HOUR
@@ -238,7 +238,8 @@ print_elapsed_time()
 print('Running simulation...')
 
 # probability_of_infection = 0.005 / SIMULATION_TICKS_PER_HOUR  # from https://hzw77-demo.readthedocs.io/en/round2/simulator_modeling.html
-age_susc = {'Y': 0.025, 'M': 0.045, 'O': 0.085} # 
+age_susc = {'Y': 0.025, 'M': 0.045, 'O': 0.085}
+
 
 def infect(p, d, i):  # poi agents, day, infectioness
     global agents
@@ -256,6 +257,7 @@ def remove_expired_agents(t): # time
     for tup in active_agent_ids[t]:
         inactive_agent_ids.add(tup[0])
         poi_current_visitors[tup[1]].remove(tup[0])
+    active_agent_ids[t] = set()
 
 
 def select_active_agents(t): # time
@@ -263,25 +265,18 @@ def select_active_agents(t): # time
     to_remove = set()
     for agent_id in inactive_agent_ids:
         if random.random() < cbgs_leaving_probs[agents[agent_id][3]]:
+            destination_end_time = t + SIMULATION_TICKS_PER_HOUR  # improve later with a distribution
+            if destination_end_time >= total_simulation_time:
+                continue
             topic = agents[agent_id][0]
             destination = numpy.random.choice(topics_to_pois[topic][0], 1, p=topics_to_pois[topic][1])[0]
             if destination == 'aux':
                 destination = numpy.random.choice(aux_dict[topic][0], 1, p=aux_dict[topic][1])[0]
-            active_agent_ids[min(t + SIMULATION_TICKS_PER_HOUR, total_simulation_time - 1)].add(
+            active_agent_ids[destination_end_time].add(
                 (agent_id, destination))
             poi_current_visitors[destination].add(agent_id)
             to_remove.add(agent_id)
     inactive_agent_ids -= to_remove
-
-
-def reset_all_agents():
-    global inactive_agent_ids, active_agent_ids, poi_current_visitors
-    for t in active_agent_ids:
-        if t >= total_simulation_time:
-            for tup in active_agent_ids[t]:
-                inactive_agent_ids.add(tup[0])
-                poi_current_visitors[tup[1]].remove(tup[0])
-        active_agent_ids[t] = set()
 
 
 def set_agent_flags(d):  # day
@@ -303,8 +298,8 @@ def set_agent_flags(d):  # day
         elif (agents[key][1] == 'Ia' or agents[key][1] == 'Ic') and agents[key][2] == d + 1:
             agents[key][1] = 'R'
 
+
 def report_status():
-    total_infect = 0
     stat = {'S': 0, 'E': 0, 'Ia': 0, 'Ip': 0, 'Ic': 0, 'R': 0, 'Q': 0}
     for tup in agents.values():
         stat[tup[1]] += 1
@@ -329,6 +324,7 @@ def quarantine(ag, days, d): # (agents, # days in quarantine, day) no leaving th
 def isolate(a): # no contact with anyone, used for those infected?
     return
 
+
 # Infected status
 # S => Susceptible: never infected
 # E => Exposed: infected the same day, will be contagious after incubation period
@@ -338,28 +334,25 @@ def isolate(a): # no contact with anyone, used for those infected?
 #     Ia -> Asymptomatic, 75% relative infectioness (50%)?, never show symptoms
 # R => Recovered: immune to the virus, no longer contagious
 
-
 for day in range(SIMULATION_DAYS):
     print('Day {}:'.format(day))
     quarantined = set()
     for current_time in range(total_simulation_time):
-        for poi in poi_current_visitors:
-            poi_agents = list(poi_current_visitors[poi])
-            for agent_id in poi_agents:
-                if agents[agent_id][1] == 'Ia' or agents[agent_id][1] == 'Ip':
-                    infect(poi_agents, day, 0.5) # the infectioness can change, only an estimate
-                elif agents[agent_id][1] == 'Ic':
-                    infect(poi_agents, day, 1)
-                    quarantined.add(agent_id)
         remove_expired_agents(current_time)
-        select_active_agents(current_time)
+        if current_time != total_simulation_time - 1:
+            for poi in poi_current_visitors:
+                poi_agents = list(poi_current_visitors[poi])
+                for agent_id in poi_agents:
+                    if agents[agent_id][1] == 'Ia' or agents[agent_id][1] == 'Ip':
+                        infect(poi_agents, day, 0.5) # the infectioness can change, only an estimate
+                    elif agents[agent_id][1] == 'Ic':
+                        infect(poi_agents, day, 1)
+                        quarantined.add(agent_id)
+            select_active_agents(current_time)
 
-        current_time += 1
         if not current_time % SIMULATION_TICKS_PER_HOUR:
             print('Hour {} complete.'.format(int(current_time / SIMULATION_TICKS_PER_HOUR)))
             print_elapsed_time()
-
-    reset_all_agents()
 
     print('Total Agents:', len(quarantined_agent_ids)+len(inactive_agent_ids) + len(active_agent_ids))
     #quarantine(quarantined, 7, day)
