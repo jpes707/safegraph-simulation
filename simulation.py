@@ -279,6 +279,18 @@ def select_active_agents(t): # time
     inactive_agent_ids -= to_remove
 
 
+<<<<<<< HEAD
+=======
+def reset_all_agents():
+    global inactive_agent_ids, active_agent_ids, poi_current_visitors
+    for t in active_agent_ids:
+        for tup in active_agent_ids[t]:
+            inactive_agent_ids.add(tup[0])
+            poi_current_visitors[tup[1]].remove(tup[0])
+        active_agent_ids[t] = set()
+
+
+>>>>>>> 8fd88fe... Updated to make agent numbers consistent.
 def set_agent_flags(d):  # day
     global agents
     for key in agents:
@@ -354,7 +366,13 @@ for day in range(SIMULATION_DAYS):
             print('Hour {} complete.'.format(int(current_time / SIMULATION_TICKS_PER_HOUR)))
             print_elapsed_time()
 
+<<<<<<< HEAD
     print('Total Agents:', len(quarantined_agent_ids)+len(inactive_agent_ids) + len(active_agent_ids))
+=======
+    reset_all_agents()
+
+    print('Total Agents:', len(quarantined_agent_ids) + len(inactive_agent_ids) + len(active_agent_ids))
+>>>>>>> 8fd88fe... Updated to make agent numbers consistent.
     #quarantine(quarantined, 7, day)
     print('Day {} complete. Infection status:'.format(day))
     report_status()
