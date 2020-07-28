@@ -1,8 +1,9 @@
 Things to add to the simulation:
-- Asymptomatic cases
-- Quarantines, isolations, hospitalizations, etc.
-- Assigning each agent to a certain demographic group
-- Mask wearing based on demographic group
+- Asymptomatic cases                                                    (complete)
+- Quarantines, isolations, hospitalizations, etc.                       (complete, critical quarantines)
+- Assigning each agent to a certain demographic group                   (complete, age)
+- Mask wearing (lower global infection)
+- Close places of specific types
 - Households and spread in the home
 - Different probabilities of spread at different types of places (you will more likely get the virus at a bar than a supermarket)
 
