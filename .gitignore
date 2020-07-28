@@ -5,3 +5,5 @@ demographics-outputs/
 experiments/
 __pycache__/
 .*
+raw_cache.p
+agents_cache.p
