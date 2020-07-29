@@ -11,16 +11,19 @@ import time
 import math
 import itertools
 import pickle
-from scipy.stats import gamma
+import numpy as np
+import statistics
+from distfit import distfit
+import scipy.stats
 
 NUM_TOPICS = 50
-MINIMUM_RAW_VISITOR_COUNT = 30
 SIMULATION_DAYS = 100000000
 SIMULATION_HOURS_PER_DAY = 16
 SIMULATION_TICKS_PER_HOUR = 4
 PROPORTION_OF_POPULATION = 1  # 0.2 => 20% of the actual population is simulated
 PROPORTION_INITIALLY_INFECTED = 0.001  # 0.05 => 5% of the simulated population is initially infected or exposed
 PROPENSITY_TO_LEAVE = 1  # 1 => nothing is wrong, normal likelihood of leaving the house
+NUMBER_OF_DWELL_SAMPLES = 5  # a higher number decreases variation and allows less outliers
 
 start_time = time.time()
 total_simulation_time = SIMULATION_HOURS_PER_DAY * SIMULATION_TICKS_PER_HOUR
@@ -44,7 +47,7 @@ agents_loaded = False
 use_raw_cache = input('Use file data cache ([y]/n)? ')
 if use_raw_cache == '' or use_raw_cache == 'y':
     raw_cache_file = open(raw_cache_path, 'rb')
-    (cbg_ids, lda_documents, cbgs_to_age_distribution, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs) = pickle.load(raw_cache_file)
+    (cbg_ids, lda_documents, cbgs_to_age_distribution, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions) = pickle.load(raw_cache_file)
     use_agents_cache = input('Use agents cache ([y]/n)? ')
     if use_agents_cache == '' or use_agents_cache == 'y':
         agents_cache_file = open(agents_cache_path, 'rb')
@@ -71,31 +74,36 @@ else:
     full_name = '{}, {}'.format(locality_name, STATE_ABBR.upper())
     area = locality_name.lower().replace(' ', '-') + '-' + STATE_ABBR.lower()
 
-    print('Running LDA...')
+    print('Reading POI data...')
 
     # Read in data from files, filtering the data that corresponds to the area of interest
     data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_weekly_patterns_v2', 'main-file', '{}-weekly-patterns'.format(WEEK), '{}-{}.csv'.format(area, WEEK)), error_bad_lines=False)
-    usable_data = data[(data.raw_visitor_counts >= MINIMUM_RAW_VISITOR_COUNT) & (data.visitor_home_cbgs != '{}')]
+    usable_data = data[(data.visitor_home_cbgs != '{}')]
 
     # From usable POIs, load cbgs, CBGs are documents, POIs are words
-    cbgs_to_places = {}
+    cbgs_to_pois = {}
+    dwell_distributions = {}
     for row in usable_data.itertuples():
         place_id = str(row.safegraph_place_id)
+        dwell_distributions[place_id] = eval(row.dwell_distribution)
         cbgs = json.loads(row.visitor_home_cbgs)
         lda_words = []
         for cbg in cbgs:
             if not cbg.startswith('51059'):  # excludes all outside of fairfax, REMOVE LATER!!!
                 continue
-            if cbg not in cbgs_to_places:
-                cbgs_to_places[cbg] = []
+            if cbg not in cbgs_to_pois:
+                cbgs_to_pois[cbg] = []
             # SafeGraph reports visits of cbgs as 4 if the visit is between 2-4
             cbg_frequency = random.randint(2, 4) if cbgs[cbg] == 4 else cbgs[cbg]
             # Generate POIs as words and multiply by the amount that CBG visited
-            cbgs_to_places[cbg].extend([place_id] * cbg_frequency)
+            cbgs_to_pois[cbg].extend([place_id] * cbg_frequency)
 
-    cbg_ids = list(cbgs_to_places.keys())
+    print_elapsed_time()
+    print('Running LDA...')
+
+    cbg_ids = list(cbgs_to_pois.keys())
     cbg_id_set = set(cbg_ids)
-    lda_documents = list(cbgs_to_places.values())
+    lda_documents = list(cbgs_to_pois.values())
     poi_set = {poi for poi_list in lda_documents for poi in poi_list}
     poi_count = len(poi_set)
 
@@ -204,7 +212,7 @@ else:
     print_elapsed_time()
     print('Caching raw data...')
 
-    raw_cache_data = (cbg_ids, lda_documents, cbgs_to_age_distribution, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs)
+    raw_cache_data = (cbg_ids, lda_documents, cbgs_to_age_distribution, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions)
     raw_cache_file = open(raw_cache_path, 'wb')
     pickle.dump(raw_cache_data, raw_cache_file)
 
@@ -215,12 +223,12 @@ raw_cache_file.close()
 # https://www.nature.com/articles/s41591-020-0962-9
 # https://www.acpjournals.org/doi/10.7326/M20-0504
 # https://www.who.int/news-room/commentaries/detail/transmission-of-sars-cov-2-implications-for-infection-prevention-precautions
-distribution_of_exposure = gamma(4, 0, 0.75) # k=4 μ=3 => midpoint is 2.754 days
+distribution_of_exposure = scipy.stats.gamma(4, 0, 0.75) # k=4 μ=3 => midpoint is 2.754 days
 
 # temporary, normal distribution 4-10 days
-distribution_of_preclinical = gamma(4, 0, 0.525)  # k=4 μ=2.1 => midpoint is 1.928 days
-distribution_of_clinical = gamma(4, 0, 0.725)  # k=4 μ=2.9 => midpoint is 2.662 days
-distribution_of_subclinical = gamma(4, 0, 1.25)  # k=4 μ=5 => midpoint is 4.590 days
+distribution_of_preclinical = scipy.stats.gamma(4, 0, 0.525)  # k=4 μ=2.1 => midpoint is 1.928 days
+distribution_of_clinical = scipy.stats.gamma(4, 0, 0.725)  # k=4 μ=2.9 => midpoint is 2.662 days
+distribution_of_subclinical = scipy.stats.gamma(4, 0, 1.25)  # k=4 μ=5 => midpoint is 4.590 days
 
 topic_numbers = [i for i in range(NUM_TOPICS)]
 
@@ -336,6 +344,18 @@ age_susc = {'C': 0.01, 'Y': 0.025, 'M': 0.045, 'O': 0.085}  # https://www.nature
 asymptomatic_relative_infectiousness = 0.75  # https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
 
 
+def get_dwell_time(dwell_tuple):
+    dwell_time = 0
+    while dwell_time < 30 / SIMULATION_TICKS_PER_HOUR:
+        if len(dwell_tuple) == 3:
+            dwell_time = statistics.median(getattr(scipy.stats, dwell_tuple[0]).rvs(loc=dwell_tuple[1], scale=dwell_tuple[2], size=NUMBER_OF_DWELL_SAMPLES))
+        elif len(dwell_tuple) == 4:
+            dwell_time = statistics.median(getattr(scipy.stats, dwell_tuple[0]).rvs(dwell_tuple[1], loc=dwell_tuple[2], scale=dwell_tuple[3], size=NUMBER_OF_DWELL_SAMPLES))
+        else:
+            dwell_time = statistics.median(getattr(scipy.stats, dwell_tuple[0]).rvs(dwell_tuple[1], dwell_tuple[2], loc=dwell_tuple[3], scale=dwell_tuple[4], size=NUMBER_OF_DWELL_SAMPLES))
+    return int(round(dwell_time * SIMULATION_TICKS_PER_HOUR / 60))
+
+
 def infect(agent_id, day):
     global infection_counts_by_day
     if agents[agent_id][1] == 'S':
@@ -366,13 +386,13 @@ def select_active_agents(t): # time
     to_remove = set()
     for agent_id in inactive_agent_ids:
         if random.random() < cbgs_leaving_probs[agents[agent_id][3]]:
-            destination_end_time = t + SIMULATION_TICKS_PER_HOUR  # improve later with a distribution
-            if destination_end_time >= total_simulation_time:
-                continue
             topic = agents[agent_id][0]
             destination = numpy.random.choice(topics_to_pois[topic][0], 1, p=topics_to_pois[topic][1])[0]
             if destination == 'aux':
                 destination = numpy.random.choice(aux_dict[topic][0], 1, p=aux_dict[topic][1])[0]
+            destination_end_time = t + get_dwell_time(dwell_distributions[destination])
+            if destination_end_time >= total_simulation_time:
+                continue
             active_agent_ids[destination_end_time].add((agent_id, destination))
             poi_current_visitors[destination].add(agent_id)
             to_remove.add(agent_id)
