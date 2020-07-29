@@ -12,15 +12,15 @@ import math
 import itertools
 import pickle
 from scipy.stats import gamma
-import matplotlib.pyplot as plt
 
 NUM_TOPICS = 50
 MINIMUM_RAW_VISITOR_COUNT = 30
-SIMULATION_DAYS = 14
+SIMULATION_DAYS = 100000000
 SIMULATION_HOURS_PER_DAY = 16
 SIMULATION_TICKS_PER_HOUR = 4
-PROPORTION_OF_POPULATION = 0.2  # 0.2 => 20% of the actual population is simulated
-PROPORTION_INITIALLY_INFECTED = 0.05  # 0.05 => 5% of the simulated population is initially infected or exposed
+PROPORTION_OF_POPULATION = 1  # 0.2 => 20% of the actual population is simulated
+PROPORTION_INITIALLY_INFECTED = 0.001  # 0.05 => 5% of the simulated population is initially infected or exposed
+PROPENSITY_TO_LEAVE = 1  # 1 => nothing is wrong, normal likelihood of leaving the house
 
 start_time = time.time()
 total_simulation_time = SIMULATION_HOURS_PER_DAY * SIMULATION_TICKS_PER_HOUR
@@ -186,7 +186,7 @@ else:
     for idx, row in social_distancing_data.iterrows():
         check_str = str(int(row['origin_census_block_group'])).zfill(12)
         if check_str in cbg_id_set:
-            day_leaving_prob = 1 - (int(row['completely_home_device_count']) / int(row['device_count']))
+            day_leaving_prob = PROPENSITY_TO_LEAVE * (1 - (int(row['completely_home_device_count']) / int(row['device_count'])))
             cbgs_leaving_probs[check_str] = day_leaving_prob / total_simulation_time
             seen_cbgs.add(check_str)
     for cbg in cbg_id_set - seen_cbgs:
@@ -233,7 +233,7 @@ if not agents_loaded:
     # Randomly select a list of CBGs of the population size based on their respective probability to the population size
     # Within that list of CBGs, iterate for each CBG
     # Generate a randomly chosen topic based on the CBG percentage in each topic
-    # Once a topic and cbg are chosen, use a 5% probability to decide whether or not that agent is infected
+    # Once a topic and cbg are chosen, use a 0.1% probability to decide whether or not that agent is infected
 
     agents = {}  # agent_id: [topic, infected_status, critical_date, home_cbg_code, age_code, household_id]
     households = {}  # household_id: {agent_id, agent_id, ...}
@@ -446,6 +446,12 @@ def quarantine(ag, days, d): # (agents, # days in quarantine, day) no leaving th
             inactive_agent_ids.add(q[0])
 
 
+def wear_masks():
+    global age_susc
+    for a in age_susc:
+        age_susc[a] *= .35  # https://www.ucdavis.edu/coronavirus/news/your-mask-cuts-own-risk-65-percent/
+
+
 # Infected status
 # S => Susceptible: never infected
 # E => Exposed: infected the same day, will be contagious after incubation period
@@ -456,6 +462,7 @@ def quarantine(ag, days, d): # (agents, # days in quarantine, day) no leaving th
 # R => Recovered: immune to the virus, no longer contagious
 
 infection_counts_by_day = []
+wear_masks()
 for day in range(SIMULATION_DAYS):
     print('Day {}:'.format(day))
     infection_counts_by_day.append(0)
@@ -482,7 +489,7 @@ for day in range(SIMULATION_DAYS):
     print_elapsed_time()
 
     reset_all_agents()
-    # quarantine(quarantined, 7, day)
+    quarantine(quarantined, 10, day)
     print('Day {} complete. Infection status:'.format(day))
     report_status()
     print('New cases per day: {}'.format(list(zip([i for i in range(len(infection_counts_by_day))], infection_counts_by_day))))
