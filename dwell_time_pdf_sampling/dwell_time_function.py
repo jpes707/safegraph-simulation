@@ -18,10 +18,10 @@ def get_dwell_time(nums, buckets):
     dist.fit_transform(filled_arr)
     dist_name = dist.model['name']
 
-    if not all(dist.model['arg']):
+    if len(dist.model['arg']) < 1:
         loc_v, scale_v = dist.model['loc'], dist.model['scale']
         output_dwell_time = getattr(scipy, dist_name).rvs(loc=loc_v, scale=scale_v, size=1)
-    elif len(dist.model['arg']) == 2:
+    elif len(dist.model['arg']) > 1:
         arg1, arg2, loc_v, scale_v = float((dist.model['arg'])[0]), float((dist.model['arg'])[1]), dist.model['loc'], \
                                      dist.model['scale']
         output_dwell_time = getattr(scipy, dist_name).rvs(arg1, arg2, loc=loc_v, scale=scale_v, size=1)
