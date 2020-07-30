@@ -24,6 +24,8 @@ PROPORTION_OF_POPULATION = 1  # 0.2 => 20% of the actual population is simulated
 PROPORTION_INITIALLY_INFECTED = 0.001  # 0.05 => 5% of the simulated population is initially infected or exposed
 PROPENSITY_TO_LEAVE = 1  # 1 => nothing is wrong, normal likelihood of leaving the house
 NUMBER_OF_DWELL_SAMPLES = 5  # a higher number decreases variation and allows less outliers
+QUARANTINE_DURATION = 10  # days
+CLOSED_POIS = {'Restaurants and Other Eating Places', 'Religious Organizations'}  # POI types from SafeGraph Core Places "top_category"
 
 start_time = time.time()
 total_simulation_time = SIMULATION_HOURS_PER_DAY * SIMULATION_TICKS_PER_HOUR
@@ -83,13 +85,11 @@ else:
     # From usable POIs, load cbgs, CBGs are documents, POIs are words
     cbgs_to_pois = {}
     dwell_distributions = {}
-    for row in usable_data.itertuples():
-        place_id = str(row.safegraph_place_id)
-        dwell_distributions[place_id] = eval(row.dwell_distribution)
     cbgs_to_places = {}
     poi_type = {}
     for row in usable_data.itertuples():
         place_id = str(row.safegraph_place_id)
+        dwell_distributions[place_id] = eval(row.dwell_distribution)
         place_type = str(row.top_category)
         if place_type not in poi_type:
             poi_type[place_type] = {place_id}
@@ -351,7 +351,6 @@ print('Running simulation...')
 # probability_of_infection = 0.005 / SIMULATION_TICKS_PER_HOUR  # from https://hzw77-demo.readthedocs.io/en/round2/simulator_modeling.html
 age_susc = {'C': 0.01, 'Y': 0.025, 'M': 0.045, 'O': 0.085}  # https://www.nature.com/articles/s41591-020-0962-9 "Susceptibility is defined as the probability of infection on contact with an infectious person"
 asymptomatic_relative_infectiousness = 0.75  # https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
-closed_pois = set()
 
 def get_dwell_time(dwell_tuple):
     dwell_time = 0
@@ -482,8 +481,9 @@ def wear_masks():
 
 
 def close_poi_type(t): # type of poi, ex. Restaurants and Other Eating Places
-    global closed_pois
-    closed_pois = closed_pois | poi_type[t]
+    global CLOSED_POIS
+    CLOSED_POIS = CLOSED_POIS | poi_type[t]
+
 
 # Infected status
 # S => Susceptible: never infected
@@ -496,7 +496,6 @@ def close_poi_type(t): # type of poi, ex. Restaurants and Other Eating Places
 
 infection_counts_by_day = []
 wear_masks()
-close_poi_type('Restaurants and Other Eating Places')
 for day in range(SIMULATION_DAYS):
     print('Day {}:'.format(day))
     infection_counts_by_day.append(0)
@@ -505,7 +504,7 @@ for day in range(SIMULATION_DAYS):
         remove_expired_agents(current_time)
         if current_time != total_simulation_time - 1:
             for poi in poi_current_visitors:
-                if poi not in closed_pois:
+                if poi not in CLOSED_POIS:
                     poi_agents = list(poi_current_visitors[poi])
                     for agent_id in poi_agents:
                         if agents[agent_id][1] == 'Ia' or agents[agent_id][1] == 'Ip':
@@ -524,7 +523,7 @@ for day in range(SIMULATION_DAYS):
     print_elapsed_time()
 
     reset_all_agents()
-    quarantine(quarantined, 10, day)
+    quarantine(quarantined, QUARANTINE_DURATION, day)
     print('Day {} complete. Infection status:'.format(day))
     report_status()
     print('New cases per day: {}'.format(list(zip([i for i in range(len(infection_counts_by_day))], infection_counts_by_day))))

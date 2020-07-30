@@ -58,13 +58,30 @@ if not os.path.exists(data_path):
     with gzip.open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_weekly_patterns_v2', 'main-file', '{}-weekly-patterns.csv.gz'.format(WEEK)), 'rb') as f_in:
         with open(data_path, 'wb') as f_out:
             shutil.copyfileobj(f_in, f_out)
-print('Reading data...')
+core_places_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_core_places', 'core_poi.csv')
+if not os.path.exists(core_places_path):
+    print('Gathering core places information...')
+    dfs = []
+    for i in range(1, 6):
+        dfs.append(pd.read_csv(gzip.open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_core_places', 'core_poi-part{}.csv.gz'.format(i)), 'rb')))
+    core_places = pd.concat(dfs, axis=0, ignore_index=True)
+    core_places.to_csv(core_places_path)
+else:
+    print('Reading core places CSV...')
+    core_places = pd.read_csv(core_places_path)
+print('Reading POI data...')
 data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_weekly_patterns_v2', 'main-file', '{}-weekly-patterns'.format(WEEK), '{}-weekly-patterns.csv'.format(WEEK)), error_bad_lines=False)
-print('Processing data...')
+print('Processing POI data...')
 county_data = data[(data.raw_visitor_counts >= MINIMUM_RAW_VISITOR_COUNT) & (data.postal_code.astype(str).isin(zip_code_set))]
-print('Running distributions...')
+print('Processing core places data and running distributions...')
+new_columns = ['top_category', 'sub_category', 'category_tags', 'naics_code', 'brands', 'safegraph_brand_ids', 'parent_safegraph_place_id', 'open_hours', 'postal_code', 'latitude', 'longitude']
 county_data['dwell_distribution'] = '()'
 for idx, row in county_data.iterrows():
+    core_places_row = core_places.loc[core_places['safegraph_place_id'] == row['safegraph_place_id']]
+    if len(core_places_row) == 1:
+        core_places_row = core_places_row.iloc[0]
+        for col in new_columns:
+            county_data.loc[idx, col] = core_places_row[col]
     county_data.loc[idx,'dwell_distribution'] = str(get_dwell_distribution(json.loads(row.bucketed_dwell_times)))
 print('Writing data...')
 print(county_data)
