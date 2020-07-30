@@ -81,11 +81,23 @@ else:
     usable_data = data[(data.visitor_home_cbgs != '{}')]
 
     # From usable POIs, load cbgs, CBGs are documents, POIs are words
+<<<<<<< HEAD
     cbgs_to_pois = {}
     dwell_distributions = {}
     for row in usable_data.itertuples():
         place_id = str(row.safegraph_place_id)
         dwell_distributions[place_id] = eval(row.dwell_distribution)
+=======
+    cbgs_to_places = {}
+    poi_type = {}
+    for row in usable_data.itertuples():
+        place_id = str(row.safegraph_place_id)
+        place_type = str(row.top_category)
+        if place_type not in poi_type:
+            poi_type[place_type] = {place_id}
+        else:
+            poi_type[place_type].add(place_id)
+>>>>>>> c33166f... Added ability to close POI by type.
         cbgs = json.loads(row.visitor_home_cbgs)
         lda_words = []
         for cbg in cbgs:
@@ -342,7 +354,7 @@ print('Running simulation...')
 # probability_of_infection = 0.005 / SIMULATION_TICKS_PER_HOUR  # from https://hzw77-demo.readthedocs.io/en/round2/simulator_modeling.html
 age_susc = {'C': 0.01, 'Y': 0.025, 'M': 0.045, 'O': 0.085}  # https://www.nature.com/articles/s41591-020-0962-9 "Susceptibility is defined as the probability of infection on contact with an infectious person"
 asymptomatic_relative_infectiousness = 0.75  # https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
-
+closed_pois = set()
 
 def get_dwell_time(dwell_tuple):
     dwell_time = 0
@@ -472,6 +484,10 @@ def wear_masks():
         age_susc[a] *= .35  # https://www.ucdavis.edu/coronavirus/news/your-mask-cuts-own-risk-65-percent/
 
 
+def close_poi_type(t): # type of poi, ex. Restaurants and Other Eating Places
+    global closed_pois
+    closed_pois = closed_pois | poi_type[t]
+
 # Infected status
 # S => Susceptible: never infected
 # E => Exposed: infected the same day, will be contagious after incubation period
@@ -483,6 +499,7 @@ def wear_masks():
 
 infection_counts_by_day = []
 wear_masks()
+close_poi_type('Restaurants and Other Eating Places')
 for day in range(SIMULATION_DAYS):
     print('Day {}:'.format(day))
     infection_counts_by_day.append(0)
@@ -491,13 +508,14 @@ for day in range(SIMULATION_DAYS):
         remove_expired_agents(current_time)
         if current_time != total_simulation_time - 1:
             for poi in poi_current_visitors:
-                poi_agents = list(poi_current_visitors[poi])
-                for agent_id in poi_agents:
-                    if agents[agent_id][1] == 'Ia' or agents[agent_id][1] == 'Ip':
-                        poi_infect(poi_agents, day, asymptomatic_relative_infectiousness)
-                    elif agents[agent_id][1] == 'Ic':
-                        poi_infect(poi_agents, day, 1)
-                        quarantined.add(agent_id)
+                if poi not in closed_pois:
+                    poi_agents = list(poi_current_visitors[poi])
+                    for agent_id in poi_agents:
+                        if agents[agent_id][1] == 'Ia' or agents[agent_id][1] == 'Ip':
+                            poi_infect(poi_agents, day, asymptomatic_relative_infectiousness)
+                        elif agents[agent_id][1] == 'Ic':
+                            poi_infect(poi_agents, day, 1)
+                            quarantined.add(agent_id)
             select_active_agents(current_time)
 
         if not current_time % SIMULATION_TICKS_PER_HOUR:
