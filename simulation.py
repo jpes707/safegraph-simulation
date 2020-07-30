@@ -395,10 +395,17 @@ def select_active_agents(t): # time
     for agent_id in inactive_agent_ids:
         if random.random() < cbgs_leaving_probs[agents[agent_id][3]]:
             topic = agents[agent_id][0]
-            destination = numpy.random.choice(topics_to_pois[topic][0], 1, p=topics_to_pois[topic][1])[0]
-            if destination == 'aux':
-                destination = numpy.random.choice(aux_dict[topic][0], 1, p=aux_dict[topic][1])[0]
+            destination = destination = numpy.random.choice(topics_to_pois[topic][0], 1, p=topics_to_pois[topic][1])[0]
             destination_end_time = t + get_dwell_time(dwell_distributions[destination])
+            rerolls = 0
+            while destination in closed_pois and rerolls < 3: # can change
+                destination = numpy.random.choice(topics_to_pois[topic][0], 1, p=topics_to_pois[topic][1])[0]
+                if destination == 'aux':
+                    destination = numpy.random.choice(aux_dict[topic][0], 1, p=aux_dict[topic][1])[0]
+                destination_end_time = t + get_dwell_time(dwell_distributions[destination])
+                rerolls += 1
+            if rerolls == 3:
+                continue
             if destination_end_time >= total_simulation_time:
                 continue
             active_agent_ids[destination_end_time].add((agent_id, destination))
