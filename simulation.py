@@ -81,13 +81,11 @@ else:
     usable_data = data[(data.visitor_home_cbgs != '{}')]
 
     # From usable POIs, load cbgs, CBGs are documents, POIs are words
-<<<<<<< HEAD
     cbgs_to_pois = {}
     dwell_distributions = {}
     for row in usable_data.itertuples():
         place_id = str(row.safegraph_place_id)
         dwell_distributions[place_id] = eval(row.dwell_distribution)
-=======
     cbgs_to_places = {}
     poi_type = {}
     for row in usable_data.itertuples():
@@ -97,7 +95,6 @@ else:
             poi_type[place_type] = {place_id}
         else:
             poi_type[place_type].add(place_id)
->>>>>>> c33166f... Added ability to close POI by type.
         cbgs = json.loads(row.visitor_home_cbgs)
         lda_words = []
         for cbg in cbgs:
