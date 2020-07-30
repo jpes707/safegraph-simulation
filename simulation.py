@@ -25,7 +25,39 @@ PROPORTION_INITIALLY_INFECTED = 0.001  # 0.05 => 5% of the simulated population 
 PROPENSITY_TO_LEAVE = 1  # 1 => nothing is wrong, normal likelihood of leaving the house
 NUMBER_OF_DWELL_SAMPLES = 5  # a higher number decreases variation and allows less outliers
 QUARANTINE_DURATION = 10  # days
-CLOSED_POIS = {'Restaurants and Other Eating Places', 'Religious Organizations'}  # POI types from SafeGraph Core Places "top_category"
+MAXIMUM_REROLLS = 3  # maximum number of times people try to go to an alternative place if a POI is closed
+CLOSED_POIS = {  # POI types from SafeGraph Core Places "sub_category"
+    'Full-Service Restaurants',
+    'Limited-Service Restaurants',
+    'Department Stores',
+    'Musical Instrument and Supplies Stores',
+    'Elementary and Secondary Schools',
+    'Colleges, Universities, and Professional Schools',
+    'Tobacco Stores',
+    'Department Stores',
+    'Snack and Nonalcoholic Beverage Bars',
+    'Jewelry Stores',
+    'Religious Organizations',
+    'Florists',
+    'Paint and Wallpaper Stores',
+    'Women\'s Clothing Stores',
+    'Fitness and Recreational Sports Centers',
+    'Family Clothing Stores',
+    'Junior Colleges',
+    'Hobby, Toy, and Game Stores',
+    'Gift, Novelty, and Souvenir Stores',
+    'Book Stores',
+    'Sporting Goods Stores',
+    'Cosmetics, Beauty Supplies, and Perfume Stores',
+    'Art Dealers',
+    'Bowling Centers',
+    'Beauty Salons',
+    'Libraries and Archives',
+    'Sewing, Needlework, and Piece Goods Stores',
+    'Wineries',
+    'Video Tape and Disc Rental',
+    'Museums'
+}
 
 start_time = time.time()
 total_simulation_time = SIMULATION_HOURS_PER_DAY * SIMULATION_TICKS_PER_HOUR
@@ -90,7 +122,7 @@ else:
     for row in usable_data.itertuples():
         place_id = str(row.safegraph_place_id)
         dwell_distributions[place_id] = eval(row.dwell_distribution)
-        place_type = str(row.top_category)
+        place_type = str(row.sub_category)
         if place_type not in poi_type:
             poi_type[place_type] = {place_id}
         else:
@@ -398,13 +430,13 @@ def select_active_agents(t): # time
             destination = destination = numpy.random.choice(topics_to_pois[topic][0], 1, p=topics_to_pois[topic][1])[0]
             destination_end_time = t + get_dwell_time(dwell_distributions[destination])
             rerolls = 0
-            while destination in closed_pois and rerolls < 3: # can change
+            while destination in CLOSED_POIS and rerolls < MAXIMUM_REROLLS: # can change
                 destination = numpy.random.choice(topics_to_pois[topic][0], 1, p=topics_to_pois[topic][1])[0]
                 if destination == 'aux':
                     destination = numpy.random.choice(aux_dict[topic][0], 1, p=aux_dict[topic][1])[0]
                 destination_end_time = t + get_dwell_time(dwell_distributions[destination])
                 rerolls += 1
-            if rerolls == 3:
+            if rerolls == MAXIMUM_REROLLS:
                 continue
             if destination_end_time >= total_simulation_time:
                 continue
