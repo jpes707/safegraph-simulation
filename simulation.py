@@ -25,8 +25,8 @@ PROPORTION_INITIALLY_INFECTED = 0.001  # 0.05 => 5% of the simulated population 
 PROPENSITY_TO_LEAVE = 1  # 1 => nothing is wrong, normal likelihood of leaving the house
 NUMBER_OF_DWELL_SAMPLES = 5  # a higher number decreases variation and allows less outliers
 QUARANTINE_DURATION = 10  # days
-MAXIMUM_REROLLS = 3  # maximum number of times people try to go to an alternative place if a POI is closed
-CLOSED_POIS = {  # POI types from SafeGraph Core Places "sub_category"
+# MAXIMUM_REROLLS = 3  # maximum number of times people try to go to an alternative place if a POI is closed
+CLOSED_POI_TYPES = {  # POI types from SafeGraph Core Places "sub_category"
     'Full-Service Restaurants',
     'Limited-Service Restaurants',
     'Department Stores',
@@ -81,7 +81,7 @@ agents_loaded = False
 use_raw_cache = input('Use file data cache ([y]/n)? ')
 if use_raw_cache == '' or use_raw_cache == 'y':
     raw_cache_file = open(raw_cache_path, 'rb')
-    (cbg_ids, lda_documents, cbgs_to_age_distribution, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions) = pickle.load(raw_cache_file)
+    (cbg_ids, lda_documents, cbgs_to_age_distribution, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type) = pickle.load(raw_cache_file)
     use_agents_cache = input('Use agents cache ([y]/n)? ')
     if use_agents_cache == '' or use_agents_cache == 'y':
         agents_cache_file = open(agents_cache_path, 'rb')
@@ -138,7 +138,7 @@ else:
             cbg_frequency = random.randint(2, 4) if cbgs[cbg] == 4 else cbgs[cbg]
             # Generate POIs as words and multiply by the amount that CBG visited
             cbgs_to_pois[cbg].extend([place_id] * cbg_frequency)
-
+    
     print_elapsed_time()
     print('Running LDA...')
 
@@ -253,7 +253,7 @@ else:
     print_elapsed_time()
     print('Caching raw data...')
 
-    raw_cache_data = (cbg_ids, lda_documents, cbgs_to_age_distribution, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions)
+    raw_cache_data = (cbg_ids, lda_documents, cbgs_to_age_distribution, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type)
     raw_cache_file = open(raw_cache_path, 'wb')
     pickle.dump(raw_cache_data, raw_cache_file)
 
@@ -384,6 +384,7 @@ print('Running simulation...')
 age_susc = {'C': 0.01, 'Y': 0.025, 'M': 0.045, 'O': 0.085}  # https://www.nature.com/articles/s41591-020-0962-9 "Susceptibility is defined as the probability of infection on contact with an infectious person"
 asymptomatic_relative_infectiousness = 0.75  # https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
 
+
 def get_dwell_time(dwell_tuple):
     dwell_time = 0
     while dwell_time < 30 / SIMULATION_TICKS_PER_HOUR:
@@ -428,9 +429,11 @@ def select_active_agents(t): # time
         if random.random() < cbgs_leaving_probs[agents[agent_id][3]]:
             topic = agents[agent_id][0]
             destination = destination = numpy.random.choice(topics_to_pois[topic][0], 1, p=topics_to_pois[topic][1])[0]
-            destination_end_time = t + get_dwell_time(dwell_distributions[destination])
+            if destination == 'aux':
+                destination = numpy.random.choice(aux_dict[topic][0], 1, p=aux_dict[topic][1])[0]
+            '''
             rerolls = 0
-            while destination in CLOSED_POIS and rerolls < MAXIMUM_REROLLS: # can change
+            while rerolls < MAXIMUM_REROLLS and destination in closed_pois:
                 destination = numpy.random.choice(topics_to_pois[topic][0], 1, p=topics_to_pois[topic][1])[0]
                 if destination == 'aux':
                     destination = numpy.random.choice(aux_dict[topic][0], 1, p=aux_dict[topic][1])[0]
@@ -438,8 +441,12 @@ def select_active_agents(t): # time
                 rerolls += 1
             if rerolls == MAXIMUM_REROLLS:
                 continue
+            '''
+            if destination in closed_pois:
+                continue
             if destination_end_time >= total_simulation_time:
                 continue
+            destination_end_time = t + get_dwell_time(dwell_distributions[destination])
             active_agent_ids[destination_end_time].add((agent_id, destination))
             poi_current_visitors[destination].add(agent_id)
             to_remove.add(agent_id)
@@ -520,8 +527,8 @@ def wear_masks():
 
 
 def close_poi_type(t): # type of poi, ex. Restaurants and Other Eating Places
-    global CLOSED_POIS
-    CLOSED_POIS = CLOSED_POIS | poi_type[t]
+    global closed_pois
+    closed_pois = closed_pois | poi_type[t]
 
 
 # Infected status
@@ -535,6 +542,9 @@ def close_poi_type(t): # type of poi, ex. Restaurants and Other Eating Places
 
 infection_counts_by_day = []
 wear_masks()
+closed_pois = set()
+for current_poi_type in CLOSED_POI_TYPES:
+    close_poi_type(current_poi_type)
 for day in range(SIMULATION_DAYS):
     print('Day {}:'.format(day))
     infection_counts_by_day.append(0)
@@ -543,7 +553,7 @@ for day in range(SIMULATION_DAYS):
         remove_expired_agents(current_time)
         if current_time != total_simulation_time - 1:
             for poi in poi_current_visitors:
-                if poi not in CLOSED_POIS:
+                if poi not in closed_pois:
                     poi_agents = list(poi_current_visitors[poi])
                     for agent_id in poi_agents:
                         if agents[agent_id][1] == 'Ia' or agents[agent_id][1] == 'Ip':
