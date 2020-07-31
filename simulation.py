@@ -444,9 +444,9 @@ def select_active_agents(t): # time
             '''
             if destination in closed_pois:
                 continue
+            destination_end_time = t + get_dwell_time(dwell_distributions[destination])
             if destination_end_time >= total_simulation_time:
                 continue
-            destination_end_time = t + get_dwell_time(dwell_distributions[destination])
             active_agent_ids[destination_end_time].add((agent_id, destination))
             poi_current_visitors[destination].add(agent_id)
             to_remove.add(agent_id)
