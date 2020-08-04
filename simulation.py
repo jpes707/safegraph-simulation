@@ -25,6 +25,8 @@ PROPORTION_INITIALLY_INFECTED = 0.001  # 0.05 => 5% of the simulated population 
 PROPENSITY_TO_LEAVE = 1  # 1 => nothing is wrong, normal likelihood of leaving the house
 NUMBER_OF_DWELL_SAMPLES = 5  # a higher number decreases variation and allows less outliers
 QUARANTINE_DURATION = 10  # days
+MAXIMUM_INTERACTIONS_PER_TICK = 5  # maximum number of interactions an infected person can have with others per tick
+ALPHA = 0  # 0.4 => 40% of the population is quarantined in their house for the duration of the simulation
 # MAXIMUM_REROLLS = 3  # maximum number of times people try to go to an alternative place if a POI is closed
 CLOSED_POI_TYPES = {  # POI types from SafeGraph Core Places "sub_category"
     'Full-Service Restaurants',
@@ -56,7 +58,20 @@ CLOSED_POI_TYPES = {  # POI types from SafeGraph Core Places "sub_category"
     'Sewing, Needlework, and Piece Goods Stores',
     'Wineries',
     'Video Tape and Disc Rental',
-    'Museums'
+    'Museums',
+    'Children\'s and Infants\' Clothing Stores',
+    'Motion Picture Theaters (except Drive-Ins)',
+    'Shoe Stores',
+    'Golf Courses and Country Clubs',
+    'Furniture Stores',
+    'Breweries',
+    'Investment Advice',
+    'Historical Sites',
+    'Floor Covering Stores',
+    'Carpet and Upholstery Cleaning Services',
+    'Drinking Places (Alcoholic Beverages)',
+    'Exam Preparation and Tutoring',
+    'Boat Dealers'
 }
 
 start_time = time.time()
@@ -286,11 +301,11 @@ if not agents_loaded:
 
     agents = {}  # agent_id: [topic, infected_status, critical_date, home_cbg_code, age_code, household_id]
     households = {}  # household_id: {agent_id, agent_id, ...}
-    cbgs_to_agents = {cbg: set() for cbg in cbg_ids}  # cbg: {agent id, agent id, ...}
-    inactive_agent_ids = set()
-    quarantined_agent_ids = set()
-    active_agent_ids = {t: set() for t in range(total_simulation_time)}  # expiration time: {(agent id, poi id), (agent id, poi id), ...}
-    poi_current_visitors = {poi: set() for poi_list in lda_documents for poi in poi_list}  # poi id: {agent id, agent id, ...}
+    cbgs_to_agents = {cbg: set() for cbg in cbg_ids}  # cbg: {agent_id, agent_id, ...}
+    inactive_agent_ids = set()  # {agent_id, agent_id, ...}
+    quarantined_agent_ids = {day: set() for day in range(SIMULATION_DAYS + QUARANTINE_DURATION)}  # {quarantine_expiry_date: {agent_id, agent_id, ...}, ...}
+    active_agent_ids = {t: set() for t in range(total_simulation_time)}  # expiration_time: {(agent_id, poi_id), (agent_id, poi_id), ...}
+    poi_current_visitors = {poi: set() for poi_list in lda_documents for poi in poi_list}  # poi id: {agent_id, agent_id, ...}
 
     agent_count = 0
     household_count = 0
@@ -326,6 +341,8 @@ if not agents_loaded:
         cbgs_to_agents[current_cbg].add(agent_id)
         households[household_id].add(agent_id)
         inactive_agent_ids.add(agent_id)
+        if random.random() < ALPHA:  # prohibits agent from ever leaving their house
+            inactive_agent_ids.remove(agent_id)
 
     benchmark = 5
     for i, current_cbg in enumerate(cbg_ids):
@@ -442,9 +459,9 @@ def select_active_agents(t): # time
             if rerolls == MAXIMUM_REROLLS:
                 continue
             '''
+            destination_end_time = t + get_dwell_time(dwell_distributions[destination])
             if destination in closed_pois:
                 continue
-            destination_end_time = t + get_dwell_time(dwell_distributions[destination])
             if destination_end_time >= total_simulation_time:
                 continue
             active_agent_ids[destination_end_time].add((agent_id, destination))
@@ -511,13 +528,11 @@ def report_status():
 def quarantine(ag, days, d): # (agents, # days in quarantine, day) no leaving the house, contact tracing? (not implemented)
     global quarantined_agent_ids, inactive_agent_ids
     for a in ag:
-        quarantined_agent_ids.add((a, d + days))
+        quarantined_agent_ids[d + days].add(a)
         inactive_agent_ids.remove(a)
-    qq = [q for q in quarantined_agent_ids]
-    for q in qq:
-        if q[1] == d:
-            quarantined_agent_ids.remove(q)
-            inactive_agent_ids.add(q[0])
+    for q in quarantined_agent_ids[d]:
+        quarantined_agent_ids[d].remove(q)
+        inactive_agent_ids.add(q)
 
 
 def wear_masks():
@@ -548,19 +563,23 @@ for current_poi_type in CLOSED_POI_TYPES:
 for day in range(SIMULATION_DAYS):
     print('Day {}:'.format(day))
     infection_counts_by_day.append(0)
-    quarantined = set()
+    to_be_quarantined = set()
     for current_time in range(total_simulation_time):
         remove_expired_agents(current_time)
         if current_time != total_simulation_time - 1:
             for poi in poi_current_visitors:
                 if poi not in closed_pois:
-                    poi_agents = list(poi_current_visitors[poi])
-                    for agent_id in poi_agents:
-                        if agents[agent_id][1] == 'Ia' or agents[agent_id][1] == 'Ip':
-                            poi_infect(poi_agents, day, asymptomatic_relative_infectiousness)
-                        elif agents[agent_id][1] == 'Ic':
-                            poi_infect(poi_agents, day, 1)
-                            quarantined.add(agent_id)
+                    if len(poi_current_visitors[poi]) > 1:
+                        poi_agents = list(poi_current_visitors[poi])
+                        max_interactions = min(len(poi_agents) - 1, MAXIMUM_INTERACTIONS_PER_TICK)
+                        for agent_idx, agent_id in enumerate(poi_agents):
+                            if agents[agent_id][1] == 'Ia' or agents[agent_id][1] == 'Ip':
+                                possible_agents = poi_agents[:agent_idx] + poi_agents[agent_idx+1:]
+                                poi_infect(np.random.choice(possible_agents, max_interactions), day, asymptomatic_relative_infectiousness)
+                            elif agents[agent_id][1] == 'Ic':
+                                possible_agents = poi_agents[:agent_idx] + poi_agents[agent_idx+1:]
+                                poi_infect(np.random.choice(possible_agents, max_interactions), day, 1)
+                                to_be_quarantined.add(agent_id)
             select_active_agents(current_time)
 
         if not current_time % SIMULATION_TICKS_PER_HOUR:
@@ -572,7 +591,7 @@ for day in range(SIMULATION_DAYS):
     print_elapsed_time()
 
     reset_all_agents()
-    quarantine(quarantined, QUARANTINE_DURATION, day)
+    quarantine(to_be_quarantined, QUARANTINE_DURATION, day)
     print('Day {} complete. Infection status:'.format(day))
     report_status()
     print('New cases per day: {}'.format(list(zip([i for i in range(len(infection_counts_by_day))], infection_counts_by_day))))
