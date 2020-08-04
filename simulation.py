@@ -1,6 +1,3 @@
-# LINKS:
-# https://www.who.int/news-room/commentaries/detail/transmission-of-sars-cov-2-implications-for-infection-prevention-precautions
-
 import pandas as pd
 import gensim
 import json
@@ -13,22 +10,23 @@ import itertools
 import pickle
 import numpy as np
 import statistics
+import gzip
 from distfit import distfit
 import scipy.stats
 
-NUM_TOPICS = 50
-SIMULATION_DAYS = 365 * 5
-SIMULATION_HOURS_PER_DAY = 16
-SIMULATION_TICKS_PER_HOUR = 4
+NUM_TOPICS = 50  # number of LDA topics
+SIMULATION_DAYS = 365 * 5  # number of "days" the simulation runs for
+SIMULATION_HOURS_PER_DAY = 16  # number of "hours" per "day" in which agents visit POIs
+SIMULATION_TICKS_PER_HOUR = 4  # number of ticks per simulation "hour"
 PROPORTION_OF_POPULATION = 1  # 0.2 => 20% of the actual population is simulated
 PROPORTION_INITIALLY_INFECTED = 0.001  # 0.05 => 5% of the simulated population is initially infected or exposed
-PROPENSITY_TO_LEAVE = 1  # 1 => nothing is wrong, normal likelihood of leaving the house
-NUMBER_OF_DWELL_SAMPLES = 5  # a higher number decreases variation and allows less outliers
-QUARANTINE_DURATION = 10  # days
+PROPENSITY_TO_LEAVE = 1  # 0.2 => people are only 20% as likely to leave the house as compared to normal
+NUMBER_OF_DWELL_SAMPLES = 5  # a higher number decreases POI dwell time variation and allows less outliers
+QUARANTINE_DURATION = 10  # number of days a quarantine lasts after an agent begins to show symptoms
 MAXIMUM_INTERACTIONS_PER_TICK = 5  # maximum number of interactions an infected person can have with others per tick
 ALPHA = 0  # 0.4 => 40% of the population is quarantined in their house for the duration of the simulation
 # MAXIMUM_REROLLS = 3  # maximum number of times people try to go to an alternative place if a POI is closed
-CLOSED_POI_TYPES = {  # POI types from SafeGraph Core Places "sub_category"
+CLOSED_POI_TYPES = {  # closed POI types (from SafeGraph Core Places "sub_category")
     'Full-Service Restaurants',
     'Limited-Service Restaurants',
     'Department Stores',
@@ -90,28 +88,32 @@ def print_elapsed_time():
     print('Total time elapsed: {}s'.format(adj_sig_figs(time.time() - start_time, 4)))
 
 
+# prompt user whether or not to used cached data in order to reduce initial simulation load time
 raw_cache_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'raw_cache.p')
 agents_cache_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'agents_cache.p')
 agents_loaded = False
 use_raw_cache = input('Use file data cache ([y]/n)? ')
-if use_raw_cache == '' or use_raw_cache == 'y':
+if use_raw_cache == '' or use_raw_cache == 'y':  # obtains cached variables from the file data cache
     raw_cache_file = open(raw_cache_path, 'rb')
     (cbg_ids, lda_documents, cbgs_to_age_distribution, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type) = pickle.load(raw_cache_file)
-    use_agents_cache = input('Use agents cache ([y]/n)? ')
+    use_agents_cache = input('Use agents cache ([y]/n)? ')  # obtains cached variables from agent file data cache
     if use_agents_cache == '' or use_agents_cache == 'y':
         agents_cache_file = open(agents_cache_path, 'rb')
         (agents, households, cbgs_to_agents, inactive_agent_ids, quarantined_agent_ids, active_agent_ids, poi_current_visitors) = pickle.load(agents_cache_file)
         agents_loaded = True
-else:
+else:  # loads and caches data from files depending on user input
+    # prompts for user input
     STATE_ABBR = input('State abbreviation (default: VA): ')
     if STATE_ABBR == '':
         STATE_ABBR = 'VA'
-    LOCALITY = input('Locality (default: Fairfax): ')  # County, Borough, or Parish
+    LOCALITY = input('Locality (default: Fairfax): ')  # can be a county, borough, or parish
     if LOCALITY == '':
         LOCALITY = 'Fairfax'
     WEEK = input('Week (default: 2019-10-28): ')
     if WEEK == '':
         WEEK = '2019-10-28'
+
+    # checks locality type
     if STATE_ABBR == 'AK':
         LOCALITY_TYPE = 'borough'
     elif STATE_ABBR == 'LA':
@@ -119,17 +121,17 @@ else:
     else:
         LOCALITY_TYPE = 'county'
 
-    locality_name = (LOCALITY + ' ' + LOCALITY_TYPE).title()
-    full_name = '{}, {}'.format(locality_name, STATE_ABBR.upper())
-    area = locality_name.lower().replace(' ', '-') + '-' + STATE_ABBR.lower()
+    locality_name = (LOCALITY + ' ' + LOCALITY_TYPE).title()  # e.g. "Fairfax County"
+    full_name = '{}, {}'.format(locality_name, STATE_ABBR.upper())  # e.g. "Fairfax County, VA"
+    area = locality_name.lower().replace(' ', '-') + '-' + STATE_ABBR.lower()  # e.g. "fairfax-county-va"
 
     print('Reading POI data...')
 
-    # Read in data from files, filtering the data that corresponds to the area of interest
+    # read in data from weekly movement pattern files, filtering the data that corresponds to the area of interest
     data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_weekly_patterns_v2', 'main-file', '{}-weekly-patterns'.format(WEEK), '{}-{}.csv'.format(area, WEEK)), error_bad_lines=False)
     usable_data = data[(data.visitor_home_cbgs != '{}')]
 
-    # From usable POIs, load cbgs, CBGs are documents, POIs are words
+    # from usable POIs, load cbgs, CBGs are documents, POIs are words
     cbgs_to_pois = {}
     dwell_distributions = {}
     cbgs_to_places = {}
@@ -145,14 +147,12 @@ else:
         cbgs = json.loads(row.visitor_home_cbgs)
         lda_words = []
         for cbg in cbgs:
-            if not cbg.startswith('51059'):  # excludes all outside of fairfax, REMOVE LATER!!!
+            if not cbg.startswith('51059'):  # excludes all POIs outside of Fairfax County, must be removed later!
                 continue
             if cbg not in cbgs_to_pois:
                 cbgs_to_pois[cbg] = []
-            # SafeGraph reports visits of cbgs as 4 if the visit is between 2-4
-            cbg_frequency = random.randint(2, 4) if cbgs[cbg] == 4 else cbgs[cbg]
-            # Generate POIs as words and multiply by the amount that CBG visited
-            cbgs_to_pois[cbg].extend([place_id] * cbg_frequency)
+            cbg_frequency = random.randint(2, 4) if cbgs[cbg] == 4 else cbgs[cbg]  # SafeGraph reports POI CBG frequency as 4 if the visit count is between 2-4
+            cbgs_to_pois[cbg].extend([place_id] * cbg_frequency)  # generate POIs as "words" and multiply by the amount that CBG visited
     
     print_elapsed_time()
     print('Running LDA...')
@@ -163,8 +163,8 @@ else:
     poi_set = {poi for poi_list in lda_documents for poi in poi_list}
     poi_count = len(poi_set)
 
-    lda_dictionary = gensim.corpora.dictionary.Dictionary(lda_documents) # generate documents
-    lda_corpus = [lda_dictionary.doc2bow(cbg) for cbg in lda_documents] # generate words
+    lda_dictionary = gensim.corpora.dictionary.Dictionary(lda_documents)  # generate "documents" for gensim
+    lda_corpus = [lda_dictionary.doc2bow(cbg) for cbg in lda_documents]  # generate "words" for gensim
     cbg_to_bow = dict(zip(cbg_ids, lda_corpus))
     lda_model = gensim.models.LdaModel(lda_corpus, num_topics=NUM_TOPICS, id2word=lda_dictionary)
 
@@ -207,7 +207,7 @@ else:
     print('Reading household data...')
 
     census_household_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_open_census_data', 'data', 'cbg_b11.csv'), error_bad_lines=False)
-    cbgs_to_households = {}  # {cbg: [# nonfamily households size 1, # nonfamily households size 2, ... # nonfamily households size 7+, # family households size 2, # family households size 3, ... # family households size 7+]}
+    cbgs_to_households = {}  # {cbg: [# nonfamily households of size 1, # nonfamily households of size 2, ... # nonfamily households of size 7+, # family households of size 2, # family households of size 3, ... # family households of size 7+]}
     total_households = 0
     for idx, row in census_household_data.iterrows():
         check_str = str(int(row['census_block_group'])).zfill(12)
@@ -224,7 +224,7 @@ else:
     print('Reading age data...')
 
     census_age_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_open_census_data', 'data', 'cbg_b01.csv'), error_bad_lines=False)
-    cbgs_to_age_distribution = {}  # {cbg: [[% 18-49, % 50-64, % 65+], [% <18, % 18-49, % 50-64, % 65+]], ...}
+    cbgs_to_age_distribution = {}  # {cbg: [[% 18-49, % 50-64, % 65+], [% <18, % 18-49, % 50-64, % 65+]], ...} (first array is distribution for nonfamily households because nonfamily households cannot include age <18, second array is distribution for family households)
     code_under_18 = ['B01001e3', 'B01001e4', 'B01001e5', 'B01001e6', 'B01001e27', 'B01001e28', 'B01001e29', 'B01001e30']
     code_18_to_49 = ['B01001e7', 'B01001e8', 'B01001e9', 'B01001e10', 'B01001e11', 'B01001e12', 'B01001e13', 'B01001e14', 'B01001e15', 'B01001e31', 'B01001e32', 'B01001e33', 'B01001e34', 'B01001e35', 'B01001e36', 'B01001e37', 'B01001e38', 'B01001e39']
     code_50_to_64 = ['B01001e16', 'B01001e17', 'B01001e18', 'B01001e19', 'B01001e40', 'B01001e41', 'B01001e42', 'B01001e43']
@@ -243,9 +243,8 @@ else:
     print_elapsed_time()
     print('Reading social distancing data...')
 
-    social_distancing_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_social_distancing_metrics', WEEK[:4], WEEK[5:7], WEEK[8:], '{}-social-distancing.csv'.format(WEEK)), error_bad_lines=False)
+    social_distancing_data = pd.read_csv(gzip.open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_social_distancing_metrics', WEEK[:4], WEEK[5:7], WEEK[8:], '{}-social-distancing.csv.gz'.format(WEEK)), 'rb'), error_bad_lines=False)
     cbgs_leaving_probs = {}  # probability that a member of a cbg will leave their house each tick
-    population_proportions = []  # proportions list of device count / cbg population
     seen_cbgs = set()
     for idx, row in social_distancing_data.iterrows():
         check_str = str(int(row['origin_census_block_group'])).zfill(12)
@@ -380,58 +379,60 @@ print('Number of agents: {}'.format(len(agents)))
 
 print('Normalizing probabilities...')
 
-aux_dict = {}  # to speed up numpy.choice with many probabilities {topic: list of cbgs} {cbg: poi_ids, probabilities}
-for topic in range(len(topics_to_pois)):
-    mindex = -1
+aux_dict = {}  # an auxiliary POI dictionary for the least likely POIs per topic to speed up numpy.choice with many probabilities {topic: list of cbgs} {cbg: poi_ids, probabilities}
+for topic in range(len(topics_to_pois)):  # iterates through each topic
+    minimum_list_index = -1
     prob_sum = 0
-    while prob_sum < 0.2:
-        prob_sum = sum(topics_to_pois[topic][1][mindex:])
-        mindex -= 1
-    aux_dict[topic] = [topics_to_pois[topic][0][mindex:], topics_to_pois[topic][1][mindex:]] # store poi ids, probabilities
-    aux_dict[topic][1] = numpy.array(aux_dict[topic][1])
-    aux_dict[topic][1] /= aux_dict[topic][1].sum()
-    # update old topics_to_pois with addition of aux
-    topics_to_pois[topic][0] = topics_to_pois[topic][0][:mindex] + ['aux']
-    topics_to_pois[topic][1] = numpy.array(topics_to_pois[topic][1][:mindex] + [prob_sum])
+    while prob_sum < 0.2:  # the probability of selecting any POI in aux_dict is 20%
+        prob_sum = sum(topics_to_pois[topic][1][minimum_list_index:])
+        minimum_list_index -= 1
+    aux_dict[topic] = [topics_to_pois[topic][0][minimum_list_index:], topics_to_pois[topic][1][minimum_list_index:]]  # [poi ids list, poi probabilities list for numpy.choice]
+    aux_dict[topic][1] = numpy.array(aux_dict[topic][1])  # converts poi probabilities list at aux_dict[topic][1] from a list to a numpy array for numpy.choice
+    aux_dict[topic][1] /= aux_dict[topic][1].sum()  # ensures the sum of aux_dict[topic][1] is 1 for numpy.choice
+    # update old topics_to_pois with addition of aux, representing the selection of a POI from aux_dict
+    topics_to_pois[topic][0] = topics_to_pois[topic][0][:minimum_list_index] + ['aux']
+    topics_to_pois[topic][1] = numpy.array(topics_to_pois[topic][1][:minimum_list_index] + [prob_sum])
     topics_to_pois[topic][1] /= topics_to_pois[topic][1].sum()
 
 print('Running simulation...')
 
 # probability_of_infection = 0.005 / SIMULATION_TICKS_PER_HOUR  # from https://hzw77-demo.readthedocs.io/en/round2/simulator_modeling.html
-age_susc = {'C': 0.01, 'Y': 0.025, 'M': 0.045, 'O': 0.085}  # https://www.nature.com/articles/s41591-020-0962-9 "Susceptibility is defined as the probability of infection on contact with an infectious person"
+age_susc = {'C': 0.01, 'Y': 0.025, 'M': 0.045, 'O': 0.085}  # "Susceptibility is defined as the probability of infection on contact with an infectious person" (https://www.nature.com/articles/s41591-020-0962-9)
 asymptomatic_relative_infectiousness = 0.75  # https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
+mask_reduction_factor = 0.35  # https://www.ucdavis.edu/coronavirus/news/your-mask-cuts-own-risk-65-percent/
 
 
-def get_dwell_time(dwell_tuple):
-    dwell_time = 0
-    while dwell_time < 30 / SIMULATION_TICKS_PER_HOUR:
+def get_dwell_time(dwell_tuple):  # given a cached tuple from the dwell_distributions dictionary for a specific POI, return a dwell time in ticks
+    dwell_time_minutes = 0  # represents dwell time in minutes (not ticks)
+    while dwell_time_minutes < 30 / SIMULATION_TICKS_PER_HOUR:  # ensures dwell_time_ticks will be >= 1
         if len(dwell_tuple) == 3:
-            dwell_time = statistics.median(getattr(scipy.stats, dwell_tuple[0]).rvs(loc=dwell_tuple[1], scale=dwell_tuple[2], size=NUMBER_OF_DWELL_SAMPLES))
+            dwell_time_minutes = statistics.median(getattr(scipy.stats, dwell_tuple[0]).rvs(loc=dwell_tuple[1], scale=dwell_tuple[2], size=NUMBER_OF_DWELL_SAMPLES))
         elif len(dwell_tuple) == 4:
-            dwell_time = statistics.median(getattr(scipy.stats, dwell_tuple[0]).rvs(dwell_tuple[1], loc=dwell_tuple[2], scale=dwell_tuple[3], size=NUMBER_OF_DWELL_SAMPLES))
+            dwell_time_minutes = statistics.median(getattr(scipy.stats, dwell_tuple[0]).rvs(dwell_tuple[1], loc=dwell_tuple[2], scale=dwell_tuple[3], size=NUMBER_OF_DWELL_SAMPLES))
         else:
-            dwell_time = statistics.median(getattr(scipy.stats, dwell_tuple[0]).rvs(dwell_tuple[1], dwell_tuple[2], loc=dwell_tuple[3], scale=dwell_tuple[4], size=NUMBER_OF_DWELL_SAMPLES))
-    return int(round(dwell_time * SIMULATION_TICKS_PER_HOUR / 60))
+            dwell_time_minutes = statistics.median(getattr(scipy.stats, dwell_tuple[0]).rvs(dwell_tuple[1], dwell_tuple[2], loc=dwell_tuple[3], scale=dwell_tuple[4], size=NUMBER_OF_DWELL_SAMPLES))
+    dwell_time_ticks = int(round(dwell_time_minutes * SIMULATION_TICKS_PER_HOUR / 60))  # represents dwell time in ticks
+    return dwell_time_ticks
 
 
-def infect(agent_id, day):
+def infect(agent_id, day):  # infects an agent with the virus
     global infection_counts_by_day
     if agents[agent_id][1] == 'S':
-        infection_counts_by_day[-1] += 1
         agents[agent_id][1] = 'E'
         agents[agent_id][2] = day + round(distribution_of_exposure.rvs(1)[0])
+        infection_counts_by_day[day] += 1
 
 
-def poi_infect(p, d, i):  # poi agents, day, infectioness
+def poi_infect(current_poi_agents, day, infectiousness):  # poi_agents, day, infectioness
     global agents
-    for other_agent_id in p:
+    for other_agent_id in current_poi_agents:
         rand = random.random()
         probability_of_infection = age_susc[agents[other_agent_id][4]] / SIMULATION_TICKS_PER_HOUR
-        if rand < probability_of_infection * i:
-            infect(other_agent_id, d)
+        if rand < probability_of_infection * infectiousness:
+            infect(other_agent_id, day)
 
 
-def remove_expired_agents(t): # time
+def remove_expired_agents(t):  # removes agents from POIs whose visits end at time t
     global inactive_agent_ids, poi_current_visitors
     for tup in active_agent_ids[t]:
         inactive_agent_ids.add(tup[0])
@@ -439,7 +440,7 @@ def remove_expired_agents(t): # time
     active_agent_ids[t] = set()
 
 
-def select_active_agents(t): # time
+def select_active_agents(t):  # removes agents from POIs whose visits starting at at time t
     global inactive_agent_ids, active_agent_ids, poi_current_visitors
     to_remove = set()
     for agent_id in inactive_agent_ids:
@@ -470,7 +471,7 @@ def select_active_agents(t): # time
     inactive_agent_ids -= to_remove
 
 
-def reset_all_agents():
+def reset_all_agents():  # forces all agents to return home from POIs
     global inactive_agent_ids, active_agent_ids, poi_current_visitors
     for t in active_agent_ids:
         for tup in active_agent_ids[t]:
@@ -479,9 +480,9 @@ def reset_all_agents():
         active_agent_ids[t] = set()
 
 
-def household_transmission(day):
+def household_transmission(day):  # simulates a day's worth of of household transmission in every household
     for household in households.values():
-        base_transmission_probability = .091/4.59 if len(household) < 6 else .204/4.59
+        base_transmission_probability = .091/4.59 if len(household) < 6 else .204/4.59  # https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30471-0/fulltext
         for agent_id in household:
             if agents[agent_id][1] == 'Ia' or agents[agent_id][1] == 'Ip':
                 for other_agent_id in household:
@@ -493,27 +494,27 @@ def household_transmission(day):
                         infect(other_agent_id, day)
 
 
-def set_agent_flags(d):  # day
+def set_agent_flags(day):  # changes agent infection status
     global agents
     for key in agents:
-        if agents[key][1] == 'E' and agents[key][2] == d + 1:  # https://www.nature.com/articles/s41586-020-2196-x?fbclid=IwAR1voT8K7fAlVq39RPINfrT-qTc_N4XI01fRp09-agM1v5tfXrC6NOy8-0c
+        if agents[key][1] == 'E' and agents[key][2] == day + 1:  # https://www.nature.com/articles/s41586-020-2196-x?fbclid=IwAR1voT8K7fAlVq39RPINfrT-qTc_N4XI01fRp09-agM1v5tfXrC6NOy8-0c
             rand_s = random.random()
             rand = 0
-            if rand_s < 0.4:
+            if rand_s < 0.4:  # subclinical (asymptomatic) cases, never show symptoms
                 agents[key][1] = 'Ia'
                 rand = round(distribution_of_subclinical.rvs(1)[0])
-            else:
+            else:  # preclinical cases, will be symptomatic in the future
                 agents[key][1] = 'Ip'
                 rand = round(distribution_of_preclinical.rvs(1)[0])
-            agents[key][2] = d + rand
-        elif agents[key][1] == 'Ip' and agents[key][2] == d+1:
+            agents[key][2] = day + rand
+        elif agents[key][1] == 'Ip' and agents[key][2] == day + 1:
             agents[key][1] = 'Ic'
             agents[key][2] = round(distribution_of_clinical.rvs(1)[0])
-        elif (agents[key][1] == 'Ia' or agents[key][1] == 'Ic') and agents[key][2] == d + 1:
+        elif (agents[key][1] == 'Ia' or agents[key][1] == 'Ic') and agents[key][2] == day + 1:
             agents[key][1] = 'R'
 
 
-def report_status():
+def report_status():  # prints status
     global infection_counts_by_day
     stat = {'S': 0, 'E': 0, 'Ia': 0, 'Ip': 0, 'Ic': 0, 'R': 0, 'Q': 0}
     for tup in agents.values():
@@ -525,7 +526,7 @@ def report_status():
     print('Quarantined: {}'.format(len(quarantined_agent_ids)))
 
 
-def quarantine(ag, days, d): # (agents, # days in quarantine, day) no leaving the house, contact tracing? (not implemented)
+def quarantine(ag, days, d):  # agents, number of days in quarantine, current day => agents cannot leave house during quarantine
     global quarantined_agent_ids, inactive_agent_ids
     for a in ag:
         quarantined_agent_ids[d + days].add(a)
@@ -535,31 +536,33 @@ def quarantine(ag, days, d): # (agents, # days in quarantine, day) no leaving th
         inactive_agent_ids.add(q)
 
 
-def wear_masks():
+def wear_masks():  # simulates the entire population wearing masks
     global age_susc
     for a in age_susc:
-        age_susc[a] *= .35  # https://www.ucdavis.edu/coronavirus/news/your-mask-cuts-own-risk-65-percent/
+        age_susc[a] *= mask_reduction_factor
 
 
-def close_poi_type(t): # type of poi, ex. Restaurants and Other Eating Places
+def close_poi_type(current_poi_type):  # e.g. "Restaurants and Other Eating Places"
     global closed_pois
-    closed_pois = closed_pois | poi_type[t]
+    closed_pois |= poi_type[current_poi_type]
 
 
 # Infected status
 # S => Susceptible: never infected
 # E => Exposed: infected the same day, will be contagious after incubation period
-# Infected: infected on a previous day, contagious, 40% asymptomatic
+# Infected: 60% of cases are Ip (presymptomatic) then Ic (symptomatic), 40% of cases are Ia (asymptomatic, these agents never show symptoms)
 #     Ip => Preclinical, before clinical, not symptomatic, contagious
 #     Ic => Clinical, full symptoms, contagious
 #     Ia => Asymptomatic (subclinical), 75% relative infectioness, never show symptoms
 # R => Recovered: immune to the virus, no longer contagious
 
-infection_counts_by_day = []
+# prescriptions
 wear_masks()
 closed_pois = set()
 for current_poi_type in CLOSED_POI_TYPES:
     close_poi_type(current_poi_type)
+
+infection_counts_by_day = []
 for day in range(SIMULATION_DAYS):
     print('Day {}:'.format(day))
     infection_counts_by_day.append(0)
@@ -579,7 +582,7 @@ for day in range(SIMULATION_DAYS):
                             elif agents[agent_id][1] == 'Ic':
                                 possible_agents = poi_agents[:agent_idx] + poi_agents[agent_idx+1:]
                                 poi_infect(np.random.choice(possible_agents, max_interactions), day, 1)
-                                to_be_quarantined.add(agent_id)
+                                to_be_quarantined.add(agent_id)  # quarantines symptomatic agents one day after they begin showing symptoms
             select_active_agents(current_time)
 
         if not current_time % SIMULATION_TICKS_PER_HOUR:
