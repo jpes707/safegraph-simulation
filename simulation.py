@@ -17,7 +17,7 @@ from distfit import distfit
 import scipy.stats
 
 NUM_TOPICS = 50
-SIMULATION_DAYS = 100000000
+SIMULATION_DAYS = 365 * 5
 SIMULATION_HOURS_PER_DAY = 16
 SIMULATION_TICKS_PER_HOUR = 4
 PROPORTION_OF_POPULATION = 1  # 0.2 => 20% of the actual population is simulated
@@ -322,27 +322,27 @@ if not agents_loaded:
             rand_age = numpy.random.choice(['Y', 'M', 'O'], p=cbgs_to_age_distribution[current_cbg][0])
         agent_status = 'S'
         rand_infected = 0
-        rand = random.random()
-        if rand < PROPORTION_INITIALLY_INFECTED:
-            rand /= PROPORTION_INITIALLY_INFECTED
-            if rand < 0.23076923076:  # 2.754 / (2.754 + 1.928 + 2.662 + 4.590), from exposure gamma distributions
-                agent_status = 'E'
-                rand_infected = round(distribution_of_exposure.rvs(1)[0])
-            elif rand < 0.53846153845:  # 40% of the remaining value, represents asymptomatic (subclinical) cases
-                agent_status = 'Ia'
-                rand_infected = round(distribution_of_subclinical.rvs(1)[0])
-            elif rand < 0.7323278029:  # 1.928 / 4.590 of the remaining value, represents preclinical cases
-                agent_status = 'Ip'
-                rand_infected = round(distribution_of_preclinical.rvs(1)[0])
-            else:  # represents symptomatic (clinical) cases
-                agent_status = 'Ic'
-                rand_infected = round(distribution_of_clinical.rvs(1)[0])
+        permanently_quarantined = random.random() < ALPHA  # prohibits agent from ever leaving their house and ensures they are not initially infected if True
+        if not permanently_quarantined:
+            rand = random.random()
+            if rand < PROPORTION_INITIALLY_INFECTED:
+                rand /= PROPORTION_INITIALLY_INFECTED
+                if rand < 0.23076923076:  # 2.754 / (2.754 + 1.928 + 2.662 + 4.590), from exposure gamma distributions
+                    agent_status = 'E'
+                    rand_infected = round(distribution_of_exposure.rvs(1)[0])
+                elif rand < 0.53846153845:  # 40% of the remaining value, represents asymptomatic (subclinical) cases
+                    agent_status = 'Ia'
+                    rand_infected = round(distribution_of_subclinical.rvs(1)[0])
+                elif rand < 0.7323278029:  # 1.928 / 4.590 of the remaining value, represents preclinical cases
+                    agent_status = 'Ip'
+                    rand_infected = round(distribution_of_preclinical.rvs(1)[0])
+                else:  # represents symptomatic (clinical) cases
+                    agent_status = 'Ic'
+                    rand_infected = round(distribution_of_clinical.rvs(1)[0])
+            inactive_agent_ids.add(agent_id)
         agents[agent_id] = [agent_topic, agent_status, rand_infected, current_cbg, rand_age, household_id]  # topic, infection status, critical date, cbg, age
         cbgs_to_agents[current_cbg].add(agent_id)
         households[household_id].add(agent_id)
-        inactive_agent_ids.add(agent_id)
-        if random.random() < ALPHA:  # prohibits agent from ever leaving their house
-            inactive_agent_ids.remove(agent_id)
 
     benchmark = 5
     for i, current_cbg in enumerate(cbg_ids):
@@ -530,7 +530,7 @@ def quarantine(ag, days, d): # (agents, # days in quarantine, day) no leaving th
     for a in ag:
         quarantined_agent_ids[d + days].add(a)
         inactive_agent_ids.remove(a)
-    for q in quarantined_agent_ids[d]:
+    for q in list(quarantined_agent_ids[d]):
         quarantined_agent_ids[d].remove(q)
         inactive_agent_ids.add(q)
 
