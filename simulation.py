@@ -16,8 +16,8 @@ import scipy.stats
 
 NUM_TOPICS = 50  # number of LDA topics
 SIMULATION_DAYS = 365 * 5  # number of "days" the simulation runs for
-SIMULATION_HOURS_PER_DAY = 16  # number of "hours" per "day" in which agents visit POIs
-SIMULATION_TICKS_PER_HOUR = 4  # number of ticks per simulation "hour"
+SIMULATION_HOURS_PER_DAY = 24  # number of "hours" per "day" in which agents visit POIs
+SIMULATION_TICKS_PER_HOUR = 2  # number of ticks per simulation "hour"
 PROPORTION_OF_POPULATION = 1  # 0.2 => 20% of the actual population is simulated
 PROPORTION_INITIALLY_INFECTED = 0.001  # 0.05 => 5% of the simulated population is initially infected or exposed
 PROPENSITY_TO_LEAVE = 1  # 0.2 => people are only 20% as likely to leave the house as compared to normal
@@ -95,7 +95,7 @@ agents_loaded = False
 use_raw_cache = input('Use file data cache ([y]/n)? ')
 if use_raw_cache == '' or use_raw_cache == 'y':  # obtains cached variables from the file data cache
     raw_cache_file = open(raw_cache_path, 'rb')
-    (cbg_ids, lda_documents, cbgs_to_age_distribution, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type) = pickle.load(raw_cache_file)
+    (cbg_ids, poi_set, hourly_lda, cbgs_to_age_distribution, cbgs_to_households, cbgs_leaving_probs, dwell_distributions, poi_type) = pickle.load(raw_cache_file)
     use_agents_cache = input('Use agents cache ([y]/n)? ')  # obtains cached variables from agent file data cache
     if use_agents_cache == '' or use_agents_cache == 'y':
         agents_cache_file = open(agents_cache_path, 'rb')
@@ -132,59 +132,69 @@ else:  # loads and caches data from files depending on user input
     usable_data = data[(data.visitor_home_cbgs != '{}')]
 
     # from usable POIs, load cbgs, CBGs are documents, POIs are words
-    cbgs_to_pois = {}
+    cbgs_to_pois = {k: {} for k in range(168)}
     dwell_distributions = {}
     cbgs_to_places = {}
+    poi_set = set()
     poi_type = {}
     for row in usable_data.itertuples():
         place_id = str(row.safegraph_place_id)
+        poi_set.add(place_id)
         dwell_distributions[place_id] = eval(row.dwell_distribution)
         place_type = str(row.sub_category)
         if place_type not in poi_type:
             poi_type[place_type] = {place_id}
         else:
             poi_type[place_type].add(place_id)
+        hourly_poi = json.loads(row.visits_by_each_hour)
+        weekly_poi = int(row.raw_visit_counts)
         cbgs = json.loads(row.visitor_home_cbgs)
         lda_words = []
         for cbg in cbgs:
             if not cbg.startswith('51059'):  # excludes all POIs outside of Fairfax County, must be removed later!
                 continue
-            if cbg not in cbgs_to_pois:
-                cbgs_to_pois[cbg] = []
             cbg_frequency = random.randint(2, 4) if cbgs[cbg] == 4 else cbgs[cbg]  # SafeGraph reports POI CBG frequency as 4 if the visit count is between 2-4
-            cbgs_to_pois[cbg].extend([place_id] * cbg_frequency)  # generate POIs as "words" and multiply by the amount that CBG visited
+            for hour, freq in enumerate(hourly_poi):
+                if cbg not in cbgs_to_pois[hour]:
+                    cbgs_to_pois[hour][cbg] = []
+                cbgs_to_pois[hour][cbg].extend([place_id] * cbg_frequency * round(10000 * freq/weekly_poi))
+            # cbgs_to_pois[cbg].extend([place_id] * cbg_frequency)  # generate POIs as "words" and multiply by the amount that CBG visited
     
     print_elapsed_time()
     print('Running LDA...')
-
-    cbg_ids = list(cbgs_to_pois.keys())
+    cbg_ids = list(cbgs_to_pois[0].keys())
     cbg_id_set = set(cbg_ids)
-    lda_documents = list(cbgs_to_pois.values())
-    poi_set = {poi for poi_list in lda_documents for poi in poi_list}
-    poi_count = len(poi_set)
 
-    lda_dictionary = gensim.corpora.dictionary.Dictionary(lda_documents)  # generate "documents" for gensim
-    lda_corpus = [lda_dictionary.doc2bow(cbg) for cbg in lda_documents]  # generate "words" for gensim
-    cbg_to_bow = dict(zip(cbg_ids, lda_corpus))
-    lda_model = gensim.models.LdaModel(lda_corpus, num_topics=NUM_TOPICS, id2word=lda_dictionary)
+    hourly_lda = {k: [] for k in range(168)}
+    for hour in range(168): # length of a week, in hours
+        lda_documents = list(cbgs_to_pois[hour].values())
+        poi_set = {poi for poi_list in lda_documents for poi in poi_list}
+        poi_count = len(poi_set)
 
-    cbgs_to_topics = dict(zip(cbg_ids, list(lda_model.get_document_topics(lda_corpus, minimum_probability=0))))
-    topics_to_pois = [[[tup[0] for tup in givens[1]], [tup[1] for tup in givens[1]]] for givens in lda_model.show_topics(formatted=False, num_topics=NUM_TOPICS, num_words=poi_count)]
+        lda_dictionary = gensim.corpora.dictionary.Dictionary(lda_documents)  # generate "documents" for gensim
+        lda_corpus = [lda_dictionary.doc2bow(cbg) for cbg in lda_documents]  # generate "words" for gensim
+        cbg_to_bow = dict(zip(cbg_ids, lda_corpus))
+        lda_model = gensim.models.LdaModel(lda_corpus, num_topics=NUM_TOPICS, id2word=lda_dictionary)
 
-    cbg_topic_probabilities = {}
-    for cbg in cbgs_to_topics:
-        current_probabilities = []
-        count = 0
-        for tup in cbgs_to_topics[cbg]:
-            while count != tup[0]:
+        cbgs_to_topics = dict(zip(cbg_ids, list(lda_model.get_document_topics(lda_corpus, minimum_probability=0))))
+        topics_to_pois = [[[tup[0] for tup in givens[1]], [tup[1] for tup in givens[1]]] for givens in lda_model.show_topics(formatted=False, num_topics=NUM_TOPICS, num_words=poi_count)]
+
+        cbg_topic_probabilities = {}
+        for cbg in cbgs_to_topics:
+            current_probabilities = []
+            count = 0
+            for tup in cbgs_to_topics[cbg]:
+                while count != tup[0]:
+                    current_probabilities.append(0)
+                    count += 1
+                current_probabilities.append(tup[1])
+                count += 1
+            while count != NUM_TOPICS:
                 current_probabilities.append(0)
                 count += 1
-            current_probabilities.append(tup[1])
-            count += 1
-        while count != NUM_TOPICS:
-            current_probabilities.append(0)
-            count += 1
-        cbg_topic_probabilities[cbg] = current_probabilities
+            cbg_topic_probabilities[cbg] = current_probabilities
+
+        hourly_lda[hour] = [lda_documents, cbgs_to_topics, topics_to_pois, cbg_topic_probabilities]
 
     print_elapsed_time()
     print('Reading population data...')
@@ -267,7 +277,7 @@ else:  # loads and caches data from files depending on user input
     print_elapsed_time()
     print('Caching raw data...')
 
-    raw_cache_data = (cbg_ids, lda_documents, cbgs_to_age_distribution, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type)
+    raw_cache_data = (cbg_ids, poi_set, hourly_lda, cbgs_to_age_distribution, cbgs_to_households, cbgs_leaving_probs, dwell_distributions, poi_type)
     raw_cache_file = open(raw_cache_path, 'wb')
     pickle.dump(raw_cache_data, raw_cache_file)
 
@@ -304,7 +314,7 @@ if not agents_loaded:
     inactive_agent_ids = set()  # {agent_id, agent_id, ...}
     quarantined_agent_ids = {day: set() for day in range(SIMULATION_DAYS + QUARANTINE_DURATION)}  # {quarantine_expiry_date: {agent_id, agent_id, ...}, ...}
     active_agent_ids = {t: set() for t in range(total_simulation_time)}  # expiration_time: {(agent_id, poi_id), (agent_id, poi_id), ...}
-    poi_current_visitors = {poi: set() for poi_list in lda_documents for poi in poi_list}  # poi id: {agent_id, agent_id, ...}
+    poi_current_visitors = {poi: set() for poi in poi_set}  # poi id: {agent_id, agent_id, ...} # may produce errors
 
     agent_count = 0
     household_count = 0
@@ -345,7 +355,7 @@ if not agents_loaded:
 
     benchmark = 5
     for i, current_cbg in enumerate(cbg_ids):
-        probs = numpy.array(cbg_topic_probabilities[current_cbg])
+        probs = numpy.array(hourly_lda[0][3][current_cbg]) # first hour, topic probabilities
         probs /= probs.sum()
         for idx, cbg_household_count in enumerate(cbgs_to_households[current_cbg]):
             current_household_size = idx % 7 + 1  # will end up being one more than this for family households
@@ -373,26 +383,28 @@ if not agents_loaded:
     pickle.dump(agents_cache_data, agents_cache_file)
 
     print_elapsed_time()
+    agents_cache_file.close()
 
-agents_cache_file.close()
 print('Number of agents: {}'.format(len(agents)))
 
 print('Normalizing probabilities...')
 
-aux_dict = {}  # an auxiliary POI dictionary for the least likely POIs per topic to speed up numpy.choice with many probabilities {topic: list of cbgs} {cbg: poi_ids, probabilities}
-for topic in range(len(topics_to_pois)):  # iterates through each topic
-    minimum_list_index = -1
-    prob_sum = 0
-    while prob_sum < 0.2:  # the probability of selecting any POI in aux_dict is 20%
-        prob_sum = sum(topics_to_pois[topic][1][minimum_list_index:])
-        minimum_list_index -= 1
-    aux_dict[topic] = [topics_to_pois[topic][0][minimum_list_index:], topics_to_pois[topic][1][minimum_list_index:]]  # [poi ids list, poi probabilities list for numpy.choice]
-    aux_dict[topic][1] = numpy.array(aux_dict[topic][1])  # converts poi probabilities list at aux_dict[topic][1] from a list to a numpy array for numpy.choice
-    aux_dict[topic][1] /= aux_dict[topic][1].sum()  # ensures the sum of aux_dict[topic][1] is 1 for numpy.choice
-    # update old topics_to_pois with addition of aux, representing the selection of a POI from aux_dict
-    topics_to_pois[topic][0] = topics_to_pois[topic][0][:minimum_list_index] + ['aux']
-    topics_to_pois[topic][1] = numpy.array(topics_to_pois[topic][1][:minimum_list_index] + [prob_sum])
-    topics_to_pois[topic][1] /= topics_to_pois[topic][1].sum()
+for hour in range(168):
+    aux_dict = {}  # an auxiliary POI dictionary for the least likely POIs per topic to speed up numpy.choice with many probabilities {topic: list of cbgs} {cbg: poi_ids, probabilities}
+    for topic in range(len(hourly_lda[hour][2])):  # iterates through each topic
+        minimum_list_index = -1
+        prob_sum = 0
+        while prob_sum < 0.2:  # the probability of selecting any POI in aux_dict is 20%
+            prob_sum = sum(hourly_lda[hour][2][topic][1][minimum_list_index:])
+            minimum_list_index -= 1
+        aux_dict[topic] = [hourly_lda[hour][2][topic][0][minimum_list_index:], hourly_lda[hour][2][topic][1][minimum_list_index:]]  # [poi ids list, poi probabilities list for numpy.choice]
+        aux_dict[topic][1] = numpy.array(aux_dict[topic][1])  # converts poi probabilities list at aux_dict[topic][1] from a list to a numpy array for numpy.choice
+        aux_dict[topic][1] /= aux_dict[topic][1].sum()  # ensures the sum of aux_dict[topic][1] is 1 for numpy.choice
+        # update old topics_to_pois with addition of aux, representing the selection of a POI from aux_dict
+        hourly_lda[hour][2][topic][0] = hourly_lda[hour][2][topic][0][:minimum_list_index] + ['aux']
+        hourly_lda[hour][2][topic][1] = numpy.array(hourly_lda[hour][2][topic][1][:minimum_list_index] + [prob_sum])
+        hourly_lda[hour][2][topic][1] /= hourly_lda[hour][2][topic][1].sum()
+    hourly_lda[hour].append(aux_dict)
 
 print('Running simulation...')
 
@@ -446,9 +458,9 @@ def select_active_agents(t):  # removes agents from POIs whose visits starting a
     for agent_id in inactive_agent_ids:
         if random.random() < cbgs_leaving_probs[agents[agent_id][3]]:
             topic = agents[agent_id][0]
-            destination = destination = numpy.random.choice(topics_to_pois[topic][0], 1, p=topics_to_pois[topic][1])[0]
+            destination = numpy.random.choice(hourly_lda[t][3][topic][0], 1, p=hourly_lda[t][3][topic][1])[0]
             if destination == 'aux':
-                destination = numpy.random.choice(aux_dict[topic][0], 1, p=aux_dict[topic][1])[0]
+                destination = numpy.random.choice(hourly_lda[t][4][topic][0], 1, p=hourly_lda[t][4][topic][1])[0]
             '''
             rerolls = 0
             while rerolls < MAXIMUM_REROLLS and destination in closed_pois:
