@@ -132,7 +132,7 @@ else:  # loads and caches data from files depending on user input
     usable_data = data[(data.visitor_home_cbgs != '{}')]
 
     # from usable POIs, load cbgs, CBGs are documents, POIs are words
-    cbgs_to_pois = {k: {} for k in range(168)}
+    cbgs_to_pois = {k: {} for k in range(24)}
     dwell_distributions = {}
     cbgs_to_places = {}
     poi_set = set()
@@ -146,7 +146,10 @@ else:  # loads and caches data from files depending on user input
             poi_type[place_type] = {place_id}
         else:
             poi_type[place_type].add(place_id)
-        hourly_poi = json.loads(row.visits_by_each_hour)
+        weekly_hours_info = json.loads(row.visits_by_each_hour)
+        hourly_poi = [0] * 24
+        for idx, num in enumerate(weekly_hours_info):
+            hourly_poi[idx % 24] += num
         weekly_poi = int(row.raw_visit_counts)
         cbgs = json.loads(row.visitor_home_cbgs)
         lda_words = []
@@ -165,8 +168,8 @@ else:  # loads and caches data from files depending on user input
     cbg_ids = list(cbgs_to_pois[0].keys())
     cbg_id_set = set(cbg_ids)
 
-    hourly_lda = {k: [] for k in range(168)}
-    for hour in range(168): # length of a week, in hours
+    hourly_lda = {k: [] for k in range(24)}
+    for hour in range(24): # length of a week, in hours
         lda_documents = list(cbgs_to_pois[hour].values())
         poi_set = {poi for poi_list in lda_documents for poi in poi_list}
         poi_count = len(poi_set)
@@ -253,7 +256,7 @@ else:  # loads and caches data from files depending on user input
     print_elapsed_time()
     print('Reading social distancing data...')
 
-    social_distancing_data = pd.read_csv(gzip.open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_social_distancing_metrics', WEEK[:4], WEEK[5:7], WEEK[8:], '{}-social-distancing.csv.gz'.format(WEEK)), 'rb'), error_bad_lines=False)
+    social_distancing_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_social_distancing_metrics', WEEK[:4], WEEK[5:7], WEEK[8:], '{}-social-distancing.csv'.format(WEEK)), error_bad_lines=False)
     cbgs_leaving_probs = {}  # probability that a member of a cbg will leave their house each tick
     seen_cbgs = set()
     for idx, row in social_distancing_data.iterrows():
@@ -389,7 +392,7 @@ print('Number of agents: {}'.format(len(agents)))
 
 print('Normalizing probabilities...')
 
-for hour in range(168):
+for hour in range(24):
     aux_dict = {}  # an auxiliary POI dictionary for the least likely POIs per topic to speed up numpy.choice with many probabilities {topic: list of cbgs} {cbg: poi_ids, probabilities}
     for topic in range(len(hourly_lda[hour][2])):  # iterates through each topic
         minimum_list_index = -1
