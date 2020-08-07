@@ -26,7 +26,7 @@ MAX_DWELL_TIME = 16  # maximum dwell time at any POI (hours)
 QUARANTINE_DURATION = 10  # number of days a quarantine lasts after an agent begins to show symptoms
 MAXIMUM_INTERACTIONS_PER_TICK = 1500000  # maximum number of interactions an infected person can have with others per tick
 ALPHA = 0  # 0.4 => 40% of the population is quarantined in their house for the duration of the simulation
-# MAXIMUM_REROLLS = 3  # maximum number of times people try to go to an alternative place if a POI is closed
+WEAR_MASKS = False
 CLOSED_POI_TYPES = {  # closed POI types (from SafeGraph Core Places "sub_category")
     'Full-Service Restaurants',
     'Limited-Service Restaurants',
@@ -97,7 +97,7 @@ agents_loaded = False
 use_raw_cache = input('Use file data cache ([y]/n)? ')
 if use_raw_cache == '' or use_raw_cache == 'y':  # obtains cached variables from the file data cache
     raw_cache_file = open(raw_cache_path, 'rb')
-    (cbg_ids, lda_documents, cbgs_to_age_distribution, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour) = pickle.load(raw_cache_file)
+    (cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour) = pickle.load(raw_cache_file)
     use_agents_cache = input('Use agents cache ([y]/n)? ')  # obtains cached variables from agent file data cache
     if use_agents_cache == '' or use_agents_cache == 'y':
         agents_cache_file = open(agents_cache_path, 'rb')
@@ -255,25 +255,6 @@ else:  # loads and caches data from files depending on user input
             total_households += sum(arr)
             cbgs_to_households[check_str] = arr
 
-    print_elapsed_time()
-    print('Reading age data...')
-
-    census_age_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_open_census_data', 'data', 'cbg_b01.csv'), error_bad_lines=False)
-    cbgs_to_age_distribution = {}  # {cbg: [[% 18-49, % 50-64, % 65+], [% <18, % 18-49, % 50-64, % 65+]], ...} (first array is distribution for nonfamily households because nonfamily households cannot include age <18, second array is distribution for family households)
-    code_under_18 = ['B01001e3', 'B01001e4', 'B01001e5', 'B01001e6', 'B01001e27', 'B01001e28', 'B01001e29', 'B01001e30']
-    code_18_to_49 = ['B01001e7', 'B01001e8', 'B01001e9', 'B01001e10', 'B01001e11', 'B01001e12', 'B01001e13', 'B01001e14', 'B01001e15', 'B01001e31', 'B01001e32', 'B01001e33', 'B01001e34', 'B01001e35', 'B01001e36', 'B01001e37', 'B01001e38', 'B01001e39']
-    code_50_to_64 = ['B01001e16', 'B01001e17', 'B01001e18', 'B01001e19', 'B01001e40', 'B01001e41', 'B01001e42', 'B01001e43']
-    code_65_plus = ['B01001e20', 'B01001e21', 'B01001e22', 'B01001e23', 'B01001e24', 'B01001e25', 'B01001e44', 'B01001e45', 'B01001e46', 'B01001e47', 'B01001e48', 'B01001e49']
-    for idx, row in census_age_data.iterrows():
-        check_str = str(int(row['census_block_group'])).zfill(12)
-        if check_str in cbg_id_set:
-            pop_under_18 = sum([int(row[a]) for a in code_under_18])
-            pop_18_49 = sum([int(row[a]) for a in code_18_to_49])
-            pop_50_64 = sum([int(row[a]) for a in code_50_to_64])
-            pop_65_over = sum([int(row[a]) for a in code_65_plus])
-            pop_distribution_nonfamily = numpy.array([pop_18_49, pop_50_64, pop_65_over], dtype='f') / (pop_18_49 + pop_50_64 + pop_65_over)
-            pop_distribution_family = numpy.array([pop_under_18, pop_18_49, pop_50_64, pop_65_over], dtype='f') / (pop_under_18 + pop_18_49 + pop_50_64 + pop_65_over)
-            cbgs_to_age_distribution[check_str] = [pop_distribution_nonfamily, pop_distribution_family]
 
     print_elapsed_time()
     print('Reading social distancing data...')
@@ -301,7 +282,7 @@ else:  # loads and caches data from files depending on user input
     print_elapsed_time()
     print('Caching raw data...')
 
-    raw_cache_data = (cbg_ids, lda_documents, cbgs_to_age_distribution, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour)
+    raw_cache_data = (cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour)
     raw_cache_file = open(raw_cache_path, 'wb')
     pickle.dump(raw_cache_data, raw_cache_file)
 
@@ -332,7 +313,7 @@ if not agents_loaded:
     # Generate a randomly chosen topic based on the CBG percentage in each topic
     # Once a topic and cbg are chosen, use a 0.1% probability to decide whether or not that agent is infected
 
-    agents = {}  # agent_id: [topic, infected_status, (current poi, expiration time) or None, home_cbg_code, age_code, household_id]
+    agents = {}  # agent_id: [topic, infected_status, (current poi, expiration time) or None, home_cbg_code]
     households = {}  # household_id: {agent_id, agent_id, ...}
     cbgs_to_agents = {cbg: set() for cbg in cbg_ids}  # cbg: {agent_id, agent_id, ...}
     inactive_agent_ids = set()  # {agent_id, agent_id, ...}
@@ -352,10 +333,6 @@ if not agents_loaded:
         agent_id = 'agent_{}'.format(agent_count)
         agent_count += 1
         agent_topic = numpy.random.choice(topic_numbers, 1, p=probs)[0]
-        if possibly_child:
-            rand_age = numpy.random.choice(['C', 'Y', 'M', 'O'], p=cbgs_to_age_distribution[current_cbg][1])
-        else:
-            rand_age = numpy.random.choice(['Y', 'M', 'O'], p=cbgs_to_age_distribution[current_cbg][0])
         agent_status = 'S'
         permanently_quarantined = random.random() < ALPHA  # prohibits agent from ever leaving their house and ensures they are not initially infected if True
         parameter_2 = None
@@ -382,7 +359,7 @@ if not agents_loaded:
                     parameter_2 = 'quarantined'
             else:
                 inactive_agent_ids.add(agent_id)
-        agents[agent_id] = [agent_topic, agent_status, parameter_2, current_cbg, rand_age, household_id]
+        agents[agent_id] = [agent_topic, agent_status, parameter_2, current_cbg]
         cbgs_to_agents[current_cbg].add(agent_id)
         households[household_id].add(agent_id)
 
@@ -472,9 +449,7 @@ del quarantine_queue_tups
 print_elapsed_time()
 print('Running simulation...')
 
-# probability_of_infection = 0.005 / SIMULATION_TICKS_PER_HOUR  # from https://hzw77-demo.readthedocs.io/en/round2/simulator_modeling.html
-# age_susc = {'C': 0.01, 'Y': 0.025, 'M': 0.045, 'O': 0.085}  # "Susceptibility is defined as the probability of infection on contact with an infectious person" (https://www.nature.com/articles/s41591-020-0962-9)
-age_susc = {'C': 0.005, 'Y': 0.005, 'M': 0.005, 'O': 0.005}  # represents no age susceptibility differences
+susc = ((0.055 + 0.046 + 0.074 + 0.099 + 0.084) / 5) / SIMULATION_TICKS_PER_HOUR  # from https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-020-0962-9/MediaObjects/41591_2020_962_MOESM1_ESM.pdf
 asymptomatic_relative_infectiousness = 0.75  # https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
 mask_reduction_factor = 0.35  # https://www.ucdavis.edu/coronavirus/news/your-mask-cuts-own-risk-65-percent/
 
@@ -508,7 +483,7 @@ def poi_infect(current_poi_agents, current_time, infectiousness):  # poi_agents,
     global agents
     for other_agent_id in current_poi_agents:
         rand = random.random()
-        probability_of_infection = age_susc[agents[other_agent_id][4]] / SIMULATION_TICKS_PER_HOUR
+        probability_of_infection = susc / SIMULATION_TICKS_PER_HOUR
         if rand < probability_of_infection * infectiousness:
             infect(other_agent_id, current_time)
 
@@ -622,12 +597,6 @@ def report_status():  # prints status
     print()
 
 
-def wear_masks():  # simulates the entire population wearing masks
-    global age_susc
-    for a in age_susc:
-        age_susc[a] *= mask_reduction_factor
-
-
 def close_poi_type(current_poi_type):  # e.g. "Restaurants and Other Eating Places"
     global closed_pois
     closed_pois |= poi_type[current_poi_type]
@@ -639,7 +608,8 @@ def set_propensity_to_leave():
 
 
 # prescriptions
-wear_masks()
+if WEAR_MASKS:
+    susc *= mask_reduction_factor
 closed_pois = set()
 for current_poi_type in CLOSED_POI_TYPES:
     close_poi_type(current_poi_type)
