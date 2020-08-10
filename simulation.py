@@ -17,14 +17,14 @@ import scipy.stats
 
 NUM_TOPICS = 50  # number of LDA topics
 SIMULATION_DAYS = 365 * 5  # number of "days" the simulation runs for
-SIMULATION_TICKS_PER_HOUR = 2  # number of ticks per simulation "hour"
+SIMULATION_TICKS_PER_HOUR = 4  # integer, number of ticks per simulation "hour"
 PROPORTION_OF_POPULATION = 1  # 0.2 => 20% of the actual population is simulated
 PROPORTION_INITIALLY_INFECTED = 0.001  # 0.05 => 5% of the simulated population is initially infected or exposed
 PROPENSITY_TO_LEAVE = 1  # 0.2 => people are only 20% as likely to leave the house as compared to normal
 NUMBER_OF_DWELL_SAMPLES = 5  # a higher number decreases POI dwell time variation and allows less outliers
 MAX_DWELL_TIME = 16  # maximum dwell time at any POI (hours)
 QUARANTINE_DURATION = 10  # number of days a quarantine lasts after an agent begins to show symptoms
-MAXIMUM_INTERACTIONS_PER_TICK = 1500000  # maximum number of interactions an infected person can have with others per tick
+MAXIMUM_INTERACTIONS_PER_TICK = 5  # integer, maximum number of interactions an infected person can have with others per tick
 ALPHA = 0  # 0.4 => 40% of the population is quarantined in their house for the duration of the simulation
 WEAR_MASKS = False
 CLOSED_POI_TYPES = {  # closed POI types (from SafeGraph Core Places "sub_category")
@@ -449,7 +449,7 @@ del quarantine_queue_tups
 print_elapsed_time()
 print('Running simulation...')
 
-susc = ((0.055 + 0.046 + 0.074 + 0.099 + 0.084) / 5) / SIMULATION_TICKS_PER_HOUR  # from https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-020-0962-9/MediaObjects/41591_2020_962_MOESM1_ESM.pdf
+susc = (0.055 + 0.046 + 0.074 + 0.099 + 0.084) / 5  # DO NOT DIVIDE BY SIMULATION_TICKS_PER_HOUR, chance of contracting the virus on contact with someone, from https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-020-0962-9/MediaObjects/41591_2020_962_MOESM1_ESM.pdf
 asymptomatic_relative_infectiousness = 0.75  # https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
 mask_reduction_factor = 0.35  # https://www.ucdavis.edu/coronavirus/news/your-mask-cuts-own-risk-65-percent/
 
@@ -483,8 +483,7 @@ def poi_infect(current_poi_agents, current_time, infectiousness):  # poi_agents,
     global agents
     for other_agent_id in current_poi_agents:
         rand = random.random()
-        probability_of_infection = susc / SIMULATION_TICKS_PER_HOUR
-        if rand < probability_of_infection * infectiousness:
+        if rand < susc * infectiousness:  # assumes direct contact with other agent and a contact limit, does not use per hour probabilities
             infect(other_agent_id, current_time)
 
 
@@ -623,7 +622,7 @@ for current_time in range(total_simulation_time):
     infect_active_agents(current_time)
     set_agent_flags(current_time)
     if not (current_time + 1) % SIMULATION_TICKS_PER_HOUR:  # if the next tick marks the start of an hour
-        print('Hour {} complete.'.format(int(current_time / SIMULATION_TICKS_PER_HOUR)))
+        print('Hour {} ({}) complete.'.format(int(current_time // SIMULATION_TICKS_PER_HOUR % 24), int(current_time / SIMULATION_TICKS_PER_HOUR)))
         print_elapsed_time()
         if not (current_time + 1) % daily_simulation_time:  # if the next tick marks midnight
             print(current_time)
