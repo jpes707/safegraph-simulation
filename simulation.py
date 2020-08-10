@@ -28,49 +28,6 @@ MAXIMUM_INTERACTIONS_PER_TICK = 5  # integer, maximum number of interactions an 
 ALPHA = 0  # 0.4 => 40% of the population is quarantined in their house for the duration of the simulation
 WEAR_MASKS = False
 CLOSED_POI_TYPES = {  # closed POI types (from SafeGraph Core Places "sub_category")
-    'Full-Service Restaurants',
-    'Limited-Service Restaurants',
-    'Department Stores',
-    'Musical Instrument and Supplies Stores',
-    'Elementary and Secondary Schools',
-    'Colleges, Universities, and Professional Schools',
-    'Tobacco Stores',
-    'Department Stores',
-    'Snack and Nonalcoholic Beverage Bars',
-    'Jewelry Stores',
-    'Religious Organizations',
-    'Florists',
-    'Paint and Wallpaper Stores',
-    'Women\'s Clothing Stores',
-    'Fitness and Recreational Sports Centers',
-    'Family Clothing Stores',
-    'Junior Colleges',
-    'Hobby, Toy, and Game Stores',
-    'Gift, Novelty, and Souvenir Stores',
-    'Book Stores',
-    'Sporting Goods Stores',
-    'Cosmetics, Beauty Supplies, and Perfume Stores',
-    'Art Dealers',
-    'Bowling Centers',
-    'Beauty Salons',
-    'Libraries and Archives',
-    'Sewing, Needlework, and Piece Goods Stores',
-    'Wineries',
-    'Video Tape and Disc Rental',
-    'Museums',
-    'Children\'s and Infants\' Clothing Stores',
-    'Motion Picture Theaters (except Drive-Ins)',
-    'Shoe Stores',
-    'Golf Courses and Country Clubs',
-    'Furniture Stores',
-    'Breweries',
-    'Investment Advice',
-    'Historical Sites',
-    'Floor Covering Stores',
-    'Carpet and Upholstery Cleaning Services',
-    'Drinking Places (Alcoholic Beverages)',
-    'Exam Preparation and Tutoring',
-    'Boat Dealers'
 }
 
 start_time = time.time()
@@ -342,19 +299,19 @@ if not agents_loaded:
                 rand /= PROPORTION_INITIALLY_INFECTED
                 if rand < 0.23076923076:  # 2.754 / (2.754 + 1.928 + 2.662 + 4.590), from exposure gamma distributions
                     agent_status = 'E'
-                    Ipa_queue_tups.append((round(distribution_of_exposure.rvs(1)[0] * 24 * SIMULATION_TICKS_PER_HOUR), agent_id))
+                    Ipa_queue_tups.append((round(distribution_of_exposure.rvs(1)[0] * daily_simulation_time), agent_id))
                     inactive_agent_ids.add(agent_id)
                 elif rand < 0.53846153845:  # 40% of the remaining value, represents asymptomatic (subclinical) cases
                     agent_status = 'Ia'
-                    R_queue_tups.append((round(distribution_of_subclinical.rvs(1)[0] * 24 * SIMULATION_TICKS_PER_HOUR), agent_id))
+                    R_queue_tups.append((round(distribution_of_subclinical.rvs(1)[0] * daily_simulation_time), agent_id))
                     inactive_agent_ids.add(agent_id)
                 elif rand < 0.7323278029:  # 1.928 / 4.590 of the remaining value, represents preclinical cases
                     agent_status = 'Ip'
-                    Ic_queue_tups.append((round(distribution_of_preclinical.rvs(1)[0] * 24 * SIMULATION_TICKS_PER_HOUR), agent_id))
+                    Ic_queue_tups.append((round(distribution_of_preclinical.rvs(1)[0] * daily_simulation_time), agent_id))
                     inactive_agent_ids.add(agent_id)
                 else:  # represents symptomatic (clinical) cases
                     agent_status = 'Ic'
-                    R_queue_tups.append((round(distribution_of_clinical.rvs(1)[0] * 24 * SIMULATION_TICKS_PER_HOUR), agent_id))
+                    R_queue_tups.append((round(distribution_of_clinical.rvs(1)[0] * daily_simulation_time), agent_id))
                     quarantine_queue_tups.append((QUARANTINE_DURATION * 24 * SIMULATION_TICKS_PER_HOUR, agent_id))
                     parameter_2 = 'quarantined'
             else:
@@ -475,7 +432,7 @@ def infect(agent_id, current_time):  # infects an agent with the virus
     global infection_counts_by_day, Ipa_queue
     if agents[agent_id][1] == 'S':
         agents[agent_id][1] = 'E'
-        Ipa_queue.put((current_time + round(distribution_of_exposure.rvs(1)[0] * 24 * SIMULATION_TICKS_PER_HOUR), agent_id))
+        Ipa_queue.put((current_time + round(distribution_of_exposure.rvs(1)[0] * daily_simulation_time), agent_id))
         infection_counts_by_day[current_time // daily_simulation_time] += 1
 
 
@@ -546,7 +503,7 @@ def household_transmission(current_time):  # simulates a day's worth of of house
 
 def quarantine(agent, days, current_time):  # agents, number of days in quarantine, current day => agents cannot leave house during quarantine
     global quarantine_queue, inactive_agent_ids
-    quarantine_queue.put((current_time + days * 24 * SIMULATION_TICKS_PER_HOUR, agent))
+    quarantine_queue.put((current_time + days * daily_simulation_time, agent))
     if agents[agent][2] == 'quarantined':
         return
     elif agents[agent][2] == None:
@@ -559,21 +516,21 @@ def quarantine(agent, days, current_time):  # agents, number of days in quaranti
 
 
 def set_agent_flags(current_time):  # changes agent infection status
-    global agents, Ipa_queue, Ic_queue, R_queue
+    global agents, Ipa_queue, Ic_queue, R_queue, quarantine_queue
     while Ipa_queue and Ipa_queue.queue[0][0] <= current_time + 1:  # https://www.nature.com/articles/s41586-020-2196-x?fbclid=IwAR1voT8K7fAlVq39RPINfrT-qTc_N4XI01fRp09-agM1v5tfXrC6NOy8-0c
         key = Ipa_queue.get()[1]
         rand_s = random.random()
         if rand_s < 0.4:  # subclinical (asymptomatic) cases, never show symptoms
             agents[key][1] = 'Ia'
-            R_queue.put((current_time + round(distribution_of_subclinical.rvs(1)[0] * 24 * SIMULATION_TICKS_PER_HOUR), key))
+            R_queue.put((current_time + round(distribution_of_subclinical.rvs(1)[0] * daily_simulation_time), key))
         else:  # preclinical cases, will be symptomatic in the future
             agents[key][1] = 'Ip'
-            Ic_queue.put((current_time + round(distribution_of_preclinical.rvs(1)[0] * 24 * SIMULATION_TICKS_PER_HOUR), key))
+            Ic_queue.put((current_time + round(distribution_of_preclinical.rvs(1)[0] * daily_simulation_time), key))
     while Ic_queue and Ic_queue.queue[0][0] <= current_time + 1:
         key = Ic_queue.get()[1]
         agents[key][1] = 'Ic'
         quarantine(key, QUARANTINE_DURATION, current_time)
-        R_queue.put((current_time + round(distribution_of_clinical.rvs(1)[0] * 24 * SIMULATION_TICKS_PER_HOUR), key))
+        R_queue.put((current_time + round(distribution_of_clinical.rvs(1)[0] * daily_simulation_time), key))
     while R_queue and R_queue.queue[0][0] <= current_time + 1:
         key = R_queue.get()[1]
         agents[key][1] = 'R'
