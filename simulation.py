@@ -27,6 +27,8 @@ QUARANTINE_DURATION = 10  # number of days a quarantine lasts after an agent beg
 MAXIMUM_INTERACTIONS_PER_TICK = 5  # integer, maximum number of interactions an infected person can have with others per tick
 ALPHA = 0  # 0.4 => 40% of the population is quarantined in their house for the duration of the simulation
 WEAR_MASKS = False
+SOCIAL_DISTANCING = False
+EYE_PROTECTION = False
 CLOSED_POI_TYPES = {  # closed POI types (from SafeGraph Core Places "sub_category")
 }
 
@@ -316,6 +318,8 @@ if not agents_loaded:
                     parameter_2 = 'quarantined'
             else:
                 inactive_agent_ids.add(agent_id)
+        else:
+            inactive_agent_ids.add(agent_id)
         agents[agent_id] = [agent_topic, agent_status, parameter_2, current_cbg]
         cbgs_to_agents[current_cbg].add(agent_id)
         households[household_id].add(agent_id)
@@ -408,7 +412,9 @@ print('Running simulation...')
 
 susc = (0.055 + 0.046 + 0.074 + 0.099 + 0.084) / 5  # DO NOT DIVIDE BY SIMULATION_TICKS_PER_HOUR, chance of contracting the virus on contact with someone, from https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-020-0962-9/MediaObjects/41591_2020_962_MOESM1_ESM.pdf
 asymptomatic_relative_infectiousness = 0.75  # https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
-mask_reduction_factor = 0.35  # https://www.ucdavis.edu/coronavirus/news/your-mask-cuts-own-risk-65-percent/
+mask_reduction_factor = 3.1/17.4  # https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31142-9/fulltext
+social_distancing_reduction_factor = 2.6 / 12.8  # https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31142-9/fulltext
+eye_protection_reduction_factor = 5.5 / 16.0 # https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31142-9/fulltext
 
 
 def get_dwell_time(dwell_tuple):  # given a cached tuple from the dwell_distributions dictionary for a specific POI, return a dwell time in ticks
@@ -566,6 +572,10 @@ def set_propensity_to_leave():
 # prescriptions
 if WEAR_MASKS:
     susc *= mask_reduction_factor
+if SOCIAL_DISTANCING:
+    susc *= social_distancing_reduction_factor
+if EYE_PROTECTION:
+    susc *= eye_protection_reduction_factor
 closed_pois = set()
 for current_poi_type in CLOSED_POI_TYPES:
     close_poi_type(current_poi_type)
