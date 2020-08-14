@@ -448,9 +448,10 @@ del quarantine_queue_tups
 print_elapsed_time()
 print('Running simulation...')
 
-secondary_attack_rate = 0.05  # DO NOT DIVIDE BY SIMULATION_TICKS_PER_HOUR, chance of contracting the virus on contact with someone, from https://jamanetwork.com/journals/jama/fullarticle/2768396
+# For COVID-19, a close contact is defined as ay individual who was within 6 feet of an infected person for at least 15 minutes starting from 2 days before illness onset (or, for asymptomatic patients, 2 days prior to positive specimen collection) until the time the patient is isolated. (https://www.cdc.gov/coronavirus/2019-ncov/php/contact-tracing/contact-tracing-plan/contact-tracing.html)
+secondary_attack_rate = 0.05  # DO NOT DIVIDE BY SIMULATION_TICKS_PER_HOUR, chance of contracting the virus on close contact with someone, from https://jamanetwork.com/journals/jama/fullarticle/2768396
 asymptomatic_relative_infectiousness = 0.75  # https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
-mask_reduction_factor = 3.1/17.4  # https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31142-9/fulltext
+mask_reduction_factor = 3.1 / 17.4  # https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31142-9/fulltext
 social_distancing_reduction_factor = 2.6 / 12.8  # https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31142-9/fulltext
 eye_protection_reduction_factor = 5.5 / 16.0 # https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31142-9/fulltext
 
