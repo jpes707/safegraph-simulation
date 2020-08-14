@@ -26,6 +26,7 @@ MAX_DWELL_TIME = 16  # maximum dwell time at any POI (hours)
 QUARANTINE_DURATION = 10  # number of days a quarantine lasts after an agent begins to show symptoms
 MAXIMUM_INTERACTIONS_PER_TICK = 5  # integer, maximum number of interactions an infected person can have with others per tick
 ALPHA = 0  # 0.4 => 40% of the population is quarantined in their house for the duration of the simulation
+SYMPTOMATIC_QUARANTINES = False
 WEAR_MASKS = False
 SOCIAL_DISTANCING = False
 EYE_PROTECTION = False
@@ -56,7 +57,7 @@ agents_loaded = False
 use_raw_cache = input('Use file data cache ([y]/n)? ')
 if use_raw_cache == '' or use_raw_cache == 'y':  # obtains cached variables from the file data cache
     raw_cache_file = open(raw_cache_path, 'rb')
-    (cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour) = pickle.load(raw_cache_file)
+    (cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour, under_16_chance) = pickle.load(raw_cache_file)
     use_agents_cache = input('Use agents cache ([y]/n)? ')  # obtains cached variables from agent file data cache
     if use_agents_cache == '' or use_agents_cache == 'y':
         agents_cache_file = open(agents_cache_path, 'rb')
@@ -181,29 +182,30 @@ else:  # loads and caches data from files depending on user input
         cbg_topic_probabilities[cbg] = current_probabilities
 
     print_elapsed_time()
-    print('Reading population data...')
+    print('Reading CBG population data...')
 
-    census_population_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_open_census_data', 'data', 'cbg_b00.csv'), error_bad_lines=False)
-    cbgs_to_populations = {}
-    total_population = 0
+    census_population_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_open_census_data', 'data', 'cbg_b01.csv'), error_bad_lines=False)
+    cbgs_to_real_populations = {}
+    total_real_population = 0
     for idx, row in census_population_data.iterrows():
         check_str = str(int(row['census_block_group'])).zfill(12)
         if check_str in cbg_id_set:
-            if str(row['B00001e1']) in {'nan', '0.0'}:
+            if str(row['B01001e1']) in {'nan', '0.0'}:
                 cbg_id_set.remove(check_str)
                 cbg_ids.remove(check_str)
-                continue
-            cbg_population = int(int(row['B00001e1']) * PROPORTION_OF_POPULATION)
-            total_population += cbg_population
-            cbgs_to_populations[check_str] = cbg_population
+            else:
+                cbg_real_population = int(int(row['B01001e1']) * PROPORTION_OF_POPULATION)
+                total_real_population += cbg_real_population
+                cbgs_to_real_populations[check_str] = cbg_real_population
 
     print_elapsed_time()
     print('Reading household data...')
 
     census_household_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_open_census_data', 'data', 'cbg_b11.csv'), error_bad_lines=False)
     cbgs_to_households = {}  # {cbg: [# nonfamily households of size 1, # nonfamily households of size 2, ... # nonfamily households of size 7+, # family households of size 2, # family households of size 3, ... # family households of size 7+]}
-    total_households = 0
-    for idx, row in census_household_data.iterrows():
+    cbgs_to_populations = {}
+    total_population = 0
+    for _, row in census_household_data.iterrows():
         check_str = str(int(row['census_block_group'])).zfill(12)
         if check_str in cbg_id_set:
             arr = []
@@ -211,14 +213,43 @@ else:  # loads and caches data from files depending on user input
                 arr.append(int(int(row['B11016e{}'.format(ext)]) * PROPORTION_OF_POPULATION))
             for ext in range(3, 9):  # appends family household counts
                 arr.append(int(int(row['B11016e{}'.format(ext)]) * PROPORTION_OF_POPULATION))
-            total_households += sum(arr)
-            cbgs_to_households[check_str] = arr
+            if arr == [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]:
+                cbg_id_set.remove(check_str)
+                cbg_ids.remove(check_str)
+            else:
+                household_based_cbg_population = sum([(idx % 7 + idx // 7 + 1) * arr[idx] for idx in range(13)])
+                underestimate_corrector = cbgs_to_real_populations[check_str] / household_based_cbg_population
+                arr = [int(elem * underestimate_corrector) for elem in arr]
+                cbgs_to_households[check_str] = arr
+                cbg_population = sum([(idx % 7 + idx // 7 + 1) * arr[idx] for idx in range(13)])
+                total_population += cbg_population
+                cbgs_to_populations[check_str] = cbg_population
+    print(r'The simulated population will be {}% of the real population.'.format(adj_sig_figs(100 * total_population / total_real_population)))
 
+    print_elapsed_time()
+    print('Reading age data...')
+
+    census_age_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_open_census_data', 'data', 'cbg_b01.csv'), error_bad_lines=False)
+    codes_under_15 = ['B01001e3', 'B01001e4', 'B01001e5', 'B01001e27', 'B01001e28', 'B01001e29']
+    codes_15_to_17 = ['B01001e6', 'B01001e30']
+    under_16_chance = {}  # {cbg: chance that a non-householder member of a family household is under 16, ...} (assumes children under 16 cannot live in nonfamily households and that children 16 and older can be householders due to emancipation)
+    for _, row in census_age_data.iterrows():
+        check_str = str(int(row['census_block_group'])).zfill(12)
+        if check_str in cbg_id_set:
+            pop_under_15 = sum([int(row[elem]) for elem in codes_under_15])
+            pop_15_to_17 = sum([int(row[elem]) for elem in codes_15_to_17])
+            pop_under_16 = pop_under_15 + pop_15_to_17 / 3  # assumes 1/3 of the population from age 15 to 17 in the CBG is 15
+            family_households_non_householder_population = sum([(idx % 7 + idx // 7 + 1) * cbgs_to_households[check_str][idx] for idx in range(7, 13)]) - sum([cbgs_to_households[check_str][idx] for idx in range(7, 13)])  # number of family household members - number of family householders, see household generation code below for sense of the variable values
+            if family_households_non_householder_population:
+                under_16_chance[check_str] = pop_under_16 / family_households_non_householder_population
+            else:
+                under_16_chance[check_str] = 0
 
     print_elapsed_time()
     print('Reading social distancing data...')
     
     cbg_device_counts = {}  # cbg: [completely_home_device_count, device_count]
+    total_devices_tracked = 0
     for date in pd.date_range(WEEK, periods=7, freq='D'):
         print(date)
         social_distancing_data = pd.read_csv(gzip.open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_social_distancing_metrics', str(date.year), str(date.month).zfill(2), str(date.day).zfill(2), '{}-{}-{}-social-distancing.csv.gz'.format(str(date.year), str(date.month).zfill(2), str(date.day).zfill(2))), 'rb'), error_bad_lines=False)
@@ -229,19 +260,20 @@ else:  # loads and caches data from files depending on user input
                     cbg_device_counts[check_str] = [0, 0]
                 cbg_device_counts[check_str][0] += int(row['completely_home_device_count'])
                 cbg_device_counts[check_str][1] += int(row['device_count'])
-    print('Removed: {}'.format(cbg_id_set - set(cbg_device_counts.keys())))
-    for cbg in cbg_id_set - set(cbg_device_counts.keys()):
+                total_devices_tracked += cbg_device_counts[check_str][1]
+    for cbg in cbg_id_set - set(cbg_device_counts.keys()):  # removes cbg due to lack of data
         cbg_id_set.remove(cbg)
         cbg_ids.remove(cbg)
         total_population -= cbgs_to_populations[cbg]
     cbgs_leaving_probs = {}  # probability that a member of a cbg will leave their house each tick
     for cbg in cbg_device_counts:
         cbgs_leaving_probs[cbg] = 1 - (cbg_device_counts[cbg][0] / cbg_device_counts[cbg][1])
+    print('Average percentage of population tracked per day: {}%'.format(adj_sig_figs(100 * total_devices_tracked / (total_population * 7))))
 
     print_elapsed_time()
     print('Caching raw data...')
 
-    raw_cache_data = (cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour)
+    raw_cache_data = (cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour, under_16_chance)
     raw_cache_file = open(raw_cache_path, 'wb')
     pickle.dump(raw_cache_data, raw_cache_file)
 
@@ -287,13 +319,16 @@ if not agents_loaded:
     household_count = 0
 
 
-    def add_agent(current_cbg, household_id, possibly_child):
+    def add_agent(current_cbg, household_id, probs, possibly_child):
         global agent_count
         agent_id = 'agent_{}'.format(agent_count)
         agent_count += 1
         agent_topic = numpy.random.choice(topic_numbers, 1, p=probs)[0]
         agent_status = 'S'
-        permanently_quarantined = random.random() < ALPHA  # prohibits agent from ever leaving their house and ensures they are not initially infected if True
+        if possibly_child:
+            permanently_quarantined = random.random() < under_16_chance[current_cbg]
+        else:
+            permanently_quarantined = random.random() < ALPHA  # prohibits agent from ever leaving their house and ensures they are not initially infected if True
         parameter_2 = None
         if not permanently_quarantined:
             rand = random.random()
@@ -314,8 +349,11 @@ if not agents_loaded:
                 else:  # represents symptomatic (clinical) cases
                     agent_status = 'Ic'
                     R_queue_tups.append((round(distribution_of_clinical.rvs(1)[0] * daily_simulation_time), agent_id))
-                    quarantine_queue_tups.append((QUARANTINE_DURATION * 24 * SIMULATION_TICKS_PER_HOUR, agent_id))
-                    parameter_2 = 'quarantined'
+                    if SYMPTOMATIC_QUARANTINES:
+                        quarantine_queue_tups.append((QUARANTINE_DURATION * 24 * SIMULATION_TICKS_PER_HOUR, agent_id))
+                        parameter_2 = 'quarantined'
+                    else:
+                        inactive_agent_ids.add(agent_id)
             else:
                 inactive_agent_ids.add(agent_id)
         else:
@@ -330,18 +368,18 @@ if not agents_loaded:
         probs = numpy.array(cbg_topic_probabilities[current_cbg])
         probs /= probs.sum()
         for idx, cbg_household_count in enumerate(cbgs_to_households[current_cbg]):
-            current_household_size = idx % 7 + 1  # will end up being one more than this for family households
+            current_household_size = idx % 7 + idx // 7 + 1  # will end up being one more than this for family households
             for _ in range(cbg_household_count):
                 household_id = 'household_{}'.format(household_count)
                 household_count += 1
                 households[household_id] = set()
                 if idx >= 7:  # family households
-                    add_agent(current_cbg, household_id, False)  # householder, cannot be a child
-                    for _ in range(current_household_size):  # adds additional family members, can be children
-                        add_agent(current_cbg, household_id, True)
+                    add_agent(current_cbg, household_id, probs, False)  # householder, cannot be a child
+                    for _ in range(1, current_household_size):  # adds additional family members, can be children
+                        add_agent(current_cbg, household_id, probs, True)
                 else:
                     for _ in range(current_household_size):
-                        add_agent(current_cbg, household_id, False)
+                        add_agent(current_cbg, household_id, probs, False)
         completion = i / len(cbg_ids) * 100
         if completion >= benchmark:
             print('Preparing simulation... {}%'.format(adj_sig_figs(benchmark)))
@@ -410,7 +448,7 @@ del quarantine_queue_tups
 print_elapsed_time()
 print('Running simulation...')
 
-susc = (0.055 + 0.046 + 0.074 + 0.099 + 0.084) / 5  # DO NOT DIVIDE BY SIMULATION_TICKS_PER_HOUR, chance of contracting the virus on contact with someone, from https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-020-0962-9/MediaObjects/41591_2020_962_MOESM1_ESM.pdf
+secondary_attack_rate = 0.05  # DO NOT DIVIDE BY SIMULATION_TICKS_PER_HOUR, chance of contracting the virus on contact with someone, from https://jamanetwork.com/journals/jama/fullarticle/2768396
 asymptomatic_relative_infectiousness = 0.75  # https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
 mask_reduction_factor = 3.1/17.4  # https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31142-9/fulltext
 social_distancing_reduction_factor = 2.6 / 12.8  # https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31142-9/fulltext
@@ -446,7 +484,7 @@ def poi_infect(current_poi_agents, current_time, infectiousness):  # poi_agents,
     global agents
     for other_agent_id in current_poi_agents:
         rand = random.random()
-        if rand < susc * infectiousness:  # assumes direct contact with other agent and a contact limit, does not use per hour probabilities
+        if rand < secondary_attack_rate * infectiousness:  # assumes direct contact with other agent and a contact limit, does not use per hour probabilities
             infect(other_agent_id, current_time)
 
 
@@ -535,15 +573,17 @@ def set_agent_flags(current_time):  # changes agent infection status
     while Ic_queue and Ic_queue.queue[0][0] <= current_time + 1:
         key = Ic_queue.get()[1]
         agents[key][1] = 'Ic'
-        quarantine(key, QUARANTINE_DURATION, current_time)
+        if SYMPTOMATIC_QUARANTINES:
+            quarantine(key, QUARANTINE_DURATION, current_time)
         R_queue.put((current_time + round(distribution_of_clinical.rvs(1)[0] * daily_simulation_time), key))
     while R_queue and R_queue.queue[0][0] <= current_time + 1:
         key = R_queue.get()[1]
         agents[key][1] = 'R'
-    while quarantine_queue and quarantine_queue.queue[0][0] <= current_time + 1:
-        key = quarantine_queue.get()[1]
-        inactive_agent_ids.add(key)
-        agents[key][2] = None
+    if SYMPTOMATIC_QUARANTINES:
+        while quarantine_queue and quarantine_queue.queue[0][0] <= current_time + 1:
+            key = quarantine_queue.get()[1]
+            inactive_agent_ids.add(key)
+            agents[key][2] = None
 
 
 def report_status():  # prints status
@@ -571,11 +611,11 @@ def set_propensity_to_leave():
 
 # prescriptions
 if WEAR_MASKS:
-    susc *= mask_reduction_factor
+    secondary_attack_rate *= mask_reduction_factor
 if SOCIAL_DISTANCING:
-    susc *= social_distancing_reduction_factor
+    secondary_attack_rate *= social_distancing_reduction_factor
 if EYE_PROTECTION:
-    susc *= eye_protection_reduction_factor
+    secondary_attack_rate *= eye_protection_reduction_factor
 closed_pois = set()
 for current_poi_type in CLOSED_POI_TYPES:
     close_poi_type(current_poi_type)
