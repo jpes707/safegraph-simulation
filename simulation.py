@@ -20,18 +20,27 @@ SIMULATION_DAYS = 365 * 5  # number of "days" the simulation runs for
 SIMULATION_TICKS_PER_HOUR = 4  # integer, number of ticks per simulation "hour"
 PROPORTION_OF_POPULATION = 1  # 0.2 => 20% of the actual population is simulated
 PROPORTION_INITIALLY_INFECTED = 0.001  # 0.05 => 5% of the simulated population is initially infected or exposed
-PROPENSITY_TO_LEAVE = 1  # 0.2 => people are only 20% as likely to leave the house as compared to normal
 NUMBER_OF_DWELL_SAMPLES = 5  # a higher number decreases POI dwell time variation and allows less outliers
 MAX_DWELL_TIME = 16  # maximum dwell time at any POI (hours)
-QUARANTINE_DURATION = 10  # number of days a quarantine lasts after an agent begins to show symptoms
 MAXIMUM_INTERACTIONS_PER_TICK = 5  # integer, maximum number of interactions an infected person can have with others per tick
 ALPHA = 0  # 0.4 => 40% of the population is quarantined in their house for the duration of the simulation
-SYMPTOMATIC_QUARANTINES = False
+MINIMUM_INTERVENTION_PROPORTION = 0.1  # 0.1 => all below interventions begin when 10% of the simulated population is infected
+PROPORTION_OBSERVING_GUIDELINES = 1  # NOT YET IMPLEMENTED, 0.9 => only 90% of the population will observe the below interventions (except POI closures, which are always observed)
+PROPENSITY_TO_LEAVE = 1  # 0.2 => people are only 20% as likely to leave the house as compared to normal
+SYMPTOMATIC_QUARANTINES = False  # quarantines agents upon showing symptoms
+QUARANTINE_DURATION = 10  # number of days a quarantine lasts after an agent begins to show symptoms
 WEAR_MASKS = False
 SOCIAL_DISTANCING = False
 EYE_PROTECTION = False
 CLOSED_POI_TYPES = {  # closed POI types (from SafeGraph Core Places "sub_category")
 }
+
+# For COVID-19, a close contact is defined as ay individual who was within 6 feet of an infected person for at least 15 minutes starting from 2 days before illness onset (or, for asymptomatic patients, 2 days prior to positive specimen collection) until the time the patient is isolated. (https://www.cdc.gov/coronavirus/2019-ncov/php/contact-tracing/contact-tracing-plan/contact-tracing.html)
+secondary_attack_rate = 0.05  # (recommended: 0.05) chance of contracting the virus on close contact with someone, from https://jamanetwork.com/journals/jama/fullarticle/2768396, DO NOT DIVIDE BY SIMULATION_TICKS_PER_HOUR
+asymptomatic_relative_infectiousness = 0.75  # (recommended: 0.75) https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
+mask_reduction_factor = 3.1 / 17.4  # (recommended: 3.1 / 17.4) https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31142-9/fulltext
+social_distancing_reduction_factor = 2.6 / 12.8  # (recommended: 2.6 / 12.8) https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31142-9/fulltext
+eye_protection_reduction_factor = 5.5 / 16.0 # (recommended: 5.5 / 16.0) https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31142-9/fulltext
 
 start_time = time.time()
 daily_simulation_time = SIMULATION_TICKS_PER_HOUR * 24
@@ -57,11 +66,11 @@ agents_loaded = False
 use_raw_cache = input('Use file data cache ([y]/n)? ')
 if use_raw_cache == '' or use_raw_cache == 'y':  # obtains cached variables from the file data cache
     raw_cache_file = open(raw_cache_path, 'rb')
-    (cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour, under_16_chance) = pickle.load(raw_cache_file)
+    (cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour) = pickle.load(raw_cache_file)
     use_agents_cache = input('Use agents cache ([y]/n)? ')  # obtains cached variables from agent file data cache
     if use_agents_cache == '' or use_agents_cache == 'y':
         agents_cache_file = open(agents_cache_path, 'rb')
-        (agents, households, cbgs_to_agents, inactive_agent_ids, active_agent_ids, poi_current_visitors, Ipa_queue_tups, Ic_queue_tups, R_queue_tups, quarantine_queue_tups) = pickle.load(agents_cache_file)
+        (agents, households, cbgs_to_agents, inactive_agent_ids, active_agent_ids, poi_current_visitors, Ipa_queue_tups, Ic_queue_tups, R_queue_tups, quarantine_queue_tups, total_ever_infected) = pickle.load(agents_cache_file)
         agents_loaded = True
 else:  # loads and caches data from files depending on user input
     # prompts for user input
@@ -227,25 +236,6 @@ else:  # loads and caches data from files depending on user input
     print(r'The simulated population will be {}% of the real population.'.format(adj_sig_figs(100 * total_population / total_real_population)))
 
     print_elapsed_time()
-    print('Reading age data...')
-
-    census_age_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_open_census_data', 'data', 'cbg_b01.csv'), error_bad_lines=False)
-    codes_under_15 = ['B01001e3', 'B01001e4', 'B01001e5', 'B01001e27', 'B01001e28', 'B01001e29']
-    codes_15_to_17 = ['B01001e6', 'B01001e30']
-    under_16_chance = {}  # {cbg: chance that a non-householder member of a family household is under 16, ...} (assumes children under 16 cannot live in nonfamily households and that children 16 and older can be householders due to emancipation)
-    for _, row in census_age_data.iterrows():
-        check_str = str(int(row['census_block_group'])).zfill(12)
-        if check_str in cbg_id_set:
-            pop_under_15 = sum([int(row[elem]) for elem in codes_under_15])
-            pop_15_to_17 = sum([int(row[elem]) for elem in codes_15_to_17])
-            pop_under_16 = pop_under_15 + pop_15_to_17 / 3  # assumes 1/3 of the population from age 15 to 17 in the CBG is 15
-            family_households_non_householder_population = sum([(idx % 7 + idx // 7 + 1) * cbgs_to_households[check_str][idx] for idx in range(7, 13)]) - sum([cbgs_to_households[check_str][idx] for idx in range(7, 13)])  # number of family household members - number of family householders, see household generation code below for sense of the variable values
-            if family_households_non_householder_population:
-                under_16_chance[check_str] = pop_under_16 / family_households_non_householder_population
-            else:
-                under_16_chance[check_str] = 0
-
-    print_elapsed_time()
     print('Reading social distancing data...')
     
     cbg_device_counts = {}  # cbg: [completely_home_device_count, device_count]
@@ -273,7 +263,7 @@ else:  # loads and caches data from files depending on user input
     print_elapsed_time()
     print('Caching raw data...')
 
-    raw_cache_data = (cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour, under_16_chance)
+    raw_cache_data = (cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour)
     raw_cache_file = open(raw_cache_path, 'wb')
     pickle.dump(raw_cache_data, raw_cache_file)
 
@@ -310,6 +300,7 @@ if not agents_loaded:
     inactive_agent_ids = set()  # {agent_id, agent_id, ...}
     active_agent_ids = {t: set() for t in range(total_simulation_time)}  # expiration_time: {(agent_id, poi_id), (agent_id, poi_id), ...}
     poi_current_visitors = {poi: set() for poi_list in lda_documents for poi in poi_list}  # poi id: {agent_id, agent_id, ...}
+    total_ever_infected = 0
     Ipa_queue_tups = []
     Ic_queue_tups = []
     R_queue_tups = []
@@ -319,21 +310,19 @@ if not agents_loaded:
     household_count = 0
 
 
-    def add_agent(current_cbg, household_id, probs, possibly_child):
-        global agent_count
+    def add_agent(current_cbg, household_id, probs):
+        global agent_count, total_ever_infected
         agent_id = 'agent_{}'.format(agent_count)
         agent_count += 1
         agent_topic = numpy.random.choice(topic_numbers, 1, p=probs)[0]
         agent_status = 'S'
-        if possibly_child:
-            permanently_quarantined = random.random() < under_16_chance[current_cbg]
-        else:
-            permanently_quarantined = random.random() < ALPHA  # prohibits agent from ever leaving their house and ensures they are not initially infected if True
+        permanently_quarantined = random.random() < ALPHA  # prohibits agent from ever leaving their house and ensures they are not initially infected if True
         parameter_2 = None
         if not permanently_quarantined:
             rand = random.random()
             if rand < PROPORTION_INITIALLY_INFECTED:
                 rand /= PROPORTION_INITIALLY_INFECTED
+                total_ever_infected += 1
                 if rand < 0.23076923076:  # 2.754 / (2.754 + 1.928 + 2.662 + 4.590), from exposure gamma distributions
                     agent_status = 'E'
                     Ipa_queue_tups.append((round(distribution_of_exposure.rvs(1)[0] * daily_simulation_time), agent_id))
@@ -349,7 +338,7 @@ if not agents_loaded:
                 else:  # represents symptomatic (clinical) cases
                     agent_status = 'Ic'
                     R_queue_tups.append((round(distribution_of_clinical.rvs(1)[0] * daily_simulation_time), agent_id))
-                    if SYMPTOMATIC_QUARANTINES:
+                    if SYMPTOMATIC_QUARANTINES and PROPORTION_INITIALLY_INFECTED >= MINIMUM_INTERVENTION_PROPORTION:
                         quarantine_queue_tups.append((QUARANTINE_DURATION * 24 * SIMULATION_TICKS_PER_HOUR, agent_id))
                         parameter_2 = 'quarantined'
                     else:
@@ -368,18 +357,13 @@ if not agents_loaded:
         probs = numpy.array(cbg_topic_probabilities[current_cbg])
         probs /= probs.sum()
         for idx, cbg_household_count in enumerate(cbgs_to_households[current_cbg]):
-            current_household_size = idx % 7 + idx // 7 + 1  # will end up being one more than this for family households
+            current_household_size = idx % 7 + idx // 7 + 1  # nonfamily households, then family households
             for _ in range(cbg_household_count):
                 household_id = 'household_{}'.format(household_count)
                 household_count += 1
                 households[household_id] = set()
-                if idx >= 7:  # family households
-                    add_agent(current_cbg, household_id, probs, False)  # householder, cannot be a child
-                    for _ in range(1, current_household_size):  # adds additional family members, can be children
-                        add_agent(current_cbg, household_id, probs, True)
-                else:
-                    for _ in range(current_household_size):
-                        add_agent(current_cbg, household_id, probs, False)
+                for _ in range(current_household_size):
+                    add_agent(current_cbg, household_id, probs)
         completion = i / len(cbg_ids) * 100
         if completion >= benchmark:
             print('Preparing simulation... {}%'.format(adj_sig_figs(benchmark)))
@@ -388,7 +372,7 @@ if not agents_loaded:
     print_elapsed_time()
     print('Caching agents data...')
 
-    agents_cache_data = (agents, households, cbgs_to_agents, inactive_agent_ids, active_agent_ids, poi_current_visitors, Ipa_queue_tups, Ic_queue_tups, R_queue_tups, quarantine_queue_tups)
+    agents_cache_data = (agents, households, cbgs_to_agents, inactive_agent_ids, active_agent_ids, poi_current_visitors, Ipa_queue_tups, Ic_queue_tups, R_queue_tups, quarantine_queue_tups, total_ever_infected)
     agents_cache_file = open(agents_cache_path, 'wb')
     pickle.dump(agents_cache_data, agents_cache_file)
 
@@ -396,6 +380,7 @@ if not agents_loaded:
 
 agents_cache_file.close()
 print('Number of agents: {}'.format(len(agents)))
+print('Total ever infected: {} ({}%)'.format(total_ever_infected, adj_sig_figs(100 * total_ever_infected / len(agents))))
 
 print('Normalizing probabilities...')
 
@@ -448,13 +433,6 @@ del quarantine_queue_tups
 print_elapsed_time()
 print('Running simulation...')
 
-# For COVID-19, a close contact is defined as ay individual who was within 6 feet of an infected person for at least 15 minutes starting from 2 days before illness onset (or, for asymptomatic patients, 2 days prior to positive specimen collection) until the time the patient is isolated. (https://www.cdc.gov/coronavirus/2019-ncov/php/contact-tracing/contact-tracing-plan/contact-tracing.html)
-secondary_attack_rate = 0.05  # DO NOT DIVIDE BY SIMULATION_TICKS_PER_HOUR, chance of contracting the virus on close contact with someone, from https://jamanetwork.com/journals/jama/fullarticle/2768396
-asymptomatic_relative_infectiousness = 0.75  # https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
-mask_reduction_factor = 3.1 / 17.4  # https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31142-9/fulltext
-social_distancing_reduction_factor = 2.6 / 12.8  # https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31142-9/fulltext
-eye_protection_reduction_factor = 5.5 / 16.0 # https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31142-9/fulltext
-
 
 def get_dwell_time(dwell_tuple):  # given a cached tuple from the dwell_distributions dictionary for a specific POI, return a dwell time in ticks
     dwell_time_minutes = 0  # represents dwell time in minutes (not ticks)
@@ -474,11 +452,12 @@ def get_dwell_time(dwell_tuple):  # given a cached tuple from the dwell_distribu
 
 
 def infect(agent_id, current_time):  # infects an agent with the virus
-    global infection_counts_by_day, Ipa_queue
+    global infection_counts_by_day, total_ever_infected, Ipa_queue
     if agents[agent_id][1] == 'S':
         agents[agent_id][1] = 'E'
         Ipa_queue.put((current_time + round(distribution_of_exposure.rvs(1)[0] * daily_simulation_time), agent_id))
         infection_counts_by_day[current_time // daily_simulation_time] += 1
+        total_ever_infected += 1
 
 
 def poi_infect(current_poi_agents, current_time, infectiousness):  # poi_agents, day, infectioness
@@ -574,13 +553,13 @@ def set_agent_flags(current_time):  # changes agent infection status
     while Ic_queue and Ic_queue.queue[0][0] <= current_time + 1:
         key = Ic_queue.get()[1]
         agents[key][1] = 'Ic'
-        if SYMPTOMATIC_QUARANTINES:
+        if do_quarantines:
             quarantine(key, QUARANTINE_DURATION, current_time)
         R_queue.put((current_time + round(distribution_of_clinical.rvs(1)[0] * daily_simulation_time), key))
     while R_queue and R_queue.queue[0][0] <= current_time + 1:
         key = R_queue.get()[1]
         agents[key][1] = 'R'
-    if SYMPTOMATIC_QUARANTINES:
+    if do_quarantines:
         while quarantine_queue and quarantine_queue.queue[0][0] <= current_time + 1:
             key = quarantine_queue.get()[1]
             inactive_agent_ids.add(key)
@@ -597,34 +576,29 @@ def report_status():  # prints status
     print('Infected: {}'.format(stat['Ia']+stat['Ip']+stat['Ic']))
     print('Recovered: {}'.format(stat['R']))
     print('New cases per day: {}'.format(list(zip([i for i in range(len(infection_counts_by_day))], infection_counts_by_day))))
+    print(r'Total ever infected: {} ({}% of the total population)'.format(total_ever_infected, adj_sig_figs(100 * total_ever_infected / len(agents))))
     print()
 
 
-def close_poi_type(current_poi_type):  # e.g. "Restaurants and Other Eating Places"
-    global closed_pois
-    closed_pois |= poi_type[current_poi_type]
-
-
-def set_propensity_to_leave():
-    for cbg in cbgs_leaving_probs:
-        cbgs_leaving_probs[cbg] *= PROPENSITY_TO_LEAVE
-
-
-# prescriptions
-if WEAR_MASKS:
-    secondary_attack_rate *= mask_reduction_factor
-if SOCIAL_DISTANCING:
-    secondary_attack_rate *= social_distancing_reduction_factor
-if EYE_PROTECTION:
-    secondary_attack_rate *= eye_protection_reduction_factor
-closed_pois = set()
-for current_poi_type in CLOSED_POI_TYPES:
-    close_poi_type(current_poi_type)
-set_propensity_to_leave()
-
 print('Day 0:')
 infection_counts_by_day = [0]
+do_quarantines = False
 for current_time in range(total_simulation_time):
+    if total_ever_infected / len(agents) >= MINIMUM_INTERVENTION_PROPORTION:  # prescriptions initiation
+        print('THE POPULATION THRESHOLD FOR INTERVENTIONS HAS BEEN MET! DEPLOYING INTERVENTIONS...')
+        if WEAR_MASKS:  # mask wearing
+            secondary_attack_rate *= mask_reduction_factor
+        if SOCIAL_DISTANCING:  # social distancing
+            secondary_attack_rate *= social_distancing_reduction_factor
+        if EYE_PROTECTION:  # eye protection
+            secondary_attack_rate *= eye_protection_reduction_factor
+        closed_pois = set()  # POI type closure
+        for current_poi_type in CLOSED_POI_TYPES:  # e.g. "Restaurants and Other Eating Places"
+            closed_pois |= poi_type[current_poi_type]
+        for cbg in cbgs_leaving_probs:  # propensity to leave modifications
+            cbgs_leaving_probs[cbg] *= PROPENSITY_TO_LEAVE
+        if SYMPTOMATIC_QUARANTINES:  # symptomatic quarantines
+            do_quarantines = True
     remove_expired_agents(current_time)
     select_active_agents(current_time)
     infect_active_agents(current_time)
@@ -640,5 +614,8 @@ for current_time in range(total_simulation_time):
             print_elapsed_time()
             print('Day {} complete. Infection status:'.format(day))
             report_status()
+            if infection_counts_by_day[day] == 0:
+                print('No new infections today, simulation complete!')
+                break
             print('Day {}:'.format(day + 1))
             infection_counts_by_day.append(0)
