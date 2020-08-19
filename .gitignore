@@ -4,6 +4,6 @@ safegraph-data/
 demographics-outputs/
 experiments/
 __pycache__/
-.*
+._*
 raw_cache.p
 agents_cache.p
