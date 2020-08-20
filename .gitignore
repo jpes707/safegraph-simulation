@@ -1,4 +1,5 @@
 .DS_Store
+.vscode
 .gdb_history
 safegraph-data/
 demographics-outputs/
@@ -7,3 +8,5 @@ __pycache__/
 ._*
 raw_cache.p
 agents_cache.p
+raw_cache_naive.p
+agents_cache_naive.p

@@ -22,7 +22,7 @@ PROPORTION_OF_POPULATION = 1  # 0.2 => 20% of the actual population is simulated
 PROPORTION_INITIALLY_INFECTED = 0.001  # 0.05 => 5% of the simulated population is initially infected or exposed
 NUMBER_OF_DWELL_SAMPLES = 5  # a higher number decreases POI dwell time variation and allows less outliers
 MAX_DWELL_TIME = 16  # maximum dwell time at any POI (hours)
-MAXIMUM_INTERACTIONS_PER_TICK = 5  # integer, maximum number of interactions an infected person can have with others per tick
+MAXIMUM_INTERACTIONS_PER_TICK = 10000  # integer, maximum number of interactions an infected person can have with others per tick
 ALPHA = 0  # 0.4 => 40% of the population is quarantined in their house for the duration of the simulation
 MINIMUM_INTERVENTION_PROPORTION = 0.1  # 0.1 => all below interventions begin when 10% of the simulated population is infected
 PROPORTION_OBSERVING_GUIDELINES = 1  # NOT YET IMPLEMENTED, 0.9 => only 90% of the population will observe the below interventions (except POI closures, which are always observed)
@@ -464,26 +464,26 @@ print('Running simulation...')
 
 
 def get_dwell_time(dwell_tuple):  # given a cached tuple from the dwell_distributions dictionary for a specific POI, return a dwell time in ticks
-    # dwell_time_minutes = 0  # represents dwell time in minutes (not ticks)
-    # while dwell_time_minutes <= 0:
-    #     if len(dwell_tuple) == 3:
-    #         dwell_time_minutes = statistics.median(
-    #             getattr(scipy.stats, dwell_tuple[0]).rvs(loc=dwell_tuple[1], scale=dwell_tuple[2],
-    #                                                      size=NUMBER_OF_DWELL_SAMPLES))
-    #     elif len(dwell_tuple) == 4:
-    #         dwell_time_minutes = statistics.median(
-    #             getattr(scipy.stats, dwell_tuple[0]).rvs(dwell_tuple[1], loc=dwell_tuple[2], scale=dwell_tuple[3],
-    #                                                      size=NUMBER_OF_DWELL_SAMPLES))
-    #     else:
-    #         dwell_time_minutes = statistics.median(
-    #             getattr(scipy.stats, dwell_tuple[0]).rvs(dwell_tuple[1], dwell_tuple[2], loc=dwell_tuple[3],
-    #                                                      scale=dwell_tuple[4], size=NUMBER_OF_DWELL_SAMPLES))
-    # dwell_time_ticks = int(round(dwell_time_minutes * SIMULATION_TICKS_PER_HOUR / 60))  # represents dwell time in ticks
-    # if dwell_time_ticks == 0:
-    #     dwell_time_ticks = 1
-    # elif dwell_time_ticks > MAX_DWELL_TIME * SIMULATION_TICKS_PER_HOUR:
-    #     dwell_time_ticks = MAX_DWELL_TIME * SIMULATION_TICKS_PER_HOUR
-    return SIMULATION_TICKS_PER_HOUR # dwell_time_ticks
+    dwell_time_minutes = 0  # represents dwell time in minutes (not ticks)
+    while dwell_time_minutes <= 0:
+        if len(dwell_tuple) == 3:
+            dwell_time_minutes = statistics.median(
+                getattr(scipy.stats, dwell_tuple[0]).rvs(loc=dwell_tuple[1], scale=dwell_tuple[2],
+                                                         size=NUMBER_OF_DWELL_SAMPLES))
+        elif len(dwell_tuple) == 4:
+            dwell_time_minutes = statistics.median(
+                getattr(scipy.stats, dwell_tuple[0]).rvs(dwell_tuple[1], loc=dwell_tuple[2], scale=dwell_tuple[3],
+                                                         size=NUMBER_OF_DWELL_SAMPLES))
+        else:
+            dwell_time_minutes = statistics.median(
+                getattr(scipy.stats, dwell_tuple[0]).rvs(dwell_tuple[1], dwell_tuple[2], loc=dwell_tuple[3],
+                                                         scale=dwell_tuple[4], size=NUMBER_OF_DWELL_SAMPLES))
+    dwell_time_ticks = int(round(dwell_time_minutes * SIMULATION_TICKS_PER_HOUR / 60))  # represents dwell time in ticks
+    if dwell_time_ticks == 0:
+        dwell_time_ticks = 1
+    elif dwell_time_ticks > MAX_DWELL_TIME * SIMULATION_TICKS_PER_HOUR:
+        dwell_time_ticks = MAX_DWELL_TIME * SIMULATION_TICKS_PER_HOUR
+    return dwell_time_ticks
 
 
 def infect(agent_id, current_time):  # infects an agent with the virus
