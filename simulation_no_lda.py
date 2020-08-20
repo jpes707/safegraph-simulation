@@ -48,15 +48,17 @@ CLOSED_POI_TYPES = {}  # closes the following POI types (from SafeGraph Core Pla
 # END DEFAULT CONFIGURATION FOR LINTER
 
 # read in config
-config_file_name = input('Config file (default: default-config): ')
+print('Note: the NUM_TOPICS variable from config files will be ignored in this script, as LDA is not applied')
+config_file_name = input('Config file (default: default-no-lda): ')
 if config_file_name == '':
-    config_file_name = 'default-config'
+    config_file_name = 'default-no-lda'
 config_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config-files', '{}.cfg'.format(config_file_name))
 cfg = configparser.RawConfigParser()
 cfg.read(config_file_path)
 globals_dict = dict(cfg.items('Settings'))
 for var in globals_dict:
     globals()[var.upper()] = eval(globals_dict[var].split('#', 1)[0].strip())
+NUM_TOPICS = 1  # overrides NUM_TOPICS from configs
 
 # virus parameters
 # For COVID-19, a close contact is defined as ay individual who was within 6 feet of an infected person for at least 15 minutes starting from 2 days before illness onset (or, for asymptomatic patients, 2 days prior to positive specimen collection) until the time the patient is isolated. (https://www.cdc.gov/coronavirus/2019-ncov/php/contact-tracing/contact-tracing-plan/contact-tracing.html)
@@ -109,13 +111,12 @@ def print_elapsed_time():  # prints the simulation's elapsed time to five signif
 
 
 def create_map(data, map_path, map_lat=38.8300, map_long=-77.2800, zoom_level=11):  # create heatmap [[lat, long, weight], [lat, long, weight], ... [lat, long, weight]]
-        folium_map = folium.Map([map_lat, map_long], tiles='stamentoner', zoom_start=11)
-        for idx, topic in enumerate(data):
-            h = HeatMap(topic, show=False)
-            h.layer_name = 'topic_{}'.format(idx)
-            folium_map.add_child(h)
-        folium.LayerControl(collapsed=False).add_to(folium_map)
-        folium_map.save(map_path)
+    folium_map = folium.Map([map_lat, map_long], tiles='stamentoner', zoom_start=11)
+    h = HeatMap(data, show=False)
+    h.layer_name = 'heatmap'
+    folium_map.add_child(h)
+    folium.LayerControl(collapsed=False).add_to(folium_map)
+    folium_map.save(map_path)
 
 
 # prompt user whether or not to used cached data in order to reduce initial simulation load time
@@ -125,7 +126,7 @@ agents_loaded = False
 use_raw_cache = input('Use file data cache (y/[n])? ')
 if use_raw_cache.lower() == 'y':  # obtains cached variables from the file data cache
     raw_cache_file = open(raw_cache_path, 'rb')
-    (cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour) = pickle.load(raw_cache_file)
+    (cbg_ids, poi_set, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour) = pickle.load(raw_cache_file)
     use_agents_cache = input('Use agents cache (y/[n])? ')  # obtains cached variables from agent file data cache
     if use_agents_cache.lower() == 'y':
         agents_cache_file = open(agents_cache_path, 'rb')
@@ -162,15 +163,18 @@ else:  # loads and caches data from files depending on user input
     usable_data = data[(data.visitor_home_cbgs != '{}')]
 
     # from usable POIs, load cbgs, CBGs are documents, POIs are words
-    cbgs_to_pois = {}
     dwell_distributions = {}
-    poi_set = set()
     poi_type = {}
     poi_hour_counts = {}  # poi id: length 24 list of poi visits by hour
     coords = {}
+    pois_to_frequencies = {}
+    total_visits = 0
+    cbg_id_set = set()
     for row in usable_data.itertuples():
         place_id = str(row.safegraph_place_id)
-        poi_set.add(place_id)
+        poi_visits = float(row.raw_visit_counts)
+        pois_to_frequencies[place_id] = poi_visits
+        total_visits += poi_visits
         dwell_distributions[place_id] = eval(row.dwell_distribution)
         lati, longi = float(row.latitude), float(row.longitude)
         if not math.isnan(lati) and not math.isnan(longi):
@@ -190,28 +194,16 @@ else:  # loads and caches data from files depending on user input
         for cbg in cbgs:
             if not cbg.startswith('51059'):  # excludes all POIs outside of Fairfax County, must be removed later!
                 continue
-            if cbg not in cbgs_to_pois:
-                cbgs_to_pois[cbg] = []
-            cbg_frequency = numpy.random.randint(2, 5) if cbgs[cbg] == 4 else cbgs[cbg]  # SafeGraph reports POI CBG frequency as 4 if the visit count is between 2-4
-            cbgs_to_pois[cbg].extend([place_id] * cbg_frequency)  # generate POIs as "words" and multiply by the amount that CBG visited
-    
+            cbg_id_set.add(cbg)
+    cbg_ids = list(cbg_id_set)
+    poi_set = set(pois_to_frequencies.keys())
+
     print_elapsed_time()
-    print('Running LDA and creating initial distributions...')
+    print('Creating initial distributions...')
 
-    cbg_ids = list(cbgs_to_pois.keys())
-    cbg_id_set = set(cbg_ids)
-    lda_documents = list(cbgs_to_pois.values())
-    poi_set = {poi for poi_list in lda_documents for poi in poi_list}
-    poi_count = len(poi_set)
-
-    lda_dictionary = gensim.corpora.dictionary.Dictionary(lda_documents)  # generate "documents" for gensim
-    lda_corpus = [lda_dictionary.doc2bow(cbg) for cbg in lda_documents]  # generate "words" for gensim
-    cbg_to_bow = dict(zip(cbg_ids, lda_corpus))
-    lda_model = gensim.models.LdaModel(lda_corpus, num_topics=NUM_TOPICS, id2word=lda_dictionary, iterations=100000, passes=30, eta='auto', alpha='auto', random_state=RANDOM_SEED)
-
-    cbgs_to_topics = dict(zip(cbg_ids, list(lda_model.get_document_topics(lda_corpus, minimum_probability=0))))  # {'510594301011': [(0, 5.5570694e-05), (1, 5.5570694e-05), (2, 5.5570694e-05), (3, 5.5570694e-05), ...], ...}
-    lda_output = lda_model.show_topics(formatted=False, num_topics=NUM_TOPICS, num_words=poi_count)
-    topics_to_pois = [[[tup[0] for tup in givens[1]], [tup[1] for tup in givens[1]]] for givens in lda_output]  # [[poi id list, probability dist], [poi id list, probability dist], ...]
+    freq_tups = [(poi, pois_to_frequencies[poi] / total_visits) for poi in pois_to_frequencies]
+    freq_tups.sort(key = lambda x: x[1], reverse = True)
+    topics_to_pois = [[[tup[0] for tup in freq_tups], [tup[1] for tup in freq_tups]]]  # [[poi id list, probability dist], [poi id list, probability dist], ...]
     
     topic_hour_distributions = []  # topic: [0.014925373134328358, 0.0, 0.014925373134328358, 0.014925373134328358, 0.014925373134328358, 0.014925373134328358, 0.014925373134328358, 0.08955223880597014, 0.029850746268656716, 0.0, 0.04477611940298507, 0.029850746268656716, 0.029850746268656716, 0.04477611940298507, 0.11940298507462686, 0.04477611940298507, 0.05970149253731343, 0.1044776119402985, 0.04477611940298507, 0.05970149253731343, 0.07462686567164178, 0.08955223880597014, 0.014925373134328358, 0.029850746268656716] (chance of leaving by hour, adds up to 1)
     topics_to_pois_by_hour = []  # topic: [hour: poi info lists, hour: poi info lists, ...] (topics_to_pois but weighted per hour)
@@ -239,27 +231,16 @@ else:  # loads and caches data from files depending on user input
         topics_to_pois_by_hour.append(current_pois_by_hour)
 
     cbg_topic_probabilities = {}
-    for cbg in cbgs_to_topics:
-        current_probabilities = []
-        count = 0
-        for tup in cbgs_to_topics[cbg]:
-            while count != tup[0]:
-                current_probabilities.append(0)
-                count += 1
-            current_probabilities.append(tup[1])
-            count += 1
-        while count != NUM_TOPICS:
-            current_probabilities.append(0)
-            count += 1
-        cbg_topic_probabilities[cbg] = current_probabilities
+    for cbg in cbg_ids:
+        cbg_topic_probabilities[cbg] = [1]
     
     print_elapsed_time()
     print('Creating topic to POI map...')
 
-    map_data = [[coords[tup[0]] + [float(tup[1])] for tup in givens[1] if tup[0] in coords][:min(len(givens[1]), MAXIMUM_NUMBER_OF_MAPPED_POIS)] for givens in lda_output]
+    map_data = [[coords[tup[0]] + [float(tup[1])] for tup in freq_tups if tup[0] in coords][:min(len(freq_tups), MAXIMUM_NUMBER_OF_MAPPED_POIS)]]
     average_lat = sum([sum([tup[0] for tup in topic_info]) for topic_info in map_data]) / sum([len(topic_info) for topic_info in map_data])
     average_long = sum([sum([tup[1] for tup in topic_info]) for topic_info in map_data]) / sum([len(topic_info) for topic_info in map_data])
-    create_map(map_data, topic_to_poi_map_path, average_lat, average_long)
+    create_map(map_data[0], topic_to_poi_map_path, average_lat, average_long)
 
     print_elapsed_time()
     print('Reading CBG population data...')
@@ -334,7 +315,7 @@ else:  # loads and caches data from files depending on user input
     print_elapsed_time()
     print('Caching raw data...')
 
-    raw_cache_data = (cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour)
+    raw_cache_data = (cbg_ids, poi_set, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour)
     raw_cache_file = open(raw_cache_path, 'wb')
     pickle.dump(raw_cache_data, raw_cache_file)
 
@@ -360,7 +341,7 @@ if not agents_loaded:
     cbgs_to_agents = {cbg: set() for cbg in cbg_ids}  # cbg: {agent_id, agent_id, ...}
     inactive_agent_ids = set()  # {agent_id, agent_id, ...}
     active_agent_ids = {}  # expiration_time: {(agent_id, poi_id), (agent_id, poi_id), ...}
-    poi_current_visitors = {poi: set() for poi_list in lda_documents for poi in poi_list}  # poi id: {agent_id, agent_id, ...}
+    poi_current_visitors = {poi: set() for poi in poi_set}  # poi id: {agent_id, agent_id, ...}
     total_ever_infected = 0
     Ipa_queue_tups = []
     Ic_queue_tups = []
@@ -371,11 +352,11 @@ if not agents_loaded:
     household_count = 0
 
 
-    def add_agent(current_cbg, household_id, probs):
+    def add_agent(current_cbg, household_id):
         global agent_count, total_ever_infected
         agent_id = 'agent_{}'.format(agent_count)
         agent_count += 1
-        agent_topic = numpy.random.choice(topic_numbers, 1, p=probs)[0]
+        agent_topic = 0
         agent_status = 'S'
         permanently_quarantined = numpy.random.rand() < ALPHA  # prohibits agent from ever leaving their house and ensures they are not initially infected if True
         parameter_2 = None
@@ -418,8 +399,6 @@ if not agents_loaded:
 
     benchmark = 5
     for i, current_cbg in enumerate(cbg_ids):
-        probs = numpy.array(cbg_topic_probabilities[current_cbg])
-        probs /= probs.sum()
         for idx, cbg_household_count in enumerate(cbgs_to_households[current_cbg]):
             current_household_size = idx % 7 + idx // 7 + 1  # nonfamily households, then family households
             for _ in range(cbg_household_count):
@@ -427,7 +406,7 @@ if not agents_loaded:
                 household_count += 1
                 households[household_id] = set()
                 for _ in range(current_household_size):
-                    add_agent(current_cbg, household_id, probs)
+                    add_agent(current_cbg, household_id)
                 for agent_id in households[household_id]:
                     agents[agent_id][4] = households[household_id] - {agent_id}
                     if SYMPTOMATIC_QUARANTINES and PROPORTION_INITIALLY_INFECTED >= MINIMUM_INTERVENTION_PROPORTION and HOUSEHOLD_QUARANTINES and agents[agent_id][2] == 'quarantined':
@@ -460,7 +439,7 @@ if not agents_loaded:
         map_data.append(topic_data)
     average_lat = sum([sum([tup[0] for tup in topic_info]) for topic_info in map_data]) / sum([len(topic_info) for topic_info in map_data])
     average_long = sum([sum([tup[1] for tup in topic_info]) for topic_info in map_data]) / sum([len(topic_info) for topic_info in map_data])
-    create_map(map_data, cbg_to_topic_map_path, average_lat, average_long)
+    create_map(map_data[0], cbg_to_topic_map_path, average_lat, average_long)
 
     print_elapsed_time()
     print('Caching agents data...')
