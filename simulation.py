@@ -47,17 +47,6 @@ CLOSED_POI_TYPES = {}  # closes the following POI types (from SafeGraph Core Pla
 
 # END DEFAULT CONFIGURATION FOR LINTER
 
-# read in config
-config_file_name = input('Config file (default: default-config): ')
-if config_file_name == '':
-    config_file_name = 'default-config'
-config_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config-files', '{}.cfg'.format(config_file_name))
-cfg = configparser.RawConfigParser()
-cfg.read(config_file_path)
-globals_dict = dict(cfg.items('Settings'))
-for var in globals_dict:
-    globals()[var.upper()] = eval(globals_dict[var].split('#', 1)[0].strip())
-
 # virus parameters
 # For COVID-19, a close contact is defined as ay individual who was within 6 feet of an infected person for at least 15 minutes starting from 2 days before illness onset (or, for asymptomatic patients, 2 days prior to positive specimen collection) until the time the patient is isolated. (https://www.cdc.gov/coronavirus/2019-ncov/php/contact-tracing/contact-tracing-plan/contact-tracing.html)
 percent_asymptomatic = 0.4  # (recommended: 0.4) https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
@@ -85,9 +74,8 @@ subclinical_median = distribution_of_subclinical.median()
 median_infectious_duration = preclinical_median + clinical_median
 daily_chance_of_small_household_transmission = total_chance_of_small_household_transmission / median_infectious_duration
 daily_chance_of_large_household_transmission = total_chance_of_large_household_transmission / median_infectious_duration
-outfile_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results', 'console-outputs', config_file_name + '-' + now.strftime(r'%Y-%m-%d-%H-%M-%S') + '.txt')
-cbg_to_topic_map_path =  os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results', 'cbg-to-topic-maps', config_file_name + '-' + now.strftime(r'%Y-%m-%d-%H-%M-%S') + '.html')
-topic_to_poi_map_path =  os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results', 'topic-to-poi-maps', config_file_name + '-' + now.strftime(r'%Y-%m-%d-%H-%M-%S') + '.html')
+mallet_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mallet-2.0.8', 'bin', 'mallet')
+os.environ['MALLET_HOME'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mallet-2.0.8')
 
 
 def update_outfile():
@@ -125,14 +113,23 @@ agents_loaded = False
 use_raw_cache = input('Use file data cache (y/[n])? ')
 if use_raw_cache.lower() == 'y':  # obtains cached variables from the file data cache
     raw_cache_file = open(raw_cache_path, 'rb')
-    (cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour) = pickle.load(raw_cache_file)
+    (config_file_name, cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour) = pickle.load(raw_cache_file)
     use_agents_cache = input('Use agents cache (y/[n])? ')  # obtains cached variables from agent file data cache
+    config_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config-files', '{}.cfg'.format(config_file_name))
+    cfg = configparser.RawConfigParser()
+    cfg.read(config_file_path)
+    globals_dict = dict(cfg.items('Settings'))
+    for var in globals_dict:
+        globals()[var.upper()] = eval(globals_dict[var].split('#', 1)[0].strip())
     if use_agents_cache.lower() == 'y':
         agents_cache_file = open(agents_cache_path, 'rb')
         (agents, households, cbgs_to_agents, inactive_agent_ids, active_agent_ids, poi_current_visitors, Ipa_queue_tups, Ic_queue_tups, R_queue_tups, quarantine_queue_tups, total_ever_infected) = pickle.load(agents_cache_file)
         agents_loaded = True
 else:  # loads and caches data from files depending on user input
     # prompts for user input
+    config_file_name = input('Config file (default: default-config): ')
+    if config_file_name == '':
+        config_file_name = 'default-config'
     STATE_ABBR = input('State abbreviation (default: VA): ')
     if STATE_ABBR == '':
         STATE_ABBR = 'VA'
@@ -142,6 +139,14 @@ else:  # loads and caches data from files depending on user input
     WEEK = input('Week (default: 2019-10-28): ')  # start date of the week to base data off of, must be a Monday
     if WEEK == '':
         WEEK = '2019-10-28'
+    
+    # read in config
+    config_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config-files', '{}.cfg'.format(config_file_name))
+    cfg = configparser.RawConfigParser()
+    cfg.read(config_file_path)
+    globals_dict = dict(cfg.items('Settings'))
+    for var in globals_dict:
+        globals()[var.upper()] = eval(globals_dict[var].split('#', 1)[0].strip())
 
     # checks locality type
     if STATE_ABBR == 'AK':
@@ -206,10 +211,9 @@ else:  # loads and caches data from files depending on user input
 
     lda_dictionary = gensim.corpora.dictionary.Dictionary(lda_documents)  # generate "documents" for gensim
     lda_corpus = [lda_dictionary.doc2bow(cbg) for cbg in lda_documents]  # generate "words" for gensim
-    cbg_to_bow = dict(zip(cbg_ids, lda_corpus))
-    lda_model = gensim.models.LdaModel(lda_corpus, num_topics=NUM_TOPICS, id2word=lda_dictionary, iterations=100000, passes=30, eta='auto', alpha='auto', random_state=RANDOM_SEED)
+    lda_model = gensim.models.wrappers.LdaMallet(mallet_path, corpus=lda_corpus, num_topics=NUM_TOPICS, id2word=lda_dictionary, random_seed=RANDOM_SEED, optimize_interval=1, alpha=50/NUM_TOPICS)
 
-    cbgs_to_topics = dict(zip(cbg_ids, list(lda_model.get_document_topics(lda_corpus, minimum_probability=0))))  # {'510594301011': [(0, 5.5570694e-05), (1, 5.5570694e-05), (2, 5.5570694e-05), (3, 5.5570694e-05), ...], ...}
+    cbgs_to_topics = dict(zip(cbg_ids, list(lda_model.load_document_topics())))  # {'510594301011': [(0, 5.5570694e-05), (1, 5.5570694e-05), (2, 5.5570694e-05), (3, 5.5570694e-05), ...], ...}
     lda_output = lda_model.show_topics(formatted=False, num_topics=NUM_TOPICS, num_words=poi_count)
     topics_to_pois = [[[tup[0] for tup in givens[1]], [tup[1] for tup in givens[1]]] for givens in lda_output]  # [[poi id list, probability dist], [poi id list, probability dist], ...]
     
@@ -256,6 +260,7 @@ else:  # loads and caches data from files depending on user input
     print_elapsed_time()
     print('Creating topic to POI map...')
 
+    topic_to_poi_map_path =  os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results', 'topic-to-poi-maps', config_file_name + '-' + now.strftime(r'%Y-%m-%d-%H-%M-%S') + '.html')
     map_data = [[coords[tup[0]] + [float(tup[1])] for tup in givens[1] if tup[0] in coords][:min(len(givens[1]), MAXIMUM_NUMBER_OF_MAPPED_POIS)] for givens in lda_output]
     average_lat = sum([sum([tup[0] for tup in topic_info]) for topic_info in map_data]) / sum([len(topic_info) for topic_info in map_data])
     average_long = sum([sum([tup[1] for tup in topic_info]) for topic_info in map_data]) / sum([len(topic_info) for topic_info in map_data])
@@ -334,7 +339,7 @@ else:  # loads and caches data from files depending on user input
     print_elapsed_time()
     print('Caching raw data...')
 
-    raw_cache_data = (cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour)
+    raw_cache_data = (config_file_name, cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour)
     raw_cache_file = open(raw_cache_path, 'wb')
     pickle.dump(raw_cache_data, raw_cache_file)
 
@@ -443,6 +448,7 @@ if not agents_loaded:
     print_elapsed_time()
     print('Creating CBG to topic map...')
     
+    cbg_to_topic_map_path =  os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results', 'cbg-to-topic-maps', config_file_name + '-' + now.strftime(r'%Y-%m-%d-%H-%M-%S') + '.html')
     map_cbg_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_open_census_data', 'metadata', 'cbg_geographic_data.csv'))
     topic_cbg_counts = {i: {} for i in range(NUM_TOPICS)}
     for agent in agents:
@@ -456,7 +462,7 @@ if not agents_loaded:
         topic_population = sum([tup[0] for tup in topic])
         for iu, tup in enumerate(topic):
             row = map_cbg_data.loc[map_cbg_data.census_block_group == int(tup[1])]
-            topic_data.append([float(row.latitude), float(row.longitude), float(tup[0] / topic_population)])
+            topic_data.append([float(row.latitude), float(row.longitude), float(tup[0])])
         map_data.append(topic_data)
     average_lat = sum([sum([tup[0] for tup in topic_info]) for topic_info in map_data]) / sum([len(topic_info) for topic_info in map_data])
     average_long = sum([sum([tup[1] for tup in topic_info]) for topic_info in map_data]) / sum([len(topic_info) for topic_info in map_data])
@@ -524,6 +530,7 @@ for topic in range(len(topics_to_pois_by_hour)):  # iterates through each topic
         topics_to_pois_by_hour[topic][t][1] /= topics_to_pois_by_hour[topic][t][1].sum()
 
 print_elapsed_time()
+outfile_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results', 'console-outputs', config_file_name + '-' + now.strftime(r'%Y-%m-%d-%H-%M-%S') + '.txt')
 print('Running simulation... (check {} for the output)'.format(outfile_path))
 outfile = open(outfile_path, 'a+')
 sys.stdout = outfile

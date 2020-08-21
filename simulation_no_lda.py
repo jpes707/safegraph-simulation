@@ -1,7 +1,6 @@
 from datetime import datetime
 from distfit import distfit
 import pandas as pd
-import gensim
 import json
 import os
 import sys
