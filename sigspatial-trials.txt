@@ -1,4 +1,4 @@
-100,000 agents in all, single CBG infected, topics counts 1, 10, and 50
+100,000 agents in all, topics counts 1, 10, and 50, single CBG infected
 
 Parameters
 0.1. default parameters

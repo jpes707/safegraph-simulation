@@ -134,6 +134,7 @@ else:  # loads and caches data from files depending on user input
     # prompts for config input
     if len(sys.argv) > 1:
         config_file_name = str(sys.argv[1])
+        print('Config file: {}'.format(config_file_name))
     else:
         config_file_name = input('Config file (default: default-config): ')
         if config_file_name == '':
@@ -289,7 +290,7 @@ else:  # loads and caches data from files depending on user input
     print_elapsed_time()
     print('Creating topic to POI map...')
 
-    topic_to_poi_map_path =  os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results', 'topic-to-poi-maps', config_file_name + '-' + now.strftime(r'%Y-%m-%d-%H-%M-%S') + '.html')
+    topic_to_poi_map_path =  os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results', 'topic-to-poi-maps', config_file_name + '.html')
     map_data = [[coords[tup[0]] + [float(tup[1])] for tup in givens[1] if tup[0] in coords][:min(len(givens[1]), MAXIMUM_NUMBER_OF_MAPPED_POIS)] for givens in lda_output]
     average_lat = sum([sum([tup[0] for tup in topic_info]) for topic_info in map_data]) / sum([len(topic_info) for topic_info in map_data])
     average_long = sum([sum([tup[1] for tup in topic_info]) for topic_info in map_data]) / sum([len(topic_info) for topic_info in map_data])
@@ -477,7 +478,7 @@ if not agents_loaded:
     print_elapsed_time()
     print('Creating CBG to topic map...')
     
-    cbg_to_topic_map_path =  os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results', 'cbg-to-topic-maps', config_file_name + '-' + now.strftime(r'%Y-%m-%d-%H-%M-%S') + '.html')
+    cbg_to_topic_map_path =  os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results', 'cbg-to-topic-maps', config_file_name + '.html')
     map_cbg_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_open_census_data', 'metadata', 'cbg_geographic_data.csv'))
     topic_cbg_counts = {i: {} for i in range(NUM_TOPICS)}
     for agent in agents:
@@ -558,7 +559,7 @@ for topic in range(len(topics_to_pois_by_hour)):  # iterates through each topic
         topics_to_pois_by_hour[topic][t][1] /= topics_to_pois_by_hour[topic][t][1].sum()
 
 print_elapsed_time()
-outfile_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results', 'console-outputs', config_file_name + '-' + now.strftime(r'%Y-%m-%d-%H-%M-%S') + '.txt')
+outfile_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results', 'console-outputs', config_file_name + '.txt')
 print('Running simulation... (check {} for the output)'.format(outfile_path))
 outfile = open(outfile_path, 'a+')
 sys.stdout = outfile
