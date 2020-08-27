@@ -1,7 +1,7 @@
 
 # safegraph-simulation
 
-ASSIP 2020 research project to simulate the spread of COVID-19 by applying LDA to data from SafeGraph
+SIGSPATIAL ARIC 2020: Foot-Traffic Informed COVID-19 Simulation and Mitigation
 
 ## Installation
 
@@ -11,11 +11,13 @@ ASSIP 2020 research project to simulate the spread of COVID-19 by applying LDA t
 
 3. Download the SafeGraph Open Census Data [here](https://www.safegraph.com/open-census-data). Save it to `safegraph-data/safegraph_open_census_data`.
 
-4. Download the SafeGraph Weekly Patterns (v2) data after following [these steps](https://www.safegraph.com/covid-19-data-consortium). Save it to `safegraph-data/safegraph_weekly_patterns_v2`.
+4. Get free access to the remaining SafeGraph data by following [these steps](https://www.safegraph.com/covid-19-data-consortium).
 
-5. Download the SafeGraph Core Places data after following the same process outlined in step 4. Save it to `safegraph-data/safegraph_core_places`.
+4. Download the SafeGraph Weekly Patterns (v2) data. Save it to `safegraph-data/safegraph_weekly_patterns_v2`.
 
-6. Download the SafeGraph Social Distancing Metrics data after following the same process outlined in step 4. Save it to `safegraph-data/safegraph_social_distancing_metrics`.
+5. Download the SafeGraph Core Places data. Save it to `safegraph-data/safegraph_core_places`.
+
+6. Download the SafeGraph Social Distancing Metrics data. Save it to `safegraph-data/safegraph_social_distancing_metrics`.
 
 ## Usage
 

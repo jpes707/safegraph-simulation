@@ -1,0 +1,40 @@
+100,000 agents in all, single CBG infected, topics counts 1, 10, and 50
+
+Parameters
+0.1. default parameters
+1. infection probabilities upon contact at POIs <= this also covers the mask wearing and social distancing interventions by reducing the global infection rate
+1.1. 1%
+1.2. 3%
+-- 5% (default)
+2. number of interactions
+2.1. 1
+2.2. 3
+-- 5 (default)
+2.3 7 (added because the R0 in 2.1 was too low to sustain the virus / result in a curve)
+3. number of initial infected agents in the base CBG (% of CBG population)
+3.1. 5%
+-- 25% (default)
+3.2. 50%
+4. propensity to leave (% of normal likelihood to leave the house)
+4.1. 25%
+4.2. 75%
+-- 100% (default)
+4.3 50% (added because the R0 in 4.1 was too low to sustain the virus / result in a curve)
+
+Interventions
+5. generic quarantines (other household members still leave)
+5.1. 4 day
+5.2. 6 day
+5.3. 10 day
+6. household quarantines (everyone in a household quarantines when a single household agent gets sick)
+6.1. 4 day
+6.2. 6 day
+6.3. 10 day
+7. closure of POIs
+7.1. schools closed
+7.2. restaurants closed
+7.3. nonessentials closed
+8. mandatory quarantines/alpha (% of population is forced to stay in the house for the duration of the simulation)
+8.1. 25%
+8.2. 50%
+8.3. 75%

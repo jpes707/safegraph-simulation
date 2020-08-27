@@ -1,3 +1,0 @@
-Day 0:
-Hour 0 (0) complete.
-Total time elapsed: 283.41s

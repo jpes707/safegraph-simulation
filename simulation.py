@@ -2,6 +2,7 @@ from datetime import datetime
 from distfit import distfit
 import pandas as pd
 import gensim
+import random
 import json
 import os
 import sys
@@ -21,61 +22,44 @@ from folium.plugins import HeatMap
 # BEGIN DEFAULT CONFIGURATION FOR LINTER, EDITING THIS DOES NOTHING!!! USE .cfg FILES INSTEAD!!!
 
 # preliminary parameters
+LOCALITY = 'Fairfax'  # can be a county, borough, or parish; independent cities (e.g. Baltimore City) are not currently compatible
+STATE_ABBR = 'VA'  # state abbreviation of where the locality is located
+WEEK = '2019-10-28'  # start date of the week to base data off of, must be a Monday
 NUM_TOPICS = 50  # number of Latent Dirichlet Allocation (LDA) topics
 MAXIMUM_NUMBER_OF_MAPPED_POIS = 100  # the top MAXIMUM_NUMBER_OF_MAPPED_POIS for each topic will appear on the topic to poi map
-RANDOM_SEED = 0  # random seed for all random events in this script
+RANDOM_SEED = 1  # SETTING THIS TO 0 USES THE SYSTEM CLOCK!! random seed for all random events in this script
 PROPORTION_OF_POPULATION = 1  # 0.2 => 20% of the actual population is simulated, a number lower than 1 will cause the curve to "flatten" because all POIs are still simulated
+PROPENSITY_TO_LEAVE = 1  # 0.2 => people are only 20% as likely to leave the house as compared to normal
 
 # agent generation parameters
 SIMULATION_TICKS_PER_HOUR = 4  # integer, number of ticks per simulation "hour"
-PROPORTION_INITIALLY_INFECTED = 0.001  # 0.05 => 5% of the simulated population is initially infected or exposed
+ORIGIN_CBG = '510594804023'  # only agents in this CBG will begin with the virus, to include all CBGs use 'random'
+PROPORTION_INITIALLY_INFECTED = 0.25  # 0.05 => 5% of the origin CBG (or the entire population if ORIGIN_CBG == 'random') is initially infected or exposed
 ALPHA = 0  # 0.4 => 40% of the population is quarantined in their house for the duration of the simulation
-PROPENSITY_TO_LEAVE = 1  # 0.2 => people are only 20% as likely to leave the house as compared to normal
 
 # runtime parameters
 MAX_DWELL_TIME = 16  # maximum dwell time at any POI (hours)
 NUMBER_OF_DWELL_SAMPLES = 5  # a higher number decreases POI dwell time variation and allows less outliers
 MAXIMUM_INTERACTIONS_PER_TICK = 5  # integer, maximum number of interactions an infected person can have with others per tick
-MINIMUM_INTERVENTION_PROPORTION = 0.01  # 0.1 => all below interventions begin when 10% of the simulated population is infected
+MINIMUM_INTERVENTION_PROPORTION = 0  # 0.1 => all below interventions begin when 10% of the simulated population is infected
 SYMPTOMATIC_QUARANTINES = False  # if True, quarantines all newly-infected agents upon showing symptoms after the MINIMUM_INTERVENTION_PROPORTION is reached
 HOUSEHOLD_QUARANTINES = False  # if True, all household members will quarantine if an agent in their household also quarantines due to symptoms
 QUARANTINE_DURATION = 10  # number of days a symptomatic-induced quarantine lasts
-WEAR_MASKS = False  # if True, multiplies secondary_attack_rate by mask_reduction_factor after the MINIMUM_INTERVENTION_PROPORTION is reached
-SOCIAL_DISTANCING = False  # if True, multiplies secondary_attack_rate by social_distancing_reduction_factor after the MINIMUM_INTERVENTION_PROPORTION is reached
-EYE_PROTECTION = False  # if True, multiplies secondary_attack_rate by eye_protection_reduction_factor after the MINIMUM_INTERVENTION_PROPORTION is reached
 CLOSED_POI_TYPES = {}  # closes the following POI types (from SafeGraph Core Places "sub_category") after the MINIMUM_INTERVENTION_PROPORTION is reached
-
-# END DEFAULT CONFIGURATION FOR LINTER
 
 # virus parameters
 # For COVID-19, a close contact is defined as ay individual who was within 6 feet of an infected person for at least 15 minutes starting from 2 days before illness onset (or, for asymptomatic patients, 2 days prior to positive specimen collection) until the time the patient is isolated. (https://www.cdc.gov/coronavirus/2019-ncov/php/contact-tracing/contact-tracing-plan/contact-tracing.html)
 percent_asymptomatic = 0.4  # (recommended: 0.4) https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
 secondary_attack_rate = 0.05  # (recommended: 0.05) chance of contracting the virus on close contact with someone, DO NOT DIVIDE BY SIMULATION_TICKS_PER_HOUR https://jamanetwork.com/journals/jama/fullarticle/2768396
 asymptomatic_relative_infectiousness = 0.75  # (recommended: 0.75) https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
-mask_reduction_factor = 3.1 / 17.4  # (recommended: 3.1 / 17.4) https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31142-9/fulltext
-social_distancing_reduction_factor = 2.6 / 12.8  # (recommended: 2.6 / 12.8) https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31142-9/fulltext
-eye_protection_reduction_factor = 5.5 / 16.0  # (recommended: 5.5 / 16.0) https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31142-9/fulltext
 distribution_of_exposure = scipy.stats.gamma(4, 0, 0.75)  # (recommended: 4, 0, 0.75) gamma distribution of the duration (days) between exposure and infectiousness, k=4 μ=3 => midpoint is 2.754 days https://www.nature.com/articles/s41591-020-0962-9
 distribution_of_preclinical = scipy.stats.gamma(4, 0, 0.525)  # (recommended: 4, 0, 0.525) gamma distribution of the duration (days) between infectiousness and symptoms for symptomatic cases, k=4 μ=2.1 => midpoint is 1.928 days https://www.nature.com/articles/s41591-020-0962-9
 distribution_of_clinical = scipy.stats.gamma(4, 0, 0.725)  # (recommended: 4, 0, 0.725) gamma distribution of the duration (days) between symptoms and non-infectiousness (recovery) for symptomatic cases, k=4 μ=2.9 => midpoint is 2.662 days https://www.nature.com/articles/s41591-020-0962-9
 distribution_of_subclinical = scipy.stats.gamma(4, 0, 1.25)  # (recommended: 4, 0, 1.25) gamma distribution of the duration (days) between infectiousness and non-infectiousness (recovery) for asymptomatic cases, k=4 μ=5 => midpoint is 4.590 days https://www.nature.com/articles/s41591-020-0962-9
-total_chance_of_small_household_transmission = 0.091  # (recommended: 0.091) chance of an infected agent spreading the virus to a given household member over the agent's entire period of infection when the household size is less than six https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30471-0/fulltext
-total_chance_of_large_household_transmission = 0.204  # (recommended: 0.204) chance of an infected agent spreading the virus to a given household member over the agent's entire period of infection when the household size is six or more https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30471-0/fulltext
+total_chance_of_small_household_transmission = 0.204  # (recommended: 0.091) chance of an infected agent spreading the virus to a given household member over the agent's entire period of infection when the household size is six or less https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30471-0/fulltext
+total_chance_of_large_household_transmission = 0.091  # (recommended: 0.204) chance of an infected agent spreading the virus to a given household member over the agent's entire period of infection when the household size is more than six https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30471-0/fulltext
 
-# static global variables
-start_time = time.time()  # current real-world time
-now = datetime.now()  # current real-world timestamp
-daily_simulation_time = SIMULATION_TICKS_PER_HOUR * 24  # number of simulation ticks that occur each day
-numpy.random.seed(RANDOM_SEED)  # used for both numpy and scipy
-exposure_median = distribution_of_exposure.median()
-preclinical_median = distribution_of_preclinical.median()
-clinical_median = distribution_of_clinical.median()
-subclinical_median = distribution_of_subclinical.median()
-median_infectious_duration = preclinical_median + clinical_median
-daily_chance_of_small_household_transmission = total_chance_of_small_household_transmission / median_infectious_duration
-daily_chance_of_large_household_transmission = total_chance_of_large_household_transmission / median_infectious_duration
-mallet_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mallet-2.0.8', 'bin', 'mallet')
-os.environ['MALLET_HOME'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mallet-2.0.8')
+# END DEFAULT CONFIGURATION FOR LINTER
 
 
 def update_outfile():
@@ -110,60 +94,99 @@ def create_map(data, map_path, map_lat=38.8300, map_long=-77.2800, zoom_level=11
 raw_cache_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'raw_cache.p')  # cache path of the SafeGraph and LDA data
 agents_cache_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'agents_cache.p')  # cache path of the agent data
 agents_loaded = False
-use_raw_cache = input('Use file data cache (y/[n])? ')
+if os.path.exists(raw_cache_path) and not len(sys.argv) > 1:
+    use_raw_cache = input('Use file data cache (y/[n])? ')
+else:
+    use_raw_cache = 'n'
 if use_raw_cache.lower() == 'y':  # obtains cached variables from the file data cache
     raw_cache_file = open(raw_cache_path, 'rb')
     (config_file_name, cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour) = pickle.load(raw_cache_file)
-    use_agents_cache = input('Use agents cache (y/[n])? ')  # obtains cached variables from agent file data cache
     config_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config-files', '{}.cfg'.format(config_file_name))
     cfg = configparser.RawConfigParser()
     cfg.read(config_file_path)
     globals_dict = dict(cfg.items('Settings'))
     for var in globals_dict:
         globals()[var.upper()] = eval(globals_dict[var].split('#', 1)[0].strip())
+    # static global variables
+    start_time = time.time()  # current real-world time
+    now = datetime.now()  # current real-world timestamp
+    daily_simulation_time = SIMULATION_TICKS_PER_HOUR * 24  # number of simulation ticks that occur each day
+    numpy.random.seed(RANDOM_SEED)  # used for both numpy and scipy
+    random.seed(RANDOM_SEED)
+    exposure_median = distribution_of_exposure.median()
+    preclinical_median = distribution_of_preclinical.median()
+    clinical_median = distribution_of_clinical.median()
+    subclinical_median = distribution_of_subclinical.median()
+    median_infectious_duration = preclinical_median + clinical_median
+    daily_chance_of_small_household_transmission = total_chance_of_small_household_transmission / median_infectious_duration
+    daily_chance_of_large_household_transmission = total_chance_of_large_household_transmission / median_infectious_duration
+    mallet_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mallet-2.0.8', 'bin', 'mallet')
+    os.environ['MALLET_HOME'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mallet-2.0.8')
+    if os.path.exists(agents_cache_path):
+        use_agents_cache = input('Use agents cache (y/[n])? ')  # obtains cached variables from agent file data cache
+    else:
+        use_agents_cache = 'n'
     if use_agents_cache.lower() == 'y':
         agents_cache_file = open(agents_cache_path, 'rb')
         (agents, households, cbgs_to_agents, inactive_agent_ids, active_agent_ids, poi_current_visitors, Ipa_queue_tups, Ic_queue_tups, R_queue_tups, quarantine_queue_tups, total_ever_infected) = pickle.load(agents_cache_file)
         agents_loaded = True
 else:  # loads and caches data from files depending on user input
-    # prompts for user input
-    config_file_name = input('Config file (default: default-config): ')
-    if config_file_name == '':
-        config_file_name = 'default-config'
-    STATE_ABBR = input('State abbreviation (default: VA): ')
-    if STATE_ABBR == '':
-        STATE_ABBR = 'VA'
-    LOCALITY = input('Locality (default: Fairfax): ')  # can be a county, borough, or parish
-    if LOCALITY == '':
-        LOCALITY = 'Fairfax'
-    WEEK = input('Week (default: 2019-10-28): ')  # start date of the week to base data off of, must be a Monday
-    if WEEK == '':
-        WEEK = '2019-10-28'
-    
-    # read in config
+    # prompts for config input
+    if len(sys.argv) > 1:
+        config_file_name = str(sys.argv[1])
+    else:
+        config_file_name = input('Config file (default: default-config): ')
+        if config_file_name == '':
+            config_file_name = 'default-config'
     config_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config-files', '{}.cfg'.format(config_file_name))
+    if not os.path.exists(config_file_path):
+        print('That config file does not exist.')
+        exit()
     cfg = configparser.RawConfigParser()
     cfg.read(config_file_path)
     globals_dict = dict(cfg.items('Settings'))
     for var in globals_dict:
         globals()[var.upper()] = eval(globals_dict[var].split('#', 1)[0].strip())
-
-    # checks locality type
+    
+    # static global variables
+    start_time = time.time()  # current real-world time
+    now = datetime.now()  # current real-world timestamp
+    daily_simulation_time = SIMULATION_TICKS_PER_HOUR * 24  # number of simulation ticks that occur each day
+    numpy.random.seed(RANDOM_SEED)  # used for both numpy and scipy
+    random.seed(RANDOM_SEED)
+    exposure_median = distribution_of_exposure.median()
+    preclinical_median = distribution_of_preclinical.median()
+    clinical_median = distribution_of_clinical.median()
+    subclinical_median = distribution_of_subclinical.median()
+    median_infectious_duration = preclinical_median + clinical_median
+    daily_chance_of_small_household_transmission = total_chance_of_small_household_transmission / median_infectious_duration
+    daily_chance_of_large_household_transmission = total_chance_of_large_household_transmission / median_infectious_duration
+    mallet_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mallet-2.0.8', 'bin', 'mallet')
+    os.environ['MALLET_HOME'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mallet-2.0.8')
+    
+    # checks locality type, independent cities (e.g. Baltimore City) are not currently compatible
     if STATE_ABBR == 'AK':
         LOCALITY_TYPE = 'borough'
     elif STATE_ABBR == 'LA':
         LOCALITY_TYPE = 'parish'
     else:
         LOCALITY_TYPE = 'county'
-
     locality_name = (LOCALITY + ' ' + LOCALITY_TYPE).title()  # e.g. "Fairfax County"
-    full_name = '{}, {}'.format(locality_name, STATE_ABBR.upper())  # e.g. "Fairfax County, VA"
     area = locality_name.lower().replace(' ', '-') + '-' + STATE_ABBR.lower()  # e.g. "fairfax-county-va"
+    weekly_patterns_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'parsed-weekly-patterns', '{}-{}.csv'.format(area, WEEK))
+    if not os.path.exists(weekly_patterns_path):
+        print('The data for the specified week and/or specified locatity has not been parsed yet. Please run `county_parser.py` before continuing.')
+        exit()
+
+    # read in FIPS code prefix data
+    prefix_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_open_census_data', 'metadata', 'cbg_fips_codes.csv'), error_bad_lines=False)
+    prefix_row = prefix_data.loc[(prefix_data['county'] == locality_name) & (prefix_data['state'] == STATE_ABBR.upper())]
+    locality_prefix = str(prefix_row['state_fips'].item()).zfill(2) + str(prefix_row['county_fips'].item()).zfill(3)
 
     print('Reading POI data...')
 
     # read in data from weekly movement pattern files, filtering the data that corresponds to the area of interest
-    data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'safegraph-data', 'safegraph_weekly_patterns_v2', 'main-file', '{}-weekly-patterns'.format(WEEK), '{}-{}.csv'.format(area, WEEK)), error_bad_lines=False)
+    data = pd.read_csv(weekly_patterns_path, error_bad_lines=False)
     usable_data = data[(data.visitor_home_cbgs != '{}')]
 
     # from usable POIs, load cbgs, CBGs are documents, POIs are words
@@ -192,13 +215,19 @@ else:  # loads and caches data from files depending on user input
         poi_hour_counts[place_id] = hourly_poi
         cbgs = json.loads(row.visitor_home_cbgs)
         lda_words = []
+        cbg_frequencies = {}
+        total_cbg_frequency = 0
         for cbg in cbgs:
-            if not cbg.startswith('51059'):  # excludes all POIs outside of Fairfax County, must be removed later!
+            if not cbg.startswith(locality_prefix):  # excludes all CBGs outside of the locality of focus
                 continue
             if cbg not in cbgs_to_pois:
                 cbgs_to_pois[cbg] = []
             cbg_frequency = numpy.random.randint(2, 5) if cbgs[cbg] == 4 else cbgs[cbg]  # SafeGraph reports POI CBG frequency as 4 if the visit count is between 2-4
-            cbgs_to_pois[cbg].extend([place_id] * cbg_frequency)  # generate POIs as "words" and multiply by the amount that CBG visited
+            total_cbg_frequency += cbg_frequency
+            cbg_frequencies[cbg] = cbg_frequency
+        raw_visit_count = float(row.raw_visit_counts)
+        for cbg in cbg_frequencies:
+            cbgs_to_pois[cbg].extend([place_id] * int(round(cbg_frequencies[cbg] / total_cbg_frequency * raw_visit_count)))  # generate POIs as "words" and multiply by the amount that CBG visited    
     
     print_elapsed_time()
     print('Running LDA and creating initial distributions...')
@@ -333,7 +362,7 @@ else:  # loads and caches data from files depending on user input
         total_population -= cbgs_to_populations[cbg]
     cbgs_leaving_probs = {}  # probability that a member of a cbg will leave their house each tick
     for cbg in cbg_device_counts:
-        cbgs_leaving_probs[cbg] = 1 - (cbg_device_counts[cbg][0] / cbg_device_counts[cbg][1])
+        cbgs_leaving_probs[cbg] = (1 - (cbg_device_counts[cbg][0] / cbg_device_counts[cbg][1])) * PROPENSITY_TO_LEAVE
     print('Average percentage of population tracked per day: {}%'.format(adj_sig_figs(100 * total_devices_tracked / (total_population * 7))))
 
     print_elapsed_time()
@@ -384,7 +413,7 @@ if not agents_loaded:
         agent_status = 'S'
         permanently_quarantined = numpy.random.rand() < ALPHA  # prohibits agent from ever leaving their house and ensures they are not initially infected if True
         parameter_2 = None
-        if not permanently_quarantined:
+        if ORIGIN_CBG.lower() in {current_cbg, 'random'} and not permanently_quarantined:
             rand = numpy.random.rand()
             if rand < PROPORTION_INITIALLY_INFECTED:
                 rand /= PROPORTION_INITIALLY_INFECTED
@@ -435,7 +464,7 @@ if not agents_loaded:
                     add_agent(current_cbg, household_id, probs)
                 for agent_id in households[household_id]:
                     agents[agent_id][4] = households[household_id] - {agent_id}
-                    if SYMPTOMATIC_QUARANTINES and PROPORTION_INITIALLY_INFECTED >= MINIMUM_INTERVENTION_PROPORTION and HOUSEHOLD_QUARANTINES and agents[agent_id][2] == 'quarantined':
+                    if HOUSEHOLD_QUARANTINES and SYMPTOMATIC_QUARANTINES and PROPORTION_INITIALLY_INFECTED >= MINIMUM_INTERVENTION_PROPORTION and agents[agent_id][2] == 'quarantined':
                         for other_agent_id in agents[agent_id][4]:
                             if agents[other_agent_id][2] != 'quarantined':
                                 quarantine_queue_tups.append((QUARANTINE_DURATION * 24 * SIMULATION_TICKS_PER_HOUR, other_agent_id))
@@ -480,7 +509,6 @@ if not agents_loaded:
 agents_cache_file.close()
 print('Number of agents: {}'.format(len(agents)))
 print('Total ever infected: {} ({}%)'.format(total_ever_infected, adj_sig_figs(100 * total_ever_infected / len(agents))))
-
 print('Creating queues...')
 
 # Infected status
@@ -541,16 +569,8 @@ def check_interventions(current_time):  # checks if the intervention threshold h
     if not interventions_deployed and total_ever_infected / len(agents) >= MINIMUM_INTERVENTION_PROPORTION:
         print('THE POPULATION THRESHOLD FOR INTERVENTIONS HAS BEEN MET! DEPLOYING INTERVENTIONS...')
         interventions_deployed = True
-        if WEAR_MASKS:  # mask wearing
-            secondary_attack_rate *= mask_reduction_factor
-        if SOCIAL_DISTANCING:  # social distancing
-            secondary_attack_rate *= social_distancing_reduction_factor
-        if EYE_PROTECTION:  # eye protection
-            secondary_attack_rate *= eye_protection_reduction_factor
         for current_poi_type in CLOSED_POI_TYPES:  # e.g. "Restaurants and Other Eating Places"
             closed_pois |= poi_type[current_poi_type]
-        for cbg in cbgs_leaving_probs:  # propensity to leave modifications
-            cbgs_leaving_probs[cbg] *= PROPENSITY_TO_LEAVE
         if SYMPTOMATIC_QUARANTINES:  # symptomatic quarantines
             do_quarantines = True
 
@@ -686,7 +706,7 @@ def update_agent_status(current_time):  # updates agent infection and quarantine
 
 def household_transmission(current_time):  # simulates a day's worth of of household transmission in every household
     for household in households.values():  # iterates through each household
-        base_transmission_probability = daily_chance_of_small_household_transmission if len(household) < 6 else daily_chance_of_large_household_transmission  # the probability an agent will spread the virus to another agent in their household today
+        base_transmission_probability = daily_chance_of_small_household_transmission if len(household) <= 6 else daily_chance_of_large_household_transmission  # the probability an agent will spread the virus to another agent in their household today
         for agent_id in household:  # iterates through each agent in the household
             if agents[agent_id][1] == 'Ia' or agents[agent_id][1] == 'Ip':  # if an agent is presymptomatic or asymptomatic, they may spread the virus to others with a reduced chance of infection
                 for other_agent_id in household:  # iterates through each other household member
