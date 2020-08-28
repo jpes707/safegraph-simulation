@@ -194,7 +194,6 @@ else:  # loads and caches data from files depending on user input
     dwell_distributions = {}
     poi_set = set()
     poi_type = {}
-    poi_types = set()
     poi_hour_counts = {}  # poi id: length 24 list of poi visits by hour
     coords = {}
     for row in usable_data.itertuples():
@@ -209,7 +208,6 @@ else:  # loads and caches data from files depending on user input
             poi_type[place_type] = {place_id}
         else:
             poi_type[place_type].add(place_id)
-        poi_types.add(place_type)
         weekly_hours_info = json.loads(row.visits_by_each_hour)
         hourly_poi = [0] * 24
         for idx, num in enumerate(weekly_hours_info):
@@ -230,9 +228,7 @@ else:  # loads and caches data from files depending on user input
         raw_visit_count = float(row.raw_visit_counts)
         for cbg in cbg_frequencies:
             cbgs_to_pois[cbg].extend([place_id] * int(round(cbg_frequencies[cbg] / total_cbg_frequency * raw_visit_count)))  # generate POIs as "words" and multiply by the amount that CBG visited    
-    
-    print(poi_types)
-    exit()
+
     print_elapsed_time()
     print('Running LDA and creating initial distributions...')
 
