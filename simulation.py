@@ -1,5 +1,4 @@
 from datetime import datetime
-from distfit import distfit
 import pandas as pd
 import gensim
 import random
@@ -508,8 +507,6 @@ if not agents_loaded:
     print_elapsed_time()
 
 agents_cache_file.close()
-print('Number of agents: {}'.format(len(agents)))
-print('Total ever infected: {} ({}%)'.format(total_ever_infected, adj_sig_figs(100 * total_ever_infected / len(agents))))
 print('Creating queues...')
 
 # Infected status
@@ -563,10 +560,12 @@ outfile_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results
 print('Running simulation... (check {} for the output)'.format(outfile_path))
 outfile = open(outfile_path, 'a+')
 sys.stdout = outfile
+print('Number of agents: {}'.format(len(agents)))
+print('Total ever infected: {} ({}%)'.format(total_ever_infected, adj_sig_figs(100 * total_ever_infected / len(agents))))
 
 
 def check_interventions(current_time):  # checks if the intervention threshold has been met, deploys interventions if so
-    global interventions_deployed, secondary_attack_rate, closed_pois, cbgs_leaving_probs, do_quarantines
+    global interventions_deployed, closed_pois, cbgs_leaving_probs, do_quarantines
     if not interventions_deployed and total_ever_infected / len(agents) >= MINIMUM_INTERVENTION_PROPORTION:
         print('THE POPULATION THRESHOLD FOR INTERVENTIONS HAS BEEN MET! DEPLOYING INTERVENTIONS...')
         interventions_deployed = True
