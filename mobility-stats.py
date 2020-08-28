@@ -433,8 +433,6 @@ for current_time in range(num_days * daily_simulation_time):  # each iteration r
     remove_expired_agents(current_time)  # sends agents home from POIs whose visits end at current_time
     select_active_agents(current_time)  # sends agents to POIs whose visits start at current_time
     check_end_of_hour(current_time)  # checks if current_time marks the end of an hour, running special code if so
-
-print()
 print('Data collection complete!')
 print('Final statistics:')
 print(total_poi_visit_counts)
