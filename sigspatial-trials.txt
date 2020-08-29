@@ -1,7 +1,11 @@
-100,000 agents in all, topics counts 1, 10, and 50, single CBG infected
+topics counts 1, 10, and 50; 100,000 agents in all except 0.2; single CBG infected in all except 0.3
+
+0. special cases
+0.1. fully default parameters
+0.2. 1 million agents
+0.3. initially infected agents come from any CBG
 
 Parameters
-0.1. default parameters
 1. infection probabilities upon contact at POIs <= this also covers the mask wearing and social distancing interventions by reducing the global infection rate
 1.1. 1%
 1.2. 3%

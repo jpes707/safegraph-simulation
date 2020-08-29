@@ -18,4 +18,4 @@ for path in os.listdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), 
     if path.startswith(trial_category):
         print(r'start "" py simulation.py sigspatial-trials\{}'.format(path[:-4]))
         subprocess.call(r'start "" py simulation.py sigspatial-trials\{}'.format(path[:-4]), shell=True)
-        time.sleep(30)
+        time.sleep(60)
