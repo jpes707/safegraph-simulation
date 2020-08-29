@@ -691,7 +691,7 @@ def update_agent_status(current_time):  # updates agent infection and quarantine
         if do_quarantines:  # checks if the quarantine intervention is enabled
             quarantine(key, QUARANTINE_DURATION, current_time)  # quarantine the agent in their house for QUARANTINE_DURATION days
             if HOUSEHOLD_QUARANTINES:  # checks if quarantines for household members are enabled
-                for household_member_id in agents[key][2]:  # iterates through each household member excluding the key agent
+                for household_member_id in agents[key][4]:  # iterates through each household member excluding the key agent
                     quarantine(household_member_id, QUARANTINE_DURATION, current_time)  # quarantines each household member in the house for QUARANTINE_DURATION days
         R_queue.put((current_time + round(distribution_of_clinical.rvs(1)[0] * daily_simulation_time), key))  # puts the agent in queue for recovery (end of being contagious)
     while R_queue.qsize() and R_queue.queue[0][0] <= current_time + 1:  # updates agents who are either symptomatic or asymptomatic and due for recovery (end of being contagious)
