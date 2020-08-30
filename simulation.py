@@ -48,15 +48,15 @@ CLOSED_POI_TYPES = {}  # closes the following POI types (from SafeGraph Core Pla
 
 # virus parameters
 # For COVID-19, a close contact is defined as ay individual who was within 6 feet of an infected person for at least 15 minutes starting from 2 days before illness onset (or, for asymptomatic patients, 2 days prior to positive specimen collection) until the time the patient is isolated. (https://www.cdc.gov/coronavirus/2019-ncov/php/contact-tracing/contact-tracing-plan/contact-tracing.html)
-percent_asymptomatic = 0.4  # (recommended: 0.4) https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
-secondary_attack_rate = 0.05  # (recommended: 0.05) chance of contracting the virus on close contact with someone, DO NOT DIVIDE BY SIMULATION_TICKS_PER_HOUR https://jamanetwork.com/journals/jama/fullarticle/2768396
-asymptomatic_relative_infectiousness = 0.75  # (recommended: 0.75) https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
-distribution_of_exposure = scipy.stats.gamma(4, 0, 0.75)  # (recommended: 4, 0, 0.75) gamma distribution of the duration (days) between exposure and infectiousness, k=4 μ=3 => midpoint is 2.754 days https://www.nature.com/articles/s41591-020-0962-9
-distribution_of_preclinical = scipy.stats.gamma(4, 0, 0.525)  # (recommended: 4, 0, 0.525) gamma distribution of the duration (days) between infectiousness and symptoms for symptomatic cases, k=4 μ=2.1 => midpoint is 1.928 days https://www.nature.com/articles/s41591-020-0962-9
-distribution_of_clinical = scipy.stats.gamma(4, 0, 0.725)  # (recommended: 4, 0, 0.725) gamma distribution of the duration (days) between symptoms and non-infectiousness (recovery) for symptomatic cases, k=4 μ=2.9 => midpoint is 2.662 days https://www.nature.com/articles/s41591-020-0962-9
-distribution_of_subclinical = scipy.stats.gamma(4, 0, 1.25)  # (recommended: 4, 0, 1.25) gamma distribution of the duration (days) between infectiousness and non-infectiousness (recovery) for asymptomatic cases, k=4 μ=5 => midpoint is 4.590 days https://www.nature.com/articles/s41591-020-0962-9
-total_chance_of_small_household_transmission = 0.204  # (recommended: 0.091) chance of an infected agent spreading the virus to a given household member over the agent's entire period of infection when the household size is six or less https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30471-0/fulltext
-total_chance_of_large_household_transmission = 0.091  # (recommended: 0.204) chance of an infected agent spreading the virus to a given household member over the agent's entire period of infection when the household size is more than six https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30471-0/fulltext
+PERCENT_ASYMPTOMATIC = 0.4  # (recommended: 0.4) https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
+SECONDARY_ATTACK_RATE = 0.05  # (recommended: 0.05) chance of contracting the virus on close contact with someone, DO NOT DIVIDE BY SIMULATION_TICKS_PER_HOUR https://jamanetwork.com/journals/jama/fullarticle/2768396
+ASYMPTOMATIC_RELATIVE_INFECTIOUSNESS = 0.75  # (recommended: 0.75) https://www.cdc.gov/coronavirus/2019-ncov/hcp/planning-scenarios.html
+DISTRIBUTION_OF_EXPOSURE = scipy.stats.gamma(4, 0, 0.75)  # (recommended: 4, 0, 0.75) gamma distribution of the duration (days) between exposure and infectiousness, k=4 μ=3 => midpoint is 2.754 days https://www.nature.com/articles/s41591-020-0962-9
+DISTRIBUTION_OF_PRECLINICAL = scipy.stats.gamma(4, 0, 0.525)  # (recommended: 4, 0, 0.525) gamma distribution of the duration (days) between infectiousness and symptoms for symptomatic cases, k=4 μ=2.1 => midpoint is 1.928 days https://www.nature.com/articles/s41591-020-0962-9
+DISTRIBUTION_OF_CLINICAL = scipy.stats.gamma(4, 0, 0.725)  # (recommended: 4, 0, 0.725) gamma distribution of the duration (days) between symptoms and non-infectiousness (recovery) for symptomatic cases, k=4 μ=2.9 => midpoint is 2.662 days https://www.nature.com/articles/s41591-020-0962-9
+DISTRIBUTION_OF_SUBCLINICAL = scipy.stats.gamma(4, 0, 1.25)  # (recommended: 4, 0, 1.25) gamma distribution of the duration (days) between infectiousness and non-infectiousness (recovery) for asymptomatic cases, k=4 μ=5 => midpoint is 4.590 days https://www.nature.com/articles/s41591-020-0962-9
+TOTAL_CHANCE_OF_SMALL_HOUSEHOLD_TRANSMISSION = 0.204  # (recommended: 0.091) chance of an infected agent spreading the virus to a given household member over the agent's entire period of infection when the household size is six or less https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30471-0/fulltext
+TOTAL_CHANCE_OF_LARGE_HOUSEHOLD_TRANSMISSION = 0.091  # (recommended: 0.204) chance of an infected agent spreading the virus to a given household member over the agent's entire period of infection when the household size is more than six https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30471-0/fulltext
 
 # END DEFAULT CONFIGURATION FOR LINTER
 
@@ -126,13 +126,13 @@ if use_raw_cache.lower() == 'y':  # obtains cached variables from the file data 
     daily_simulation_time = SIMULATION_TICKS_PER_HOUR * 24  # number of simulation ticks that occur each day
     numpy.random.seed(RANDOM_SEED)  # used for both numpy and scipy
     random.seed(RANDOM_SEED)
-    exposure_median = distribution_of_exposure.median()
-    preclinical_median = distribution_of_preclinical.median()
-    clinical_median = distribution_of_clinical.median()
-    subclinical_median = distribution_of_subclinical.median()
+    exposure_median = DISTRIBUTION_OF_EXPOSURE.median()
+    preclinical_median = DISTRIBUTION_OF_PRECLINICAL.median()
+    clinical_median = DISTRIBUTION_OF_CLINICAL.median()
+    subclinical_median = DISTRIBUTION_OF_SUBCLINICAL.median()
     median_infectious_duration = preclinical_median + clinical_median
-    daily_chance_of_small_household_transmission = total_chance_of_small_household_transmission / median_infectious_duration
-    daily_chance_of_large_household_transmission = total_chance_of_large_household_transmission / median_infectious_duration
+    daily_chance_of_small_household_transmission = TOTAL_CHANCE_OF_SMALL_HOUSEHOLD_TRANSMISSION / median_infectious_duration
+    daily_chance_of_large_household_transmission = TOTAL_CHANCE_OF_LARGE_HOUSEHOLD_TRANSMISSION / median_infectious_duration
     mallet_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mallet-2.0.8', 'bin', 'mallet')
     os.environ['MALLET_HOME'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mallet-2.0.8')
     if os.path.exists(agents_cache_path):
@@ -168,13 +168,13 @@ else:  # loads and caches data from files depending on user input
     daily_simulation_time = SIMULATION_TICKS_PER_HOUR * 24  # number of simulation ticks that occur each day
     numpy.random.seed(RANDOM_SEED)  # used for both numpy and scipy
     random.seed(RANDOM_SEED)
-    exposure_median = distribution_of_exposure.median()
-    preclinical_median = distribution_of_preclinical.median()
-    clinical_median = distribution_of_clinical.median()
-    subclinical_median = distribution_of_subclinical.median()
+    exposure_median = DISTRIBUTION_OF_EXPOSURE.median()
+    preclinical_median = DISTRIBUTION_OF_PRECLINICAL.median()
+    clinical_median = DISTRIBUTION_OF_CLINICAL.median()
+    subclinical_median = DISTRIBUTION_OF_SUBCLINICAL.median()
     median_infectious_duration = preclinical_median + clinical_median
-    daily_chance_of_small_household_transmission = total_chance_of_small_household_transmission / median_infectious_duration
-    daily_chance_of_large_household_transmission = total_chance_of_large_household_transmission / median_infectious_duration
+    daily_chance_of_small_household_transmission = TOTAL_CHANCE_OF_SMALL_HOUSEHOLD_TRANSMISSION / median_infectious_duration
+    daily_chance_of_large_household_transmission = TOTAL_CHANCE_OF_LARGE_HOUSEHOLD_TRANSMISSION / median_infectious_duration
     mallet_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mallet-2.0.8', 'bin', 'mallet')
     os.environ['MALLET_HOME'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mallet-2.0.8')
     
@@ -433,23 +433,23 @@ if not agents_loaded:
                 rand /= PROPORTION_INITIALLY_INFECTED
                 total_ever_infected += 1
                 E_bound = exposure_median / (exposure_median + preclinical_median + clinical_median + subclinical_median)  # represents chance an infected agent is exposed and not contagious or symptomatic yet
-                Ia_bound = E_bound + percent_asymptomatic * (1 - E_bound)  # percent_asymptomatic% of the remaining value, represents asymptomatic (subclinical) cases
+                Ia_bound = E_bound + PERCENT_ASYMPTOMATIC * (1 - E_bound)  # PERCENT_ASYMPTOMATIC% of the remaining value, represents asymptomatic (subclinical) cases
                 Ip_bound = Ia_bound + preclinical_median / median_infectious_duration * (1 - Ia_bound)  # represents preclinical cases
                 if rand < E_bound:
                     agent_status = 'E'
-                    Ipa_queue_tups.append((round(distribution_of_exposure.rvs(1)[0] * daily_simulation_time), agent_id))
+                    Ipa_queue_tups.append((round(DISTRIBUTION_OF_EXPOSURE.rvs(1)[0] * daily_simulation_time), agent_id))
                     inactive_agent_ids.add(agent_id)
                 elif rand < Ia_bound:
                     agent_status = 'Ia'
-                    R_queue_tups.append((round(distribution_of_subclinical.rvs(1)[0] * daily_simulation_time), agent_id))
+                    R_queue_tups.append((round(DISTRIBUTION_OF_SUBCLINICAL.rvs(1)[0] * daily_simulation_time), agent_id))
                     inactive_agent_ids.add(agent_id)
                 elif rand < Ip_bound:
                     agent_status = 'Ip'
-                    Ic_queue_tups.append((round(distribution_of_preclinical.rvs(1)[0] * daily_simulation_time), agent_id))
+                    Ic_queue_tups.append((round(DISTRIBUTION_OF_PRECLINICAL.rvs(1)[0] * daily_simulation_time), agent_id))
                     inactive_agent_ids.add(agent_id)
                 else:  # represents symptomatic (clinical) cases
                     agent_status = 'Ic'
-                    R_queue_tups.append((round(distribution_of_clinical.rvs(1)[0] * daily_simulation_time), agent_id))
+                    R_queue_tups.append((round(DISTRIBUTION_OF_CLINICAL.rvs(1)[0] * daily_simulation_time), agent_id))
                     if SYMPTOMATIC_QUARANTINES and PROPORTION_INITIALLY_INFECTED >= MINIMUM_INTERVENTION_PROPORTION:
                         quarantine_queue_tups.append((QUARANTINE_DURATION * 24 * SIMULATION_TICKS_PER_HOUR, agent_id))
                         parameter_2 = 'quarantined'
@@ -574,6 +574,7 @@ outfile_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results
 print('Running simulation... (check {} for the output)'.format(outfile_path))
 outfile = open(outfile_path, 'a+')
 sys.stdout = outfile
+print('BEGIN OUTFILE OUTPUT')
 print('Number of agents: {}'.format(len(agents)))
 print('Total ever infected: {} ({}%)'.format(total_ever_infected, adj_sig_figs(100 * total_ever_infected / len(agents))))
 
@@ -650,14 +651,14 @@ def infect(agent_id, current_time):  # infects an agent with the virus if they a
     global infection_counts_by_day, total_ever_infected, Ipa_queue
     if agents[agent_id][1] == 'S':  # ensures an agent is susceptible
         agents[agent_id][1] = 'E'  # marks the agent as exposed
-        Ipa_queue.put((current_time + round(distribution_of_exposure.rvs(1)[0] * daily_simulation_time), agent_id))  # puts the agent in a queue to become either asymptomatic or presymptomatic in a few days
+        Ipa_queue.put((current_time + round(DISTRIBUTION_OF_EXPOSURE.rvs(1)[0] * daily_simulation_time), agent_id))  # puts the agent in a queue to become either asymptomatic or presymptomatic in a few days
         infection_counts_by_day[current_time // daily_simulation_time] += 1  # increments the daily infection count
         total_ever_infected += 1  # increments the total infection count
 
 
 def possibly_infect(contacted_list, current_time, relative_infectiousness):  # possibly infects a list of agents an infected agent had contact with
     for contacted_agent_id in contacted_list:  # iterates through each agent an infected agent had direct contact with
-        if numpy.random.rand() < secondary_attack_rate * relative_infectiousness:  # the contacted agent has a (secondary_attack_rate * relative_infectiousness)% chance of becoming infected if they are susceptible
+        if numpy.random.rand() < SECONDARY_ATTACK_RATE * relative_infectiousness:  # the contacted agent has a (SECONDARY_ATTACK_RATE * relative_infectiousness)% chance of becoming infected if they are susceptible
             infect(contacted_agent_id, current_time)  # infects the contacted agent with the virus if they are susceptible
 
 
@@ -669,7 +670,7 @@ def infect_active_agents(current_time):  # iterates through each POI, allowing a
             for agent_idx, agent_id in enumerate(poi_agents):  # iterates through each visiting agent in the POI
                 if agents[agent_id][1] == 'Ia' or agents[agent_id][1] == 'Ip':  # if an agent is presymptomatic or asymptomatic, they may spread the virus to others with a reduced chance of infection
                     possible_agents = poi_agents[:agent_idx] + poi_agents[agent_idx+1:]  # prohibits the infected agent from having contact with themself
-                    possibly_infect(numpy.random.choice(possible_agents, max_interactions), current_time, asymptomatic_relative_infectiousness)  # the infected agent has contact with max_interactions other agents in the POI, possibly spreading the virus to them
+                    possibly_infect(numpy.random.choice(possible_agents, max_interactions), current_time, ASYMPTOMATIC_RELATIVE_INFECTIOUSNESS)  # the infected agent has contact with max_interactions other agents in the POI, possibly spreading the virus to them
                 elif agents[agent_id][1] == 'Ic':  # if an agent is symptomatic, they may spread the virus to others with the full chance of infection
                     possible_agents = poi_agents[:agent_idx] + poi_agents[agent_idx+1:]  # prohibits the infected agent from having contact with themself
                     possibly_infect(numpy.random.choice(possible_agents, max_interactions), current_time, 1)  # the infected agent has contact with max_interactions other agents in the POI, possibly spreading the virus to them
@@ -693,12 +694,12 @@ def update_agent_status(current_time):  # updates agent infection and quarantine
     global agents, Ipa_queue, Ic_queue, R_queue, quarantine_queue
     while Ipa_queue.qsize() and Ipa_queue.queue[0][0] <= current_time + 1:  # updates agents who are currently exposed to the virus and noncontagious
         key = Ipa_queue.get()[1]  # removes an agent from the queue
-        if numpy.random.rand() < percent_asymptomatic:  # asymptomatic (subclinical) cases, never show symptoms
+        if numpy.random.rand() < PERCENT_ASYMPTOMATIC:  # asymptomatic (subclinical) cases, never show symptoms
             agents[key][1] = 'Ia'  # marks the agent as asymptomatic, is now contagious at a reduced amount
-            R_queue.put((current_time + round(distribution_of_subclinical.rvs(1)[0] * daily_simulation_time), key))  # puts the agent in queue for recovery (end of being contagious)
+            R_queue.put((current_time + round(DISTRIBUTION_OF_SUBCLINICAL.rvs(1)[0] * daily_simulation_time), key))  # puts the agent in queue for recovery (end of being contagious)
         else:  # preclinical cases, will be symptomatic in the future
             agents[key][1] = 'Ip'  # marks the agent as presymptomatic, is now contagious at a reduced amount
-            Ic_queue.put((current_time + round(distribution_of_preclinical.rvs(1)[0] * daily_simulation_time), key))  # puts the agent in queue for symptoms (fully contagiousness then)
+            Ic_queue.put((current_time + round(DISTRIBUTION_OF_PRECLINICAL.rvs(1)[0] * daily_simulation_time), key))  # puts the agent in queue for symptoms (fully contagiousness then)
     while Ic_queue.qsize() and Ic_queue.queue[0][0] <= current_time + 1:  # updates agents who are currently presymptomatic and not fully contagious
         key = Ic_queue.get()[1]  # removes an agent from the queue
         agents[key][1] = 'Ic'  # marks the agent as symptomatic, is now fully contagious
@@ -707,7 +708,7 @@ def update_agent_status(current_time):  # updates agent infection and quarantine
             if HOUSEHOLD_QUARANTINES:  # checks if quarantines for household members are enabled
                 for household_member_id in agents[key][4]:  # iterates through each household member excluding the key agent
                     quarantine(household_member_id, QUARANTINE_DURATION, current_time)  # quarantines each household member in the house for QUARANTINE_DURATION days
-        R_queue.put((current_time + round(distribution_of_clinical.rvs(1)[0] * daily_simulation_time), key))  # puts the agent in queue for recovery (end of being contagious)
+        R_queue.put((current_time + round(DISTRIBUTION_OF_CLINICAL.rvs(1)[0] * daily_simulation_time), key))  # puts the agent in queue for recovery (end of being contagious)
     while R_queue.qsize() and R_queue.queue[0][0] <= current_time + 1:  # updates agents who are either symptomatic or asymptomatic and due for recovery (end of being contagious)
         key = R_queue.get()[1]  # removes an agent from the queue
         agents[key][1] = 'R'  # marks the agent as recovered, the agent can no longer spread the virus or become infected
@@ -724,7 +725,7 @@ def household_transmission(current_time):  # simulates a day's worth of of house
         for agent_id in household:  # iterates through each agent in the household
             if agents[agent_id][1] == 'Ia' or agents[agent_id][1] == 'Ip':  # if an agent is presymptomatic or asymptomatic, they may spread the virus to others with a reduced chance of infection
                 for other_agent_id in household:  # iterates through each other household member
-                    if numpy.random.rand() < base_transmission_probability * asymptomatic_relative_infectiousness:  # the other household member has a (base_transmission_probability * asymptomatic_relative_infectiousness)% chance of becoming infected if they are susceptible
+                    if numpy.random.rand() < base_transmission_probability * ASYMPTOMATIC_RELATIVE_INFECTIOUSNESS:  # the other household member has a (base_transmission_probability * ASYMPTOMATIC_RELATIVE_INFECTIOUSNESS)% chance of becoming infected if they are susceptible
                         infect(other_agent_id, current_time)
             elif agents[agent_id][1] == 'Ic':  # if an agent is symptomatic, they may spread the virus to others with the full chance of infection
                 for other_agent_id in household:  # iterates through each other household member
