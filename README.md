@@ -20,7 +20,7 @@ Codebase for SIGSPATIAL ARIC 2020: Foot-Traffic Informed COVID-19 Simulation and
 
 ## Usage
 
-* `county-parser.py` is used to extract locality data. Run this at least once, and then run `simulation.py`.
+* `county-parser.py` is used to extract locality data. Run this at least once, and then run `simulation.py`. The results will be located in `results/`.
 
 * To create custom simulation configurations, place new `.cfg` files in `config-files/`. Use `config-files/default-config.cfg` as a template.
 

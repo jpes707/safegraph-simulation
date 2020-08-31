@@ -79,6 +79,14 @@ def print_elapsed_time():  # prints the simulation's elapsed time to five signif
     print('Total time elapsed: {}s'.format(adj_sig_figs(time.time() - start_time, 5)))
 
 
+def isint(s):
+    try: 
+        int(s)
+        return True
+    except ValueError:
+        return False
+
+
 def create_map(data, map_path, map_lat=38.8300, map_long=-77.2800, zoom_level=11):  # create heatmap [[lat, long, weight], [lat, long, weight], ... [lat, long, weight]]
         folium_map = folium.Map([map_lat, map_long], tiles='stamentoner', zoom_start=11)
         for idx, topic in enumerate(data):
@@ -97,6 +105,12 @@ if os.path.exists(raw_cache_path) and not len(sys.argv) > 1:
     use_raw_cache = input('Use file data cache (y/[n])? ')
 else:
     use_raw_cache = 'n'
+if len(sys.argv) > 2:
+    trial = int(sys.argv[2])
+else:
+    trial = str(input('Override random state (type a positive integer to do so)? '))
+if isint(trial) and trial != -1:
+    RANDOM_SEED = trial
 if use_raw_cache.lower() == 'y':  # obtains cached variables from the file data cache
     raw_cache_file = open(raw_cache_path, 'rb')
     (config_file_name, cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour) = pickle.load(raw_cache_file)
@@ -308,7 +322,7 @@ else:  # loads and caches data from files depending on user input
                 cbg_id_set.remove(check_str)
                 cbg_ids.remove(check_str)
             else:
-                cbg_real_population = int(int(row['B01001e1']) * PROPORTION_OF_POPULATION)
+                cbg_real_population = int(round(int(row['B01001e1']) * PROPORTION_OF_POPULATION))
                 total_real_population += cbg_real_population
                 cbgs_to_real_populations[check_str] = cbg_real_population
 
@@ -324,9 +338,9 @@ else:  # loads and caches data from files depending on user input
         if check_str in cbg_id_set:
             arr = []
             for ext in range(10, 17):  # appends nonfamily household counts
-                arr.append(int(int(row['B11016e{}'.format(ext)]) * PROPORTION_OF_POPULATION))
+                arr.append(int(round(int(row['B11016e{}'.format(ext)]) * PROPORTION_OF_POPULATION)))
             for ext in range(3, 9):  # appends family household counts
-                arr.append(int(int(row['B11016e{}'.format(ext)]) * PROPORTION_OF_POPULATION))
+                arr.append(int(round(int(row['B11016e{}'.format(ext)]) * PROPORTION_OF_POPULATION)))
             if arr == [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]:
                 cbg_id_set.remove(check_str)
                 cbg_ids.remove(check_str)
