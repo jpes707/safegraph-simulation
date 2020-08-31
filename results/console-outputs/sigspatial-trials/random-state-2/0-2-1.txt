@@ -1,0 +1,5522 @@
+BEGIN OUTFILE OUTPUT
+Number of agents: 1124151
+Total ever infected: 231 (0.0205%)
+Day 0:
+THE POPULATION THRESHOLD FOR INTERVENTIONS HAS BEEN MET! DEPLOYING INTERVENTIONS...
+Hour 0 (0) complete.
+Total time elapsed: 405.43s
+Hour 1 (1) complete.
+Total time elapsed: 418.66s
+Hour 2 (2) complete.
+Total time elapsed: 430.78s
+Hour 3 (3) complete.
+Total time elapsed: 442.81s
+Hour 4 (4) complete.
+Total time elapsed: 455.37s
+Hour 5 (5) complete.
+Total time elapsed: 469.57s
+Hour 6 (6) complete.
+Total time elapsed: 486.37s
+Hour 7 (7) complete.
+Total time elapsed: 512.97s
+Hour 8 (8) complete.
+Total time elapsed: 546.75s
+Hour 9 (9) complete.
+Total time elapsed: 578.72s
+Hour 10 (10) complete.
+Total time elapsed: 613.93s
+Hour 11 (11) complete.
+Total time elapsed: 654.58s
+Hour 12 (12) complete.
+Total time elapsed: 698.59s
+Hour 13 (13) complete.
+Total time elapsed: 742.54s
+Hour 14 (14) complete.
+Total time elapsed: 783.39s
+Hour 15 (15) complete.
+Total time elapsed: 823.85s
+Hour 16 (16) complete.
+Total time elapsed: 865.83s
+Hour 17 (17) complete.
+Total time elapsed: 909.63s
+Hour 18 (18) complete.
+Total time elapsed: 950.69s
+Hour 19 (19) complete.
+Total time elapsed: 986.14s
+Hour 20 (20) complete.
+Total time elapsed: 1031.5s
+Hour 21 (21) complete.
+Total time elapsed: 1052s
+Hour 22 (22) complete.
+Total time elapsed: 1067.8s
+Hour 23 (23) complete.
+Total time elapsed: 1081.6s
+Daily household transmission complete.
+Total time elapsed: 1082.3s
+Day 0 complete. Infection status:
+Susceptible: 1123806
+Exposed: 171
+Infected: 172
+Recovered: 2
+New cases per day: [(0, 114)]
+Total ever infected: 345 (0.0307% of the total population)
+
+Day 1:
+Hour 0 (24) complete.
+Total time elapsed: 1095.4s
+Hour 1 (25) complete.
+Total time elapsed: 1107.9s
+Hour 2 (26) complete.
+Total time elapsed: 1120s
+Hour 3 (27) complete.
+Total time elapsed: 1131.7s
+Hour 4 (28) complete.
+Total time elapsed: 1144.1s
+Hour 5 (29) complete.
+Total time elapsed: 1158s
+Hour 6 (30) complete.
+Total time elapsed: 1174.8s
+Hour 7 (31) complete.
+Total time elapsed: 1200.5s
+Hour 8 (32) complete.
+Total time elapsed: 1233.8s
+Hour 9 (33) complete.
+Total time elapsed: 1265.8s
+Hour 10 (34) complete.
+Total time elapsed: 1301.6s
+Hour 11 (35) complete.
+Total time elapsed: 1343.7s
+Hour 12 (36) complete.
+Total time elapsed: 1391.6s
+Hour 13 (37) complete.
+Total time elapsed: 1438.1s
+Hour 14 (38) complete.
+Total time elapsed: 1480.8s
+Hour 15 (39) complete.
+Total time elapsed: 1523.6s
+Hour 16 (40) complete.
+Total time elapsed: 1567.1s
+Hour 17 (41) complete.
+Total time elapsed: 1612.2s
+Hour 18 (42) complete.
+Total time elapsed: 1655.8s
+Hour 19 (43) complete.
+Total time elapsed: 1691.9s
+Hour 20 (44) complete.
+Total time elapsed: 1738.5s
+Hour 21 (45) complete.
+Total time elapsed: 1759.7s
+Hour 22 (46) complete.
+Total time elapsed: 1776.2s
+Hour 23 (47) complete.
+Total time elapsed: 1790.4s
+Daily household transmission complete.
+Total time elapsed: 1791.1s
+Day 1 complete. Infection status:
+Susceptible: 1123638
+Exposed: 317
+Infected: 174
+Recovered: 22
+New cases per day: [(0, 114), (1, 168)]
+Total ever infected: 513 (0.0456% of the total population)
+
+Day 2:
+Hour 0 (48) complete.
+Total time elapsed: 1803.8s
+Hour 1 (49) complete.
+Total time elapsed: 1815.5s
+Hour 2 (50) complete.
+Total time elapsed: 1826.6s
+Hour 3 (51) complete.
+Total time elapsed: 1837.9s
+Hour 4 (52) complete.
+Total time elapsed: 1849.6s
+Hour 5 (53) complete.
+Total time elapsed: 1862.8s
+Hour 6 (54) complete.
+Total time elapsed: 1879s
+Hour 7 (55) complete.
+Total time elapsed: 1904.5s
+Hour 8 (56) complete.
+Total time elapsed: 1937.2s
+Hour 9 (57) complete.
+Total time elapsed: 1969s
+Hour 10 (58) complete.
+Total time elapsed: 2005.8s
+Hour 11 (59) complete.
+Total time elapsed: 2047.6s
+Hour 12 (60) complete.
+Total time elapsed: 2091.7s
+Hour 13 (61) complete.
+Total time elapsed: 2135s
+Hour 14 (62) complete.
+Total time elapsed: 2175.5s
+Hour 15 (63) complete.
+Total time elapsed: 2215.7s
+Hour 16 (64) complete.
+Total time elapsed: 2257.8s
+Hour 17 (65) complete.
+Total time elapsed: 2300.6s
+Hour 18 (66) complete.
+Total time elapsed: 2339.7s
+Hour 19 (67) complete.
+Total time elapsed: 2372.8s
+Hour 20 (68) complete.
+Total time elapsed: 2414.5s
+Hour 21 (69) complete.
+Total time elapsed: 2434s
+Hour 22 (70) complete.
+Total time elapsed: 2449.5s
+Hour 23 (71) complete.
+Total time elapsed: 2462.9s
+Daily household transmission complete.
+Total time elapsed: 2463.5s
+Day 2 complete. Infection status:
+Susceptible: 1123520
+Exposed: 356
+Infected: 225
+Recovered: 50
+New cases per day: [(0, 114), (1, 168), (2, 118)]
+Total ever infected: 631 (0.0561% of the total population)
+
+Day 3:
+Hour 0 (72) complete.
+Total time elapsed: 2476s
+Hour 1 (73) complete.
+Total time elapsed: 2488.1s
+Hour 2 (74) complete.
+Total time elapsed: 2499.4s
+Hour 3 (75) complete.
+Total time elapsed: 2510.7s
+Hour 4 (76) complete.
+Total time elapsed: 2522.5s
+Hour 5 (77) complete.
+Total time elapsed: 2536.1s
+Hour 6 (78) complete.
+Total time elapsed: 2552.5s
+Hour 7 (79) complete.
+Total time elapsed: 2577.6s
+Hour 8 (80) complete.
+Total time elapsed: 2611.2s
+Hour 9 (81) complete.
+Total time elapsed: 2642.1s
+Hour 10 (82) complete.
+Total time elapsed: 2677.4s
+Hour 11 (83) complete.
+Total time elapsed: 2718.2s
+Hour 12 (84) complete.
+Total time elapsed: 2763.4s
+Hour 13 (85) complete.
+Total time elapsed: 2807.1s
+Hour 14 (86) complete.
+Total time elapsed: 2847.6s
+Hour 15 (87) complete.
+Total time elapsed: 2886.6s
+Hour 16 (88) complete.
+Total time elapsed: 2926s
+Hour 17 (89) complete.
+Total time elapsed: 2968.2s
+Hour 18 (90) complete.
+Total time elapsed: 3006.1s
+Hour 19 (91) complete.
+Total time elapsed: 3038.1s
+Hour 20 (92) complete.
+Total time elapsed: 3078.8s
+Hour 21 (93) complete.
+Total time elapsed: 3098s
+Hour 22 (94) complete.
+Total time elapsed: 3112.9s
+Hour 23 (95) complete.
+Total time elapsed: 3125.5s
+Daily household transmission complete.
+Total time elapsed: 3126.2s
+Day 3 complete. Infection status:
+Susceptible: 1123313
+Exposed: 462
+Infected: 289
+Recovered: 87
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207)]
+Total ever infected: 838 (0.0745% of the total population)
+
+Day 4:
+Hour 0 (96) complete.
+Total time elapsed: 3137.8s
+Hour 1 (97) complete.
+Total time elapsed: 3149.6s
+Hour 2 (98) complete.
+Total time elapsed: 3160.6s
+Hour 3 (99) complete.
+Total time elapsed: 3171.5s
+Hour 4 (100) complete.
+Total time elapsed: 3182.8s
+Hour 5 (101) complete.
+Total time elapsed: 3195.5s
+Hour 6 (102) complete.
+Total time elapsed: 3211.1s
+Hour 7 (103) complete.
+Total time elapsed: 3235.5s
+Hour 8 (104) complete.
+Total time elapsed: 3266.5s
+Hour 9 (105) complete.
+Total time elapsed: 3296.1s
+Hour 10 (106) complete.
+Total time elapsed: 3328.7s
+Hour 11 (107) complete.
+Total time elapsed: 3367.1s
+Hour 12 (108) complete.
+Total time elapsed: 3408.1s
+Hour 13 (109) complete.
+Total time elapsed: 3447.7s
+Hour 14 (110) complete.
+Total time elapsed: 3484.6s
+Hour 15 (111) complete.
+Total time elapsed: 3521.7s
+Hour 16 (112) complete.
+Total time elapsed: 3559.3s
+Hour 17 (113) complete.
+Total time elapsed: 3598.6s
+Hour 18 (114) complete.
+Total time elapsed: 3636.9s
+Hour 19 (115) complete.
+Total time elapsed: 3669s
+Hour 20 (116) complete.
+Total time elapsed: 3709.6s
+Hour 21 (117) complete.
+Total time elapsed: 3728s
+Hour 22 (118) complete.
+Total time elapsed: 3742.8s
+Hour 23 (119) complete.
+Total time elapsed: 3755.7s
+Daily household transmission complete.
+Total time elapsed: 3756.4s
+Day 4 complete. Infection status:
+Susceptible: 1123107
+Exposed: 528
+Infected: 387
+Recovered: 129
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206)]
+Total ever infected: 1044 (0.0929% of the total population)
+
+Day 5:
+Hour 0 (120) complete.
+Total time elapsed: 3768.2s
+Hour 1 (121) complete.
+Total time elapsed: 3779.4s
+Hour 2 (122) complete.
+Total time elapsed: 3790.3s
+Hour 3 (123) complete.
+Total time elapsed: 3801.1s
+Hour 4 (124) complete.
+Total time elapsed: 3812.5s
+Hour 5 (125) complete.
+Total time elapsed: 3825.2s
+Hour 6 (126) complete.
+Total time elapsed: 3840.2s
+Hour 7 (127) complete.
+Total time elapsed: 3864.5s
+Hour 8 (128) complete.
+Total time elapsed: 3895s
+Hour 9 (129) complete.
+Total time elapsed: 3924.5s
+Hour 10 (130) complete.
+Total time elapsed: 3956.2s
+Hour 11 (131) complete.
+Total time elapsed: 3993.6s
+Hour 12 (132) complete.
+Total time elapsed: 4034.6s
+Hour 13 (133) complete.
+Total time elapsed: 4075.4s
+Hour 14 (134) complete.
+Total time elapsed: 4113.2s
+Hour 15 (135) complete.
+Total time elapsed: 4150.2s
+Hour 16 (136) complete.
+Total time elapsed: 4188.6s
+Hour 17 (137) complete.
+Total time elapsed: 4227.8s
+Hour 18 (138) complete.
+Total time elapsed: 4265.4s
+Hour 19 (139) complete.
+Total time elapsed: 4297.9s
+Hour 20 (140) complete.
+Total time elapsed: 4338.3s
+Hour 21 (141) complete.
+Total time elapsed: 4357.1s
+Hour 22 (142) complete.
+Total time elapsed: 4371.7s
+Hour 23 (143) complete.
+Total time elapsed: 4384.3s
+Daily household transmission complete.
+Total time elapsed: 4385s
+Day 5 complete. Infection status:
+Susceptible: 1122707
+Exposed: 768
+Infected: 489
+Recovered: 187
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400)]
+Total ever infected: 1444 (0.128% of the total population)
+
+Day 6:
+Hour 0 (144) complete.
+Total time elapsed: 4396.9s
+Hour 1 (145) complete.
+Total time elapsed: 4408.2s
+Hour 2 (146) complete.
+Total time elapsed: 4419.1s
+Hour 3 (147) complete.
+Total time elapsed: 4430.1s
+Hour 4 (148) complete.
+Total time elapsed: 4441.1s
+Hour 5 (149) complete.
+Total time elapsed: 4453.9s
+Hour 6 (150) complete.
+Total time elapsed: 4469.2s
+Hour 7 (151) complete.
+Total time elapsed: 4492.3s
+Hour 8 (152) complete.
+Total time elapsed: 4522.3s
+Hour 9 (153) complete.
+Total time elapsed: 4551s
+Hour 10 (154) complete.
+Total time elapsed: 4584.2s
+Hour 11 (155) complete.
+Total time elapsed: 4622.7s
+Hour 12 (156) complete.
+Total time elapsed: 4670.9s
+Hour 13 (157) complete.
+Total time elapsed: 4712.7s
+Hour 14 (158) complete.
+Total time elapsed: 4749.6s
+Hour 15 (159) complete.
+Total time elapsed: 4787.3s
+Hour 16 (160) complete.
+Total time elapsed: 4826s
+Hour 17 (161) complete.
+Total time elapsed: 4865s
+Hour 18 (162) complete.
+Total time elapsed: 4903.4s
+Hour 19 (163) complete.
+Total time elapsed: 4935.1s
+Hour 20 (164) complete.
+Total time elapsed: 4975.2s
+Hour 21 (165) complete.
+Total time elapsed: 4993.4s
+Hour 22 (166) complete.
+Total time elapsed: 5008.1s
+Hour 23 (167) complete.
+Total time elapsed: 5020.6s
+Daily household transmission complete.
+Total time elapsed: 5021.3s
+Day 6 complete. Infection status:
+Susceptible: 1122252
+Exposed: 1029
+Infected: 609
+Recovered: 261
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455)]
+Total ever infected: 1899 (0.169% of the total population)
+
+Day 7:
+Hour 0 (168) complete.
+Total time elapsed: 5032.7s
+Hour 1 (169) complete.
+Total time elapsed: 5043.7s
+Hour 2 (170) complete.
+Total time elapsed: 5054.4s
+Hour 3 (171) complete.
+Total time elapsed: 5065.3s
+Hour 4 (172) complete.
+Total time elapsed: 5076.5s
+Hour 5 (173) complete.
+Total time elapsed: 5088.9s
+Hour 6 (174) complete.
+Total time elapsed: 5104.2s
+Hour 7 (175) complete.
+Total time elapsed: 5128.1s
+Hour 8 (176) complete.
+Total time elapsed: 5158.9s
+Hour 9 (177) complete.
+Total time elapsed: 5186.7s
+Hour 10 (178) complete.
+Total time elapsed: 5216.9s
+Hour 11 (179) complete.
+Total time elapsed: 5252.3s
+Hour 12 (180) complete.
+Total time elapsed: 5291s
+Hour 13 (181) complete.
+Total time elapsed: 5329.1s
+Hour 14 (182) complete.
+Total time elapsed: 5364.1s
+Hour 15 (183) complete.
+Total time elapsed: 5399.8s
+Hour 16 (184) complete.
+Total time elapsed: 5435.4s
+Hour 17 (185) complete.
+Total time elapsed: 5472.9s
+Hour 18 (186) complete.
+Total time elapsed: 5507.4s
+Hour 19 (187) complete.
+Total time elapsed: 5536.5s
+Hour 20 (188) complete.
+Total time elapsed: 5574.1s
+Hour 21 (189) complete.
+Total time elapsed: 5590.2s
+Hour 22 (190) complete.
+Total time elapsed: 5603.8s
+Hour 23 (191) complete.
+Total time elapsed: 5616s
+Daily household transmission complete.
+Total time elapsed: 5616.6s
+Day 7 complete. Infection status:
+Susceptible: 1121717
+Exposed: 1296
+Infected: 803
+Recovered: 335
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535)]
+Total ever infected: 2434 (0.217% of the total population)
+
+Day 8:
+Hour 0 (192) complete.
+Total time elapsed: 5627.5s
+Hour 1 (193) complete.
+Total time elapsed: 5637.7s
+Hour 2 (194) complete.
+Total time elapsed: 5647.9s
+Hour 3 (195) complete.
+Total time elapsed: 5658.4s
+Hour 4 (196) complete.
+Total time elapsed: 5669.1s
+Hour 5 (197) complete.
+Total time elapsed: 5681s
+Hour 6 (198) complete.
+Total time elapsed: 5695.2s
+Hour 7 (199) complete.
+Total time elapsed: 5718s
+Hour 8 (200) complete.
+Total time elapsed: 5747.5s
+Hour 9 (201) complete.
+Total time elapsed: 5774.2s
+Hour 10 (202) complete.
+Total time elapsed: 5805.4s
+Hour 11 (203) complete.
+Total time elapsed: 5841.7s
+Hour 12 (204) complete.
+Total time elapsed: 5880.3s
+Hour 13 (205) complete.
+Total time elapsed: 5917.9s
+Hour 14 (206) complete.
+Total time elapsed: 5952.3s
+Hour 15 (207) complete.
+Total time elapsed: 5987.1s
+Hour 16 (208) complete.
+Total time elapsed: 6022.8s
+Hour 17 (209) complete.
+Total time elapsed: 6059.1s
+Hour 18 (210) complete.
+Total time elapsed: 6094s
+Hour 19 (211) complete.
+Total time elapsed: 6123.6s
+Hour 20 (212) complete.
+Total time elapsed: 6160.9s
+Hour 21 (213) complete.
+Total time elapsed: 6178.6s
+Hour 22 (214) complete.
+Total time elapsed: 6192.4s
+Hour 23 (215) complete.
+Total time elapsed: 6204s
+Daily household transmission complete.
+Total time elapsed: 6204.6s
+Day 8 complete. Infection status:
+Susceptible: 1121078
+Exposed: 1618
+Infected: 1001
+Recovered: 454
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639)]
+Total ever infected: 3073 (0.273% of the total population)
+
+Day 9:
+Hour 0 (216) complete.
+Total time elapsed: 6216.1s
+Hour 1 (217) complete.
+Total time elapsed: 6226.7s
+Hour 2 (218) complete.
+Total time elapsed: 6237.2s
+Hour 3 (219) complete.
+Total time elapsed: 6247.4s
+Hour 4 (220) complete.
+Total time elapsed: 6258.1s
+Hour 5 (221) complete.
+Total time elapsed: 6270.5s
+Hour 6 (222) complete.
+Total time elapsed: 6285.2s
+Hour 7 (223) complete.
+Total time elapsed: 6307.9s
+Hour 8 (224) complete.
+Total time elapsed: 6336.8s
+Hour 9 (225) complete.
+Total time elapsed: 6364.4s
+Hour 10 (226) complete.
+Total time elapsed: 6395.6s
+Hour 11 (227) complete.
+Total time elapsed: 6430.6s
+Hour 12 (228) complete.
+Total time elapsed: 6469.3s
+Hour 13 (229) complete.
+Total time elapsed: 6507.7s
+Hour 14 (230) complete.
+Total time elapsed: 6541.7s
+Hour 15 (231) complete.
+Total time elapsed: 6575.2s
+Hour 16 (232) complete.
+Total time elapsed: 6607.4s
+Hour 17 (233) complete.
+Total time elapsed: 6641.1s
+Hour 18 (234) complete.
+Total time elapsed: 6674s
+Hour 19 (235) complete.
+Total time elapsed: 6701.4s
+Hour 20 (236) complete.
+Total time elapsed: 6737.2s
+Hour 21 (237) complete.
+Total time elapsed: 6753s
+Hour 22 (238) complete.
+Total time elapsed: 6765.9s
+Hour 23 (239) complete.
+Total time elapsed: 6777.4s
+Daily household transmission complete.
+Total time elapsed: 6777.9s
+Day 9 complete. Infection status:
+Susceptible: 1120074
+Exposed: 2171
+Infected: 1339
+Recovered: 567
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004)]
+Total ever infected: 4077 (0.363% of the total population)
+
+Day 10:
+Hour 0 (240) complete.
+Total time elapsed: 6788s
+Hour 1 (241) complete.
+Total time elapsed: 6797.9s
+Hour 2 (242) complete.
+Total time elapsed: 6807.1s
+Hour 3 (243) complete.
+Total time elapsed: 6816.7s
+Hour 4 (244) complete.
+Total time elapsed: 6826.4s
+Hour 5 (245) complete.
+Total time elapsed: 6836.2s
+Hour 6 (246) complete.
+Total time elapsed: 6848s
+Hour 7 (247) complete.
+Total time elapsed: 6867.5s
+Hour 8 (248) complete.
+Total time elapsed: 6891.7s
+Hour 9 (249) complete.
+Total time elapsed: 6914.3s
+Hour 10 (250) complete.
+Total time elapsed: 6940.2s
+Hour 11 (251) complete.
+Total time elapsed: 6970.1s
+Hour 12 (252) complete.
+Total time elapsed: 7002.5s
+Hour 13 (253) complete.
+Total time elapsed: 7034.1s
+Hour 14 (254) complete.
+Total time elapsed: 7063.5s
+Hour 15 (255) complete.
+Total time elapsed: 7093.1s
+Hour 16 (256) complete.
+Total time elapsed: 7122.8s
+Hour 17 (257) complete.
+Total time elapsed: 7153.8s
+Hour 18 (258) complete.
+Total time elapsed: 7180.7s
+Hour 19 (259) complete.
+Total time elapsed: 7203.6s
+Hour 20 (260) complete.
+Total time elapsed: 7232.7s
+Hour 21 (261) complete.
+Total time elapsed: 7245.8s
+Hour 22 (262) complete.
+Total time elapsed: 7255.9s
+Hour 23 (263) complete.
+Total time elapsed: 7264.6s
+Daily household transmission complete.
+Total time elapsed: 7265s
+Day 10 complete. Infection status:
+Susceptible: 1118899
+Exposed: 2765
+Infected: 1738
+Recovered: 749
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175)]
+Total ever infected: 5252 (0.467% of the total population)
+
+Day 11:
+Hour 0 (264) complete.
+Total time elapsed: 7273.1s
+Hour 1 (265) complete.
+Total time elapsed: 7281.1s
+Hour 2 (266) complete.
+Total time elapsed: 7288.6s
+Hour 3 (267) complete.
+Total time elapsed: 7296.2s
+Hour 4 (268) complete.
+Total time elapsed: 7304.1s
+Hour 5 (269) complete.
+Total time elapsed: 7312.6s
+Hour 6 (270) complete.
+Total time elapsed: 7322.9s
+Hour 7 (271) complete.
+Total time elapsed: 7338.9s
+Hour 8 (272) complete.
+Total time elapsed: 7359.7s
+Hour 9 (273) complete.
+Total time elapsed: 7379.3s
+Hour 10 (274) complete.
+Total time elapsed: 7401.5s
+Hour 11 (275) complete.
+Total time elapsed: 7428.1s
+Hour 12 (276) complete.
+Total time elapsed: 7456.6s
+Hour 13 (277) complete.
+Total time elapsed: 7484.7s
+Hour 14 (278) complete.
+Total time elapsed: 7510.7s
+Hour 15 (279) complete.
+Total time elapsed: 7536.1s
+Hour 16 (280) complete.
+Total time elapsed: 7561.9s
+Hour 17 (281) complete.
+Total time elapsed: 7588.7s
+Hour 18 (282) complete.
+Total time elapsed: 7613.8s
+Hour 19 (283) complete.
+Total time elapsed: 7634.8s
+Hour 20 (284) complete.
+Total time elapsed: 7661.4s
+Hour 21 (285) complete.
+Total time elapsed: 7673.2s
+Hour 22 (286) complete.
+Total time elapsed: 7682.3s
+Hour 23 (287) complete.
+Total time elapsed: 7690s
+Daily household transmission complete.
+Total time elapsed: 7690.4s
+Day 11 complete. Infection status:
+Susceptible: 1117357
+Exposed: 3543
+Infected: 2261
+Recovered: 990
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542)]
+Total ever infected: 6794 (0.604% of the total population)
+
+Day 12:
+Hour 0 (288) complete.
+Total time elapsed: 7697.7s
+Hour 1 (289) complete.
+Total time elapsed: 7704.7s
+Hour 2 (290) complete.
+Total time elapsed: 7711.5s
+Hour 3 (291) complete.
+Total time elapsed: 7718.6s
+Hour 4 (292) complete.
+Total time elapsed: 7725.5s
+Hour 5 (293) complete.
+Total time elapsed: 7733.2s
+Hour 6 (294) complete.
+Total time elapsed: 7742.7s
+Hour 7 (295) complete.
+Total time elapsed: 7757.6s
+Hour 8 (296) complete.
+Total time elapsed: 7777.2s
+Hour 9 (297) complete.
+Total time elapsed: 7795.8s
+Hour 10 (298) complete.
+Total time elapsed: 7816.5s
+Hour 11 (299) complete.
+Total time elapsed: 7840.9s
+Hour 12 (300) complete.
+Total time elapsed: 7867.4s
+Hour 13 (301) complete.
+Total time elapsed: 7893.4s
+Hour 14 (302) complete.
+Total time elapsed: 7917.7s
+Hour 15 (303) complete.
+Total time elapsed: 7941.4s
+Hour 16 (304) complete.
+Total time elapsed: 7965.5s
+Hour 17 (305) complete.
+Total time elapsed: 7991s
+Hour 18 (306) complete.
+Total time elapsed: 8016.2s
+Hour 19 (307) complete.
+Total time elapsed: 8036.5s
+Hour 20 (308) complete.
+Total time elapsed: 8062.5s
+Hour 21 (309) complete.
+Total time elapsed: 8074s
+Hour 22 (310) complete.
+Total time elapsed: 8083s
+Hour 23 (311) complete.
+Total time elapsed: 8090.8s
+Daily household transmission complete.
+Total time elapsed: 8091.2s
+Day 12 complete. Infection status:
+Susceptible: 1115262
+Exposed: 4680
+Infected: 2899
+Recovered: 1310
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095)]
+Total ever infected: 8889 (0.791% of the total population)
+
+Day 13:
+Hour 0 (312) complete.
+Total time elapsed: 8098.6s
+Hour 1 (313) complete.
+Total time elapsed: 8105.5s
+Hour 2 (314) complete.
+Total time elapsed: 8112.3s
+Hour 3 (315) complete.
+Total time elapsed: 8119.2s
+Hour 4 (316) complete.
+Total time elapsed: 8126.3s
+Hour 5 (317) complete.
+Total time elapsed: 8134.3s
+Hour 6 (318) complete.
+Total time elapsed: 8143.7s
+Hour 7 (319) complete.
+Total time elapsed: 8159s
+Hour 8 (320) complete.
+Total time elapsed: 8178.3s
+Hour 9 (321) complete.
+Total time elapsed: 8197.2s
+Hour 10 (322) complete.
+Total time elapsed: 8217.9s
+Hour 11 (323) complete.
+Total time elapsed: 8242.2s
+Hour 12 (324) complete.
+Total time elapsed: 8269.5s
+Hour 13 (325) complete.
+Total time elapsed: 8295.5s
+Hour 14 (326) complete.
+Total time elapsed: 8319.4s
+Hour 15 (327) complete.
+Total time elapsed: 8343.5s
+Hour 16 (328) complete.
+Total time elapsed: 8367.7s
+Hour 17 (329) complete.
+Total time elapsed: 8392.6s
+Hour 18 (330) complete.
+Total time elapsed: 8417s
+Hour 19 (331) complete.
+Total time elapsed: 8437.5s
+Hour 20 (332) complete.
+Total time elapsed: 8463.2s
+Hour 21 (333) complete.
+Total time elapsed: 8474.8s
+Hour 22 (334) complete.
+Total time elapsed: 8483.9s
+Hour 23 (335) complete.
+Total time elapsed: 8491.9s
+Daily household transmission complete.
+Total time elapsed: 8492.3s
+Day 13 complete. Infection status:
+Susceptible: 1112756
+Exposed: 6007
+Infected: 3688
+Recovered: 1700
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506)]
+Total ever infected: 11395 (1.01% of the total population)
+
+Day 14:
+Hour 0 (336) complete.
+Total time elapsed: 8499.8s
+Hour 1 (337) complete.
+Total time elapsed: 8506.9s
+Hour 2 (338) complete.
+Total time elapsed: 8514.1s
+Hour 3 (339) complete.
+Total time elapsed: 8521.1s
+Hour 4 (340) complete.
+Total time elapsed: 8528.3s
+Hour 5 (341) complete.
+Total time elapsed: 8536.2s
+Hour 6 (342) complete.
+Total time elapsed: 8545.7s
+Hour 7 (343) complete.
+Total time elapsed: 8561s
+Hour 8 (344) complete.
+Total time elapsed: 8580.5s
+Hour 9 (345) complete.
+Total time elapsed: 8599.9s
+Hour 10 (346) complete.
+Total time elapsed: 8621.6s
+Hour 11 (347) complete.
+Total time elapsed: 8646s
+Hour 12 (348) complete.
+Total time elapsed: 8672.7s
+Hour 13 (349) complete.
+Total time elapsed: 8698.7s
+Hour 14 (350) complete.
+Total time elapsed: 8722.5s
+Hour 15 (351) complete.
+Total time elapsed: 8746.3s
+Hour 16 (352) complete.
+Total time elapsed: 8770.6s
+Hour 17 (353) complete.
+Total time elapsed: 8795.7s
+Hour 18 (354) complete.
+Total time elapsed: 8820.2s
+Hour 19 (355) complete.
+Total time elapsed: 8840.5s
+Hour 20 (356) complete.
+Total time elapsed: 8866.8s
+Hour 21 (357) complete.
+Total time elapsed: 8878.2s
+Hour 22 (358) complete.
+Total time elapsed: 8887.2s
+Hour 23 (359) complete.
+Total time elapsed: 8894.9s
+Daily household transmission complete.
+Total time elapsed: 8895.3s
+Day 14 complete. Infection status:
+Susceptible: 1109638
+Exposed: 7473
+Infected: 4840
+Recovered: 2200
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118)]
+Total ever infected: 14513 (1.29% of the total population)
+
+Day 15:
+Hour 0 (360) complete.
+Total time elapsed: 8902.9s
+Hour 1 (361) complete.
+Total time elapsed: 8909.8s
+Hour 2 (362) complete.
+Total time elapsed: 8916.6s
+Hour 3 (363) complete.
+Total time elapsed: 8923.4s
+Hour 4 (364) complete.
+Total time elapsed: 8930.6s
+Hour 5 (365) complete.
+Total time elapsed: 8938.3s
+Hour 6 (366) complete.
+Total time elapsed: 8947.7s
+Hour 7 (367) complete.
+Total time elapsed: 8963.1s
+Hour 8 (368) complete.
+Total time elapsed: 8982.8s
+Hour 9 (369) complete.
+Total time elapsed: 9001.3s
+Hour 10 (370) complete.
+Total time elapsed: 9021.9s
+Hour 11 (371) complete.
+Total time elapsed: 9046s
+Hour 12 (372) complete.
+Total time elapsed: 9072.3s
+Hour 13 (373) complete.
+Total time elapsed: 9098.5s
+Hour 14 (374) complete.
+Total time elapsed: 9123s
+Hour 15 (375) complete.
+Total time elapsed: 9147.2s
+Hour 16 (376) complete.
+Total time elapsed: 9171.5s
+Hour 17 (377) complete.
+Total time elapsed: 9196.6s
+Hour 18 (378) complete.
+Total time elapsed: 9221s
+Hour 19 (379) complete.
+Total time elapsed: 9241.5s
+Hour 20 (380) complete.
+Total time elapsed: 9267.5s
+Hour 21 (381) complete.
+Total time elapsed: 9279s
+Hour 22 (382) complete.
+Total time elapsed: 9288s
+Hour 23 (383) complete.
+Total time elapsed: 9295.9s
+Daily household transmission complete.
+Total time elapsed: 9296.3s
+Day 15 complete. Infection status:
+Susceptible: 1105512
+Exposed: 9535
+Infected: 6293
+Recovered: 2811
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126)]
+Total ever infected: 18639 (1.66% of the total population)
+
+Day 16:
+Hour 0 (384) complete.
+Total time elapsed: 9303.6s
+Hour 1 (385) complete.
+Total time elapsed: 9310.6s
+Hour 2 (386) complete.
+Total time elapsed: 9317.4s
+Hour 3 (387) complete.
+Total time elapsed: 9324.2s
+Hour 4 (388) complete.
+Total time elapsed: 9331.3s
+Hour 5 (389) complete.
+Total time elapsed: 9339.1s
+Hour 6 (390) complete.
+Total time elapsed: 9348.6s
+Hour 7 (391) complete.
+Total time elapsed: 9363.8s
+Hour 8 (392) complete.
+Total time elapsed: 9383.4s
+Hour 9 (393) complete.
+Total time elapsed: 9402.1s
+Hour 10 (394) complete.
+Total time elapsed: 9423.2s
+Hour 11 (395) complete.
+Total time elapsed: 9447.3s
+Hour 12 (396) complete.
+Total time elapsed: 9473.9s
+Hour 13 (397) complete.
+Total time elapsed: 9500.2s
+Hour 14 (398) complete.
+Total time elapsed: 9524.3s
+Hour 15 (399) complete.
+Total time elapsed: 9548.3s
+Hour 16 (400) complete.
+Total time elapsed: 9572.8s
+Hour 17 (401) complete.
+Total time elapsed: 9597.7s
+Hour 18 (402) complete.
+Total time elapsed: 9622s
+Hour 19 (403) complete.
+Total time elapsed: 9642.5s
+Hour 20 (404) complete.
+Total time elapsed: 9668.5s
+Hour 21 (405) complete.
+Total time elapsed: 9680.2s
+Hour 22 (406) complete.
+Total time elapsed: 9689.4s
+Hour 23 (407) complete.
+Total time elapsed: 9697.4s
+Daily household transmission complete.
+Total time elapsed: 9697.9s
+Day 16 complete. Infection status:
+Susceptible: 1100004
+Exposed: 12471
+Infected: 8008
+Recovered: 3668
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508)]
+Total ever infected: 24147 (2.15% of the total population)
+
+Day 17:
+Hour 0 (408) complete.
+Total time elapsed: 9705.1s
+Hour 1 (409) complete.
+Total time elapsed: 9712.1s
+Hour 2 (410) complete.
+Total time elapsed: 9718.9s
+Hour 3 (411) complete.
+Total time elapsed: 9725.7s
+Hour 4 (412) complete.
+Total time elapsed: 9732.8s
+Hour 5 (413) complete.
+Total time elapsed: 9740.5s
+Hour 6 (414) complete.
+Total time elapsed: 9750s
+Hour 7 (415) complete.
+Total time elapsed: 9765.1s
+Hour 8 (416) complete.
+Total time elapsed: 9784.5s
+Hour 9 (417) complete.
+Total time elapsed: 9803.4s
+Hour 10 (418) complete.
+Total time elapsed: 9824.3s
+Hour 11 (419) complete.
+Total time elapsed: 9848.9s
+Hour 12 (420) complete.
+Total time elapsed: 9876s
+Hour 13 (421) complete.
+Total time elapsed: 9901.9s
+Hour 14 (422) complete.
+Total time elapsed: 9926s
+Hour 15 (423) complete.
+Total time elapsed: 9950.1s
+Hour 16 (424) complete.
+Total time elapsed: 9974.3s
+Hour 17 (425) complete.
+Total time elapsed: 9999.2s
+Hour 18 (426) complete.
+Total time elapsed: 10023s
+Hour 19 (427) complete.
+Total time elapsed: 10044s
+Hour 20 (428) complete.
+Total time elapsed: 10072s
+Hour 21 (429) complete.
+Total time elapsed: 10083s
+Hour 22 (430) complete.
+Total time elapsed: 10092s
+Hour 23 (431) complete.
+Total time elapsed: 10100s
+Daily household transmission complete.
+Total time elapsed: 10101s
+Day 17 complete. Infection status:
+Susceptible: 1093126
+Exposed: 16121
+Infected: 10184
+Recovered: 4720
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878)]
+Total ever infected: 31025 (2.76% of the total population)
+
+Day 18:
+Hour 0 (432) complete.
+Total time elapsed: 10108s
+Hour 1 (433) complete.
+Total time elapsed: 10115s
+Hour 2 (434) complete.
+Total time elapsed: 10122s
+Hour 3 (435) complete.
+Total time elapsed: 10129s
+Hour 4 (436) complete.
+Total time elapsed: 10136s
+Hour 5 (437) complete.
+Total time elapsed: 10144s
+Hour 6 (438) complete.
+Total time elapsed: 10153s
+Hour 7 (439) complete.
+Total time elapsed: 10169s
+Hour 8 (440) complete.
+Total time elapsed: 10188s
+Hour 9 (441) complete.
+Total time elapsed: 10206s
+Hour 10 (442) complete.
+Total time elapsed: 10227s
+Hour 11 (443) complete.
+Total time elapsed: 10251s
+Hour 12 (444) complete.
+Total time elapsed: 10278s
+Hour 13 (445) complete.
+Total time elapsed: 10305s
+Hour 14 (446) complete.
+Total time elapsed: 10328s
+Hour 15 (447) complete.
+Total time elapsed: 10352s
+Hour 16 (448) complete.
+Total time elapsed: 10377s
+Hour 17 (449) complete.
+Total time elapsed: 10402s
+Hour 18 (450) complete.
+Total time elapsed: 10426s
+Hour 19 (451) complete.
+Total time elapsed: 10447s
+Hour 20 (452) complete.
+Total time elapsed: 10473s
+Hour 21 (453) complete.
+Total time elapsed: 10484s
+Hour 22 (454) complete.
+Total time elapsed: 10493s
+Hour 23 (455) complete.
+Total time elapsed: 10501s
+Daily household transmission complete.
+Total time elapsed: 10501s
+Day 18 complete. Infection status:
+Susceptible: 1084414
+Exposed: 20535
+Infected: 13062
+Recovered: 6140
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712)]
+Total ever infected: 39737 (3.53% of the total population)
+
+Day 19:
+Hour 0 (456) complete.
+Total time elapsed: 10509s
+Hour 1 (457) complete.
+Total time elapsed: 10516s
+Hour 2 (458) complete.
+Total time elapsed: 10523s
+Hour 3 (459) complete.
+Total time elapsed: 10530s
+Hour 4 (460) complete.
+Total time elapsed: 10537s
+Hour 5 (461) complete.
+Total time elapsed: 10545s
+Hour 6 (462) complete.
+Total time elapsed: 10554s
+Hour 7 (463) complete.
+Total time elapsed: 10569s
+Hour 8 (464) complete.
+Total time elapsed: 10589s
+Hour 9 (465) complete.
+Total time elapsed: 10607s
+Hour 10 (466) complete.
+Total time elapsed: 10628s
+Hour 11 (467) complete.
+Total time elapsed: 10652s
+Hour 12 (468) complete.
+Total time elapsed: 10679s
+Hour 13 (469) complete.
+Total time elapsed: 10707s
+Hour 14 (470) complete.
+Total time elapsed: 10734s
+Hour 15 (471) complete.
+Total time elapsed: 10762s
+Hour 16 (472) complete.
+Total time elapsed: 10792s
+Hour 17 (473) complete.
+Total time elapsed: 10822s
+Hour 18 (474) complete.
+Total time elapsed: 10853s
+Hour 19 (475) complete.
+Total time elapsed: 10879s
+Hour 20 (476) complete.
+Total time elapsed: 10913s
+Hour 21 (477) complete.
+Total time elapsed: 10929s
+Hour 22 (478) complete.
+Total time elapsed: 10943s
+Hour 23 (479) complete.
+Total time elapsed: 10954s
+Daily household transmission complete.
+Total time elapsed: 10955s
+Day 19 complete. Infection status:
+Susceptible: 1073613
+Exposed: 25875
+Infected: 16769
+Recovered: 7894
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801)]
+Total ever infected: 50538 (4.5% of the total population)
+
+Day 20:
+Hour 0 (480) complete.
+Total time elapsed: 10966s
+Hour 1 (481) complete.
+Total time elapsed: 10976s
+Hour 2 (482) complete.
+Total time elapsed: 10986s
+Hour 3 (483) complete.
+Total time elapsed: 10996s
+Hour 4 (484) complete.
+Total time elapsed: 11007s
+Hour 5 (485) complete.
+Total time elapsed: 11020s
+Hour 6 (486) complete.
+Total time elapsed: 11035s
+Hour 7 (487) complete.
+Total time elapsed: 11059s
+Hour 8 (488) complete.
+Total time elapsed: 11091s
+Hour 9 (489) complete.
+Total time elapsed: 11122s
+Hour 10 (490) complete.
+Total time elapsed: 11159s
+Hour 11 (491) complete.
+Total time elapsed: 11206s
+Hour 12 (492) complete.
+Total time elapsed: 11257s
+Hour 13 (493) complete.
+Total time elapsed: 11302s
+Hour 14 (494) complete.
+Total time elapsed: 11344s
+Hour 15 (495) complete.
+Total time elapsed: 11384s
+Hour 16 (496) complete.
+Total time elapsed: 11426s
+Hour 17 (497) complete.
+Total time elapsed: 11470s
+Hour 18 (498) complete.
+Total time elapsed: 11511s
+Hour 19 (499) complete.
+Total time elapsed: 11545s
+Hour 20 (500) complete.
+Total time elapsed: 11589s
+Hour 21 (501) complete.
+Total time elapsed: 11609s
+Hour 22 (502) complete.
+Total time elapsed: 11624s
+Hour 23 (503) complete.
+Total time elapsed: 11638s
+Daily household transmission complete.
+Total time elapsed: 11639s
+Day 20 complete. Infection status:
+Susceptible: 1060032
+Exposed: 32296
+Infected: 21663
+Recovered: 10160
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581)]
+Total ever infected: 64119 (5.7% of the total population)
+
+Day 21:
+Hour 0 (504) complete.
+Total time elapsed: 11651s
+Hour 1 (505) complete.
+Total time elapsed: 11663s
+Hour 2 (506) complete.
+Total time elapsed: 11675s
+Hour 3 (507) complete.
+Total time elapsed: 11686s
+Hour 4 (508) complete.
+Total time elapsed: 11698s
+Hour 5 (509) complete.
+Total time elapsed: 11711s
+Hour 6 (510) complete.
+Total time elapsed: 11728s
+Hour 7 (511) complete.
+Total time elapsed: 11753s
+Hour 8 (512) complete.
+Total time elapsed: 11787s
+Hour 9 (513) complete.
+Total time elapsed: 11818s
+Hour 10 (514) complete.
+Total time elapsed: 11855s
+Hour 11 (515) complete.
+Total time elapsed: 11897s
+Hour 12 (516) complete.
+Total time elapsed: 11942s
+Hour 13 (517) complete.
+Total time elapsed: 11987s
+Hour 14 (518) complete.
+Total time elapsed: 12029s
+Hour 15 (519) complete.
+Total time elapsed: 12070s
+Hour 16 (520) complete.
+Total time elapsed: 12113s
+Hour 17 (521) complete.
+Total time elapsed: 12156s
+Hour 18 (522) complete.
+Total time elapsed: 12199s
+Hour 19 (523) complete.
+Total time elapsed: 12236s
+Hour 20 (524) complete.
+Total time elapsed: 12283s
+Hour 21 (525) complete.
+Total time elapsed: 12304s
+Hour 22 (526) complete.
+Total time elapsed: 12321s
+Hour 23 (527) complete.
+Total time elapsed: 12336s
+Daily household transmission complete.
+Total time elapsed: 12337s
+Day 21 complete. Infection status:
+Susceptible: 1042306
+Exposed: 41201
+Infected: 27570
+Recovered: 13074
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726)]
+Total ever infected: 81845 (7.28% of the total population)
+
+Day 22:
+Hour 0 (528) complete.
+Total time elapsed: 12350s
+Hour 1 (529) complete.
+Total time elapsed: 12363s
+Hour 2 (530) complete.
+Total time elapsed: 12375s
+Hour 3 (531) complete.
+Total time elapsed: 12387s
+Hour 4 (532) complete.
+Total time elapsed: 12400s
+Hour 5 (533) complete.
+Total time elapsed: 12414s
+Hour 6 (534) complete.
+Total time elapsed: 12431s
+Hour 7 (535) complete.
+Total time elapsed: 12459s
+Hour 8 (536) complete.
+Total time elapsed: 12493s
+Hour 9 (537) complete.
+Total time elapsed: 12527s
+Hour 10 (538) complete.
+Total time elapsed: 12563s
+Hour 11 (539) complete.
+Total time elapsed: 12607s
+Hour 12 (540) complete.
+Total time elapsed: 12655s
+Hour 13 (541) complete.
+Total time elapsed: 12701s
+Hour 14 (542) complete.
+Total time elapsed: 12744s
+Hour 15 (543) complete.
+Total time elapsed: 12787s
+Hour 16 (544) complete.
+Total time elapsed: 12831s
+Hour 17 (545) complete.
+Total time elapsed: 12877s
+Hour 18 (546) complete.
+Total time elapsed: 12922s
+Hour 19 (547) complete.
+Total time elapsed: 12958s
+Hour 20 (548) complete.
+Total time elapsed: 13006s
+Hour 21 (549) complete.
+Total time elapsed: 13028s
+Hour 22 (550) complete.
+Total time elapsed: 13045s
+Hour 23 (551) complete.
+Total time elapsed: 13059s
+Daily household transmission complete.
+Total time elapsed: 13060s
+Day 22 complete. Infection status:
+Susceptible: 1020679
+Exposed: 51650
+Infected: 34950
+Recovered: 16872
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627)]
+Total ever infected: 103472 (9.2% of the total population)
+
+Day 23:
+Hour 0 (552) complete.
+Total time elapsed: 13074s
+Hour 1 (553) complete.
+Total time elapsed: 13087s
+Hour 2 (554) complete.
+Total time elapsed: 13099s
+Hour 3 (555) complete.
+Total time elapsed: 13111s
+Hour 4 (556) complete.
+Total time elapsed: 13123s
+Hour 5 (557) complete.
+Total time elapsed: 13138s
+Hour 6 (558) complete.
+Total time elapsed: 13154s
+Hour 7 (559) complete.
+Total time elapsed: 13182s
+Hour 8 (560) complete.
+Total time elapsed: 13217s
+Hour 9 (561) complete.
+Total time elapsed: 13251s
+Hour 10 (562) complete.
+Total time elapsed: 13288s
+Hour 11 (563) complete.
+Total time elapsed: 13331s
+Hour 12 (564) complete.
+Total time elapsed: 13379s
+Hour 13 (565) complete.
+Total time elapsed: 13427s
+Hour 14 (566) complete.
+Total time elapsed: 13471s
+Hour 15 (567) complete.
+Total time elapsed: 13514s
+Hour 16 (568) complete.
+Total time elapsed: 13558s
+Hour 17 (569) complete.
+Total time elapsed: 13604s
+Hour 18 (570) complete.
+Total time elapsed: 13648s
+Hour 19 (571) complete.
+Total time elapsed: 13686s
+Hour 20 (572) complete.
+Total time elapsed: 13733s
+Hour 21 (573) complete.
+Total time elapsed: 13754s
+Hour 22 (574) complete.
+Total time elapsed: 13771s
+Hour 23 (575) complete.
+Total time elapsed: 13785s
+Daily household transmission complete.
+Total time elapsed: 13786s
+Day 23 complete. Infection status:
+Susceptible: 994207
+Exposed: 64031
+Infected: 44130
+Recovered: 21783
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472)]
+Total ever infected: 129944 (11.6% of the total population)
+
+Day 24:
+Hour 0 (576) complete.
+Total time elapsed: 13800s
+Hour 1 (577) complete.
+Total time elapsed: 13812s
+Hour 2 (578) complete.
+Total time elapsed: 13824s
+Hour 3 (579) complete.
+Total time elapsed: 13836s
+Hour 4 (580) complete.
+Total time elapsed: 13849s
+Hour 5 (581) complete.
+Total time elapsed: 13863s
+Hour 6 (582) complete.
+Total time elapsed: 13881s
+Hour 7 (583) complete.
+Total time elapsed: 13908s
+Hour 8 (584) complete.
+Total time elapsed: 13943s
+Hour 9 (585) complete.
+Total time elapsed: 13976s
+Hour 10 (586) complete.
+Total time elapsed: 14015s
+Hour 11 (587) complete.
+Total time elapsed: 14060s
+Hour 12 (588) complete.
+Total time elapsed: 14108s
+Hour 13 (589) complete.
+Total time elapsed: 14157s
+Hour 14 (590) complete.
+Total time elapsed: 14201s
+Hour 15 (591) complete.
+Total time elapsed: 14245s
+Hour 16 (592) complete.
+Total time elapsed: 14290s
+Hour 17 (593) complete.
+Total time elapsed: 14336s
+Hour 18 (594) complete.
+Total time elapsed: 14379s
+Hour 19 (595) complete.
+Total time elapsed: 14416s
+Hour 20 (596) complete.
+Total time elapsed: 14462s
+Hour 21 (597) complete.
+Total time elapsed: 14484s
+Hour 22 (598) complete.
+Total time elapsed: 14500s
+Hour 23 (599) complete.
+Total time elapsed: 14515s
+Daily household transmission complete.
+Total time elapsed: 14516s
+Day 24 complete. Infection status:
+Susceptible: 962506
+Exposed: 78082
+Infected: 55576
+Recovered: 27987
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701)]
+Total ever infected: 161645 (14.4% of the total population)
+
+Day 25:
+Hour 0 (600) complete.
+Total time elapsed: 14529s
+Hour 1 (601) complete.
+Total time elapsed: 14542s
+Hour 2 (602) complete.
+Total time elapsed: 14554s
+Hour 3 (603) complete.
+Total time elapsed: 14566s
+Hour 4 (604) complete.
+Total time elapsed: 14579s
+Hour 5 (605) complete.
+Total time elapsed: 14593s
+Hour 6 (606) complete.
+Total time elapsed: 14610s
+Hour 7 (607) complete.
+Total time elapsed: 14638s
+Hour 8 (608) complete.
+Total time elapsed: 14675s
+Hour 9 (609) complete.
+Total time elapsed: 14709s
+Hour 10 (610) complete.
+Total time elapsed: 14748s
+Hour 11 (611) complete.
+Total time elapsed: 14793s
+Hour 12 (612) complete.
+Total time elapsed: 14843s
+Hour 13 (613) complete.
+Total time elapsed: 14891s
+Hour 14 (614) complete.
+Total time elapsed: 14936s
+Hour 15 (615) complete.
+Total time elapsed: 14980s
+Hour 16 (616) complete.
+Total time elapsed: 15025s
+Hour 17 (617) complete.
+Total time elapsed: 15071s
+Hour 18 (618) complete.
+Total time elapsed: 15115s
+Hour 19 (619) complete.
+Total time elapsed: 15152s
+Hour 20 (620) complete.
+Total time elapsed: 15198s
+Hour 21 (621) complete.
+Total time elapsed: 15220s
+Hour 22 (622) complete.
+Total time elapsed: 15236s
+Hour 23 (623) complete.
+Total time elapsed: 15251s
+Daily household transmission complete.
+Total time elapsed: 15252s
+Day 25 complete. Infection status:
+Susceptible: 923931
+Exposed: 94940
+Infected: 69425
+Recovered: 35855
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575)]
+Total ever infected: 200220 (17.8% of the total population)
+
+Day 26:
+Hour 0 (624) complete.
+Total time elapsed: 15266s
+Hour 1 (625) complete.
+Total time elapsed: 15279s
+Hour 2 (626) complete.
+Total time elapsed: 15291s
+Hour 3 (627) complete.
+Total time elapsed: 15304s
+Hour 4 (628) complete.
+Total time elapsed: 15316s
+Hour 5 (629) complete.
+Total time elapsed: 15331s
+Hour 6 (630) complete.
+Total time elapsed: 15349s
+Hour 7 (631) complete.
+Total time elapsed: 15376s
+Hour 8 (632) complete.
+Total time elapsed: 15413s
+Hour 9 (633) complete.
+Total time elapsed: 15447s
+Hour 10 (634) complete.
+Total time elapsed: 15493s
+Hour 11 (635) complete.
+Total time elapsed: 15539s
+Hour 12 (636) complete.
+Total time elapsed: 15589s
+Hour 13 (637) complete.
+Total time elapsed: 15638s
+Hour 14 (638) complete.
+Total time elapsed: 15682s
+Hour 15 (639) complete.
+Total time elapsed: 15726s
+Hour 16 (640) complete.
+Total time elapsed: 15770s
+Hour 17 (641) complete.
+Total time elapsed: 15816s
+Hour 18 (642) complete.
+Total time elapsed: 15860s
+Hour 19 (643) complete.
+Total time elapsed: 15897s
+Hour 20 (644) complete.
+Total time elapsed: 15945s
+Hour 21 (645) complete.
+Total time elapsed: 15967s
+Hour 22 (646) complete.
+Total time elapsed: 15985s
+Hour 23 (647) complete.
+Total time elapsed: 16000s
+Daily household transmission complete.
+Total time elapsed: 16001s
+Day 26 complete. Infection status:
+Susceptible: 879040
+Exposed: 113262
+Infected: 86192
+Recovered: 45657
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891)]
+Total ever infected: 245111 (21.8% of the total population)
+
+Day 27:
+Hour 0 (648) complete.
+Total time elapsed: 16015s
+Hour 1 (649) complete.
+Total time elapsed: 16028s
+Hour 2 (650) complete.
+Total time elapsed: 16040s
+Hour 3 (651) complete.
+Total time elapsed: 16053s
+Hour 4 (652) complete.
+Total time elapsed: 16066s
+Hour 5 (653) complete.
+Total time elapsed: 16081s
+Hour 6 (654) complete.
+Total time elapsed: 16098s
+Hour 7 (655) complete.
+Total time elapsed: 16126s
+Hour 8 (656) complete.
+Total time elapsed: 16163s
+Hour 9 (657) complete.
+Total time elapsed: 16198s
+Hour 10 (658) complete.
+Total time elapsed: 16238s
+Hour 11 (659) complete.
+Total time elapsed: 16285s
+Hour 12 (660) complete.
+Total time elapsed: 16335s
+Hour 13 (661) complete.
+Total time elapsed: 16383s
+Hour 14 (662) complete.
+Total time elapsed: 16427s
+Hour 15 (663) complete.
+Total time elapsed: 16470s
+Hour 16 (664) complete.
+Total time elapsed: 16515s
+Hour 17 (665) complete.
+Total time elapsed: 16561s
+Hour 18 (666) complete.
+Total time elapsed: 16606s
+Hour 19 (667) complete.
+Total time elapsed: 16644s
+Hour 20 (668) complete.
+Total time elapsed: 16693s
+Hour 21 (669) complete.
+Total time elapsed: 16716s
+Hour 22 (670) complete.
+Total time elapsed: 16733s
+Hour 23 (671) complete.
+Total time elapsed: 16748s
+Daily household transmission complete.
+Total time elapsed: 16750s
+Day 27 complete. Infection status:
+Susceptible: 827341
+Exposed: 133160
+Infected: 105487
+Recovered: 58163
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699)]
+Total ever infected: 296810 (26.4% of the total population)
+
+Day 28:
+Hour 0 (672) complete.
+Total time elapsed: 16764s
+Hour 1 (673) complete.
+Total time elapsed: 16777s
+Hour 2 (674) complete.
+Total time elapsed: 16789s
+Hour 3 (675) complete.
+Total time elapsed: 16801s
+Hour 4 (676) complete.
+Total time elapsed: 16814s
+Hour 5 (677) complete.
+Total time elapsed: 16829s
+Hour 6 (678) complete.
+Total time elapsed: 16847s
+Hour 7 (679) complete.
+Total time elapsed: 16875s
+Hour 8 (680) complete.
+Total time elapsed: 16912s
+Hour 9 (681) complete.
+Total time elapsed: 16947s
+Hour 10 (682) complete.
+Total time elapsed: 16988s
+Hour 11 (683) complete.
+Total time elapsed: 17033s
+Hour 12 (684) complete.
+Total time elapsed: 17082s
+Hour 13 (685) complete.
+Total time elapsed: 17130s
+Hour 14 (686) complete.
+Total time elapsed: 17175s
+Hour 15 (687) complete.
+Total time elapsed: 17220s
+Hour 16 (688) complete.
+Total time elapsed: 17265s
+Hour 17 (689) complete.
+Total time elapsed: 17314s
+Hour 18 (690) complete.
+Total time elapsed: 17360s
+Hour 19 (691) complete.
+Total time elapsed: 17399s
+Hour 20 (692) complete.
+Total time elapsed: 17448s
+Hour 21 (693) complete.
+Total time elapsed: 17471s
+Hour 22 (694) complete.
+Total time elapsed: 17488s
+Hour 23 (695) complete.
+Total time elapsed: 17504s
+Daily household transmission complete.
+Total time elapsed: 17505s
+Day 28 complete. Infection status:
+Susceptible: 769458
+Exposed: 153200
+Infected: 128117
+Recovered: 73376
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883)]
+Total ever infected: 354693 (31.6% of the total population)
+
+Day 29:
+Hour 0 (696) complete.
+Total time elapsed: 17520s
+Hour 1 (697) complete.
+Total time elapsed: 17533s
+Hour 2 (698) complete.
+Total time elapsed: 17545s
+Hour 3 (699) complete.
+Total time elapsed: 17558s
+Hour 4 (700) complete.
+Total time elapsed: 17571s
+Hour 5 (701) complete.
+Total time elapsed: 17586s
+Hour 6 (702) complete.
+Total time elapsed: 17604s
+Hour 7 (703) complete.
+Total time elapsed: 17632s
+Hour 8 (704) complete.
+Total time elapsed: 17669s
+Hour 9 (705) complete.
+Total time elapsed: 17705s
+Hour 10 (706) complete.
+Total time elapsed: 17744s
+Hour 11 (707) complete.
+Total time elapsed: 17788s
+Hour 12 (708) complete.
+Total time elapsed: 17837s
+Hour 13 (709) complete.
+Total time elapsed: 17887s
+Hour 14 (710) complete.
+Total time elapsed: 17932s
+Hour 15 (711) complete.
+Total time elapsed: 17978s
+Hour 16 (712) complete.
+Total time elapsed: 18025s
+Hour 17 (713) complete.
+Total time elapsed: 18072s
+Hour 18 (714) complete.
+Total time elapsed: 18118s
+Hour 19 (715) complete.
+Total time elapsed: 18157s
+Hour 20 (716) complete.
+Total time elapsed: 18205s
+Hour 21 (717) complete.
+Total time elapsed: 18229s
+Hour 22 (718) complete.
+Total time elapsed: 18247s
+Hour 23 (719) complete.
+Total time elapsed: 18262s
+Daily household transmission complete.
+Total time elapsed: 18264s
+Day 29 complete. Infection status:
+Susceptible: 707046
+Exposed: 171138
+Infected: 153598
+Recovered: 92369
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412)]
+Total ever infected: 417105 (37.1% of the total population)
+
+Day 30:
+Hour 0 (720) complete.
+Total time elapsed: 18278s
+Hour 1 (721) complete.
+Total time elapsed: 18291s
+Hour 2 (722) complete.
+Total time elapsed: 18303s
+Hour 3 (723) complete.
+Total time elapsed: 18316s
+Hour 4 (724) complete.
+Total time elapsed: 18329s
+Hour 5 (725) complete.
+Total time elapsed: 18344s
+Hour 6 (726) complete.
+Total time elapsed: 18361s
+Hour 7 (727) complete.
+Total time elapsed: 18390s
+Hour 8 (728) complete.
+Total time elapsed: 18426s
+Hour 9 (729) complete.
+Total time elapsed: 18461s
+Hour 10 (730) complete.
+Total time elapsed: 18500s
+Hour 11 (731) complete.
+Total time elapsed: 18546s
+Hour 12 (732) complete.
+Total time elapsed: 18597s
+Hour 13 (733) complete.
+Total time elapsed: 18648s
+Hour 14 (734) complete.
+Total time elapsed: 18695s
+Hour 15 (735) complete.
+Total time elapsed: 18741s
+Hour 16 (736) complete.
+Total time elapsed: 18788s
+Hour 17 (737) complete.
+Total time elapsed: 18836s
+Hour 18 (738) complete.
+Total time elapsed: 18882s
+Hour 19 (739) complete.
+Total time elapsed: 18921s
+Hour 20 (740) complete.
+Total time elapsed: 18971s
+Hour 21 (741) complete.
+Total time elapsed: 18994s
+Hour 22 (742) complete.
+Total time elapsed: 19012s
+Hour 23 (743) complete.
+Total time elapsed: 19027s
+Daily household transmission complete.
+Total time elapsed: 19030s
+Day 30 complete. Infection status:
+Susceptible: 640324
+Exposed: 187412
+Infected: 180987
+Recovered: 115428
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722)]
+Total ever infected: 483827 (43% of the total population)
+
+Day 31:
+Hour 0 (744) complete.
+Total time elapsed: 19044s
+Hour 1 (745) complete.
+Total time elapsed: 19056s
+Hour 2 (746) complete.
+Total time elapsed: 19069s
+Hour 3 (747) complete.
+Total time elapsed: 19081s
+Hour 4 (748) complete.
+Total time elapsed: 19095s
+Hour 5 (749) complete.
+Total time elapsed: 19109s
+Hour 6 (750) complete.
+Total time elapsed: 19126s
+Hour 7 (751) complete.
+Total time elapsed: 19155s
+Hour 8 (752) complete.
+Total time elapsed: 19190s
+Hour 9 (753) complete.
+Total time elapsed: 19227s
+Hour 10 (754) complete.
+Total time elapsed: 19268s
+Hour 11 (755) complete.
+Total time elapsed: 19316s
+Hour 12 (756) complete.
+Total time elapsed: 19368s
+Hour 13 (757) complete.
+Total time elapsed: 19419s
+Hour 14 (758) complete.
+Total time elapsed: 19466s
+Hour 15 (759) complete.
+Total time elapsed: 19513s
+Hour 16 (760) complete.
+Total time elapsed: 19561s
+Hour 17 (761) complete.
+Total time elapsed: 19608s
+Hour 18 (762) complete.
+Total time elapsed: 19655s
+Hour 19 (763) complete.
+Total time elapsed: 19694s
+Hour 20 (764) complete.
+Total time elapsed: 19743s
+Hour 21 (765) complete.
+Total time elapsed: 19766s
+Hour 22 (766) complete.
+Total time elapsed: 19785s
+Hour 23 (767) complete.
+Total time elapsed: 19800s
+Daily household transmission complete.
+Total time elapsed: 19802s
+Day 31 complete. Infection status:
+Susceptible: 572580
+Exposed: 199299
+Infected: 208931
+Recovered: 143341
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744)]
+Total ever infected: 551571 (49.1% of the total population)
+
+Day 32:
+Hour 0 (768) complete.
+Total time elapsed: 19816s
+Hour 1 (769) complete.
+Total time elapsed: 19829s
+Hour 2 (770) complete.
+Total time elapsed: 19842s
+Hour 3 (771) complete.
+Total time elapsed: 19854s
+Hour 4 (772) complete.
+Total time elapsed: 19866s
+Hour 5 (773) complete.
+Total time elapsed: 19881s
+Hour 6 (774) complete.
+Total time elapsed: 19899s
+Hour 7 (775) complete.
+Total time elapsed: 19927s
+Hour 8 (776) complete.
+Total time elapsed: 19965s
+Hour 9 (777) complete.
+Total time elapsed: 20003s
+Hour 10 (778) complete.
+Total time elapsed: 20044s
+Hour 11 (779) complete.
+Total time elapsed: 20092s
+Hour 12 (780) complete.
+Total time elapsed: 20145s
+Hour 13 (781) complete.
+Total time elapsed: 20198s
+Hour 14 (782) complete.
+Total time elapsed: 20245s
+Hour 15 (783) complete.
+Total time elapsed: 20292s
+Hour 16 (784) complete.
+Total time elapsed: 20340s
+Hour 17 (785) complete.
+Total time elapsed: 20388s
+Hour 18 (786) complete.
+Total time elapsed: 20434s
+Hour 19 (787) complete.
+Total time elapsed: 20473s
+Hour 20 (788) complete.
+Total time elapsed: 20521s
+Hour 21 (789) complete.
+Total time elapsed: 20545s
+Hour 22 (790) complete.
+Total time elapsed: 20563s
+Hour 23 (791) complete.
+Total time elapsed: 20578s
+Daily household transmission complete.
+Total time elapsed: 20581s
+Day 32 complete. Infection status:
+Susceptible: 505119
+Exposed: 206208
+Infected: 236426
+Recovered: 176398
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461)]
+Total ever infected: 619032 (55.1% of the total population)
+
+Day 33:
+Hour 0 (792) complete.
+Total time elapsed: 20595s
+Hour 1 (793) complete.
+Total time elapsed: 20608s
+Hour 2 (794) complete.
+Total time elapsed: 20621s
+Hour 3 (795) complete.
+Total time elapsed: 20634s
+Hour 4 (796) complete.
+Total time elapsed: 20647s
+Hour 5 (797) complete.
+Total time elapsed: 20662s
+Hour 6 (798) complete.
+Total time elapsed: 20680s
+Hour 7 (799) complete.
+Total time elapsed: 20709s
+Hour 8 (800) complete.
+Total time elapsed: 20748s
+Hour 9 (801) complete.
+Total time elapsed: 20785s
+Hour 10 (802) complete.
+Total time elapsed: 20828s
+Hour 11 (803) complete.
+Total time elapsed: 20877s
+Hour 12 (804) complete.
+Total time elapsed: 20931s
+Hour 13 (805) complete.
+Total time elapsed: 20984s
+Hour 14 (806) complete.
+Total time elapsed: 21032s
+Hour 15 (807) complete.
+Total time elapsed: 21079s
+Hour 16 (808) complete.
+Total time elapsed: 21125s
+Hour 17 (809) complete.
+Total time elapsed: 21173s
+Hour 18 (810) complete.
+Total time elapsed: 21220s
+Hour 19 (811) complete.
+Total time elapsed: 21259s
+Hour 20 (812) complete.
+Total time elapsed: 21310s
+Hour 21 (813) complete.
+Total time elapsed: 21334s
+Hour 22 (814) complete.
+Total time elapsed: 21352s
+Hour 23 (815) complete.
+Total time elapsed: 21367s
+Daily household transmission complete.
+Total time elapsed: 21369s
+Day 33 complete. Infection status:
+Susceptible: 439844
+Exposed: 207553
+Infected: 261646
+Recovered: 215108
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275)]
+Total ever infected: 684307 (60.9% of the total population)
+
+Day 34:
+Hour 0 (816) complete.
+Total time elapsed: 21382s
+Hour 1 (817) complete.
+Total time elapsed: 21395s
+Hour 2 (818) complete.
+Total time elapsed: 21407s
+Hour 3 (819) complete.
+Total time elapsed: 21419s
+Hour 4 (820) complete.
+Total time elapsed: 21431s
+Hour 5 (821) complete.
+Total time elapsed: 21445s
+Hour 6 (822) complete.
+Total time elapsed: 21462s
+Hour 7 (823) complete.
+Total time elapsed: 21489s
+Hour 8 (824) complete.
+Total time elapsed: 21525s
+Hour 9 (825) complete.
+Total time elapsed: 21565s
+Hour 10 (826) complete.
+Total time elapsed: 21611s
+Hour 11 (827) complete.
+Total time elapsed: 21667s
+Hour 12 (828) complete.
+Total time elapsed: 21730s
+Hour 13 (829) complete.
+Total time elapsed: 21791s
+Hour 14 (830) complete.
+Total time elapsed: 21850s
+Hour 15 (831) complete.
+Total time elapsed: 21911s
+Hour 16 (832) complete.
+Total time elapsed: 21978s
+Hour 17 (833) complete.
+Total time elapsed: 22047s
+Hour 18 (834) complete.
+Total time elapsed: 22112s
+Hour 19 (835) complete.
+Total time elapsed: 22159s
+Hour 20 (836) complete.
+Total time elapsed: 22215s
+Hour 21 (837) complete.
+Total time elapsed: 22247s
+Hour 22 (838) complete.
+Total time elapsed: 22266s
+Hour 23 (839) complete.
+Total time elapsed: 22284s
+Daily household transmission complete.
+Total time elapsed: 22286s
+Day 34 complete. Infection status:
+Susceptible: 379504
+Exposed: 202193
+Infected: 283052
+Recovered: 259402
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340)]
+Total ever infected: 744647 (66.2% of the total population)
+
+Day 35:
+Hour 0 (840) complete.
+Total time elapsed: 22306s
+Hour 1 (841) complete.
+Total time elapsed: 22324s
+Hour 2 (842) complete.
+Total time elapsed: 22340s
+Hour 3 (843) complete.
+Total time elapsed: 22353s
+Hour 4 (844) complete.
+Total time elapsed: 22367s
+Hour 5 (845) complete.
+Total time elapsed: 22382s
+Hour 6 (846) complete.
+Total time elapsed: 22410s
+Hour 7 (847) complete.
+Total time elapsed: 22438s
+Hour 8 (848) complete.
+Total time elapsed: 22490s
+Hour 9 (849) complete.
+Total time elapsed: 22529s
+Hour 10 (850) complete.
+Total time elapsed: 22573s
+Hour 11 (851) complete.
+Total time elapsed: 22619s
+Hour 12 (852) complete.
+Total time elapsed: 22670s
+Hour 13 (853) complete.
+Total time elapsed: 22729s
+Hour 14 (854) complete.
+Total time elapsed: 22783s
+Hour 15 (855) complete.
+Total time elapsed: 22830s
+Hour 16 (856) complete.
+Total time elapsed: 22886s
+Hour 17 (857) complete.
+Total time elapsed: 22934s
+Hour 18 (858) complete.
+Total time elapsed: 22989s
+Hour 19 (859) complete.
+Total time elapsed: 23028s
+Hour 20 (860) complete.
+Total time elapsed: 23080s
+Hour 21 (861) complete.
+Total time elapsed: 23108s
+Hour 22 (862) complete.
+Total time elapsed: 23132s
+Hour 23 (863) complete.
+Total time elapsed: 23147s
+Daily household transmission complete.
+Total time elapsed: 23149s
+Day 35 complete. Infection status:
+Susceptible: 324460
+Exposed: 191445
+Infected: 299283
+Recovered: 308963
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044)]
+Total ever infected: 799691 (71.1% of the total population)
+
+Day 36:
+Hour 0 (864) complete.
+Total time elapsed: 23164s
+Hour 1 (865) complete.
+Total time elapsed: 23179s
+Hour 2 (866) complete.
+Total time elapsed: 23191s
+Hour 3 (867) complete.
+Total time elapsed: 23205s
+Hour 4 (868) complete.
+Total time elapsed: 23218s
+Hour 5 (869) complete.
+Total time elapsed: 23233s
+Hour 6 (870) complete.
+Total time elapsed: 23251s
+Hour 7 (871) complete.
+Total time elapsed: 23279s
+Hour 8 (872) complete.
+Total time elapsed: 23319s
+Hour 9 (873) complete.
+Total time elapsed: 23358s
+Hour 10 (874) complete.
+Total time elapsed: 23400s
+Hour 11 (875) complete.
+Total time elapsed: 23449s
+Hour 12 (876) complete.
+Total time elapsed: 23503s
+Hour 13 (877) complete.
+Total time elapsed: 23556s
+Hour 14 (878) complete.
+Total time elapsed: 23607s
+Hour 15 (879) complete.
+Total time elapsed: 23657s
+Hour 16 (880) complete.
+Total time elapsed: 23706s
+Hour 17 (881) complete.
+Total time elapsed: 23761s
+Hour 18 (882) complete.
+Total time elapsed: 23810s
+Hour 19 (883) complete.
+Total time elapsed: 23850s
+Hour 20 (884) complete.
+Total time elapsed: 23901s
+Hour 21 (885) complete.
+Total time elapsed: 23925s
+Hour 22 (886) complete.
+Total time elapsed: 23943s
+Hour 23 (887) complete.
+Total time elapsed: 23958s
+Daily household transmission complete.
+Total time elapsed: 23961s
+Day 36 complete. Infection status:
+Susceptible: 276111
+Exposed: 176600
+Infected: 308127
+Recovered: 363313
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349)]
+Total ever infected: 848040 (75.4% of the total population)
+
+Day 37:
+Hour 0 (888) complete.
+Total time elapsed: 23976s
+Hour 1 (889) complete.
+Total time elapsed: 23989s
+Hour 2 (890) complete.
+Total time elapsed: 24002s
+Hour 3 (891) complete.
+Total time elapsed: 24015s
+Hour 4 (892) complete.
+Total time elapsed: 24028s
+Hour 5 (893) complete.
+Total time elapsed: 24044s
+Hour 6 (894) complete.
+Total time elapsed: 24062s
+Hour 7 (895) complete.
+Total time elapsed: 24091s
+Hour 8 (896) complete.
+Total time elapsed: 24129s
+Hour 9 (897) complete.
+Total time elapsed: 24167s
+Hour 10 (898) complete.
+Total time elapsed: 24210s
+Hour 11 (899) complete.
+Total time elapsed: 24259s
+Hour 12 (900) complete.
+Total time elapsed: 24312s
+Hour 13 (901) complete.
+Total time elapsed: 24365s
+Hour 14 (902) complete.
+Total time elapsed: 24414s
+Hour 15 (903) complete.
+Total time elapsed: 24461s
+Hour 16 (904) complete.
+Total time elapsed: 24509s
+Hour 17 (905) complete.
+Total time elapsed: 24558s
+Hour 18 (906) complete.
+Total time elapsed: 24605s
+Hour 19 (907) complete.
+Total time elapsed: 24645s
+Hour 20 (908) complete.
+Total time elapsed: 24695s
+Hour 21 (909) complete.
+Total time elapsed: 24721s
+Hour 22 (910) complete.
+Total time elapsed: 24739s
+Hour 23 (911) complete.
+Total time elapsed: 24755s
+Daily household transmission complete.
+Total time elapsed: 24757s
+Day 37 complete. Infection status:
+Susceptible: 234556
+Exposed: 158584
+Infected: 309270
+Recovered: 421741
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555)]
+Total ever infected: 889595 (79.1% of the total population)
+
+Day 38:
+Hour 0 (912) complete.
+Total time elapsed: 24771s
+Hour 1 (913) complete.
+Total time elapsed: 24785s
+Hour 2 (914) complete.
+Total time elapsed: 24798s
+Hour 3 (915) complete.
+Total time elapsed: 24810s
+Hour 4 (916) complete.
+Total time elapsed: 24824s
+Hour 5 (917) complete.
+Total time elapsed: 24839s
+Hour 6 (918) complete.
+Total time elapsed: 24857s
+Hour 7 (919) complete.
+Total time elapsed: 24886s
+Hour 8 (920) complete.
+Total time elapsed: 24925s
+Hour 9 (921) complete.
+Total time elapsed: 24963s
+Hour 10 (922) complete.
+Total time elapsed: 25006s
+Hour 11 (923) complete.
+Total time elapsed: 25054s
+Hour 12 (924) complete.
+Total time elapsed: 25106s
+Hour 13 (925) complete.
+Total time elapsed: 25159s
+Hour 14 (926) complete.
+Total time elapsed: 25206s
+Hour 15 (927) complete.
+Total time elapsed: 25253s
+Hour 16 (928) complete.
+Total time elapsed: 25301s
+Hour 17 (929) complete.
+Total time elapsed: 25351s
+Hour 18 (930) complete.
+Total time elapsed: 25400s
+Hour 19 (931) complete.
+Total time elapsed: 25440s
+Hour 20 (932) complete.
+Total time elapsed: 25492s
+Hour 21 (933) complete.
+Total time elapsed: 25516s
+Hour 22 (934) complete.
+Total time elapsed: 25535s
+Hour 23 (935) complete.
+Total time elapsed: 25551s
+Daily household transmission complete.
+Total time elapsed: 25553s
+Day 38 complete. Infection status:
+Susceptible: 199736
+Exposed: 139013
+Infected: 302442
+Recovered: 482960
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820)]
+Total ever infected: 924415 (82.2% of the total population)
+
+Day 39:
+Hour 0 (936) complete.
+Total time elapsed: 25567s
+Hour 1 (937) complete.
+Total time elapsed: 25580s
+Hour 2 (938) complete.
+Total time elapsed: 25594s
+Hour 3 (939) complete.
+Total time elapsed: 25607s
+Hour 4 (940) complete.
+Total time elapsed: 25620s
+Hour 5 (941) complete.
+Total time elapsed: 25634s
+Hour 6 (942) complete.
+Total time elapsed: 25652s
+Hour 7 (943) complete.
+Total time elapsed: 25681s
+Hour 8 (944) complete.
+Total time elapsed: 25719s
+Hour 9 (945) complete.
+Total time elapsed: 25756s
+Hour 10 (946) complete.
+Total time elapsed: 25798s
+Hour 11 (947) complete.
+Total time elapsed: 25846s
+Hour 12 (948) complete.
+Total time elapsed: 25898s
+Hour 13 (949) complete.
+Total time elapsed: 25950s
+Hour 14 (950) complete.
+Total time elapsed: 25998s
+Hour 15 (951) complete.
+Total time elapsed: 26047s
+Hour 16 (952) complete.
+Total time elapsed: 26095s
+Hour 17 (953) complete.
+Total time elapsed: 26145s
+Hour 18 (954) complete.
+Total time elapsed: 26192s
+Hour 19 (955) complete.
+Total time elapsed: 26232s
+Hour 20 (956) complete.
+Total time elapsed: 26282s
+Hour 21 (957) complete.
+Total time elapsed: 26306s
+Hour 22 (958) complete.
+Total time elapsed: 26331s
+Hour 23 (959) complete.
+Total time elapsed: 26346s
+Daily household transmission complete.
+Total time elapsed: 26348s
+Day 39 complete. Infection status:
+Susceptible: 170628
+Exposed: 119158
+Infected: 289509
+Recovered: 544856
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108)]
+Total ever infected: 953523 (84.8% of the total population)
+
+Day 40:
+Hour 0 (960) complete.
+Total time elapsed: 26362s
+Hour 1 (961) complete.
+Total time elapsed: 26376s
+Hour 2 (962) complete.
+Total time elapsed: 26389s
+Hour 3 (963) complete.
+Total time elapsed: 26401s
+Hour 4 (964) complete.
+Total time elapsed: 26414s
+Hour 5 (965) complete.
+Total time elapsed: 26429s
+Hour 6 (966) complete.
+Total time elapsed: 26447s
+Hour 7 (967) complete.
+Total time elapsed: 26475s
+Hour 8 (968) complete.
+Total time elapsed: 26513s
+Hour 9 (969) complete.
+Total time elapsed: 26550s
+Hour 10 (970) complete.
+Total time elapsed: 26592s
+Hour 11 (971) complete.
+Total time elapsed: 26641s
+Hour 12 (972) complete.
+Total time elapsed: 26694s
+Hour 13 (973) complete.
+Total time elapsed: 26746s
+Hour 14 (974) complete.
+Total time elapsed: 26795s
+Hour 15 (975) complete.
+Total time elapsed: 26842s
+Hour 16 (976) complete.
+Total time elapsed: 26889s
+Hour 17 (977) complete.
+Total time elapsed: 26938s
+Hour 18 (978) complete.
+Total time elapsed: 26985s
+Hour 19 (979) complete.
+Total time elapsed: 27025s
+Hour 20 (980) complete.
+Total time elapsed: 27075s
+Hour 21 (981) complete.
+Total time elapsed: 27099s
+Hour 22 (982) complete.
+Total time elapsed: 27117s
+Hour 23 (983) complete.
+Total time elapsed: 27132s
+Daily household transmission complete.
+Total time elapsed: 27134s
+Day 40 complete. Infection status:
+Susceptible: 147178
+Exposed: 100614
+Infected: 269803
+Recovered: 606556
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450)]
+Total ever infected: 976973 (86.9% of the total population)
+
+Day 41:
+Hour 0 (984) complete.
+Total time elapsed: 27148s
+Hour 1 (985) complete.
+Total time elapsed: 27162s
+Hour 2 (986) complete.
+Total time elapsed: 27174s
+Hour 3 (987) complete.
+Total time elapsed: 27187s
+Hour 4 (988) complete.
+Total time elapsed: 27200s
+Hour 5 (989) complete.
+Total time elapsed: 27215s
+Hour 6 (990) complete.
+Total time elapsed: 27233s
+Hour 7 (991) complete.
+Total time elapsed: 27262s
+Hour 8 (992) complete.
+Total time elapsed: 27301s
+Hour 9 (993) complete.
+Total time elapsed: 27338s
+Hour 10 (994) complete.
+Total time elapsed: 27380s
+Hour 11 (995) complete.
+Total time elapsed: 27430s
+Hour 12 (996) complete.
+Total time elapsed: 27481s
+Hour 13 (997) complete.
+Total time elapsed: 27533s
+Hour 14 (998) complete.
+Total time elapsed: 27580s
+Hour 15 (999) complete.
+Total time elapsed: 27627s
+Hour 16 (1000) complete.
+Total time elapsed: 27674s
+Hour 17 (1001) complete.
+Total time elapsed: 27722s
+Hour 18 (1002) complete.
+Total time elapsed: 27768s
+Hour 19 (1003) complete.
+Total time elapsed: 27807s
+Hour 20 (1004) complete.
+Total time elapsed: 27857s
+Hour 21 (1005) complete.
+Total time elapsed: 27881s
+Hour 22 (1006) complete.
+Total time elapsed: 27899s
+Hour 23 (1007) complete.
+Total time elapsed: 27914s
+Daily household transmission complete.
+Total time elapsed: 27916s
+Day 41 complete. Infection status:
+Susceptible: 127975
+Exposed: 83784
+Infected: 245977
+Recovered: 666415
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203)]
+Total ever infected: 996176 (88.6% of the total population)
+
+Day 42:
+Hour 0 (1008) complete.
+Total time elapsed: 27930s
+Hour 1 (1009) complete.
+Total time elapsed: 27944s
+Hour 2 (1010) complete.
+Total time elapsed: 27956s
+Hour 3 (1011) complete.
+Total time elapsed: 27969s
+Hour 4 (1012) complete.
+Total time elapsed: 27982s
+Hour 5 (1013) complete.
+Total time elapsed: 27997s
+Hour 6 (1014) complete.
+Total time elapsed: 28014s
+Hour 7 (1015) complete.
+Total time elapsed: 28043s
+Hour 8 (1016) complete.
+Total time elapsed: 28080s
+Hour 9 (1017) complete.
+Total time elapsed: 28116s
+Hour 10 (1018) complete.
+Total time elapsed: 28158s
+Hour 11 (1019) complete.
+Total time elapsed: 28206s
+Hour 12 (1020) complete.
+Total time elapsed: 28258s
+Hour 13 (1021) complete.
+Total time elapsed: 28308s
+Hour 14 (1022) complete.
+Total time elapsed: 28354s
+Hour 15 (1023) complete.
+Total time elapsed: 28400s
+Hour 16 (1024) complete.
+Total time elapsed: 28447s
+Hour 17 (1025) complete.
+Total time elapsed: 28495s
+Hour 18 (1026) complete.
+Total time elapsed: 28541s
+Hour 19 (1027) complete.
+Total time elapsed: 28580s
+Hour 20 (1028) complete.
+Total time elapsed: 28629s
+Hour 21 (1029) complete.
+Total time elapsed: 28653s
+Hour 22 (1030) complete.
+Total time elapsed: 28670s
+Hour 23 (1031) complete.
+Total time elapsed: 28685s
+Daily household transmission complete.
+Total time elapsed: 28687s
+Day 42 complete. Infection status:
+Susceptible: 112480
+Exposed: 68903
+Infected: 219665
+Recovered: 723103
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495)]
+Total ever infected: 1011671 (90% of the total population)
+
+Day 43:
+Hour 0 (1032) complete.
+Total time elapsed: 28701s
+Hour 1 (1033) complete.
+Total time elapsed: 28713s
+Hour 2 (1034) complete.
+Total time elapsed: 28726s
+Hour 3 (1035) complete.
+Total time elapsed: 28738s
+Hour 4 (1036) complete.
+Total time elapsed: 28751s
+Hour 5 (1037) complete.
+Total time elapsed: 28766s
+Hour 6 (1038) complete.
+Total time elapsed: 28784s
+Hour 7 (1039) complete.
+Total time elapsed: 28812s
+Hour 8 (1040) complete.
+Total time elapsed: 28850s
+Hour 9 (1041) complete.
+Total time elapsed: 28886s
+Hour 10 (1042) complete.
+Total time elapsed: 28926s
+Hour 11 (1043) complete.
+Total time elapsed: 28973s
+Hour 12 (1044) complete.
+Total time elapsed: 29024s
+Hour 13 (1045) complete.
+Total time elapsed: 29075s
+Hour 14 (1046) complete.
+Total time elapsed: 29121s
+Hour 15 (1047) complete.
+Total time elapsed: 29168s
+Hour 16 (1048) complete.
+Total time elapsed: 29215s
+Hour 17 (1049) complete.
+Total time elapsed: 29263s
+Hour 18 (1050) complete.
+Total time elapsed: 29309s
+Hour 19 (1051) complete.
+Total time elapsed: 29347s
+Hour 20 (1052) complete.
+Total time elapsed: 29395s
+Hour 21 (1053) complete.
+Total time elapsed: 29419s
+Hour 22 (1054) complete.
+Total time elapsed: 29436s
+Hour 23 (1055) complete.
+Total time elapsed: 29451s
+Daily household transmission complete.
+Total time elapsed: 29453s
+Day 43 complete. Infection status:
+Susceptible: 100139
+Exposed: 56015
+Infected: 192819
+Recovered: 775178
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341)]
+Total ever infected: 1024012 (91.1% of the total population)
+
+Day 44:
+Hour 0 (1056) complete.
+Total time elapsed: 29467s
+Hour 1 (1057) complete.
+Total time elapsed: 29480s
+Hour 2 (1058) complete.
+Total time elapsed: 29493s
+Hour 3 (1059) complete.
+Total time elapsed: 29505s
+Hour 4 (1060) complete.
+Total time elapsed: 29517s
+Hour 5 (1061) complete.
+Total time elapsed: 29532s
+Hour 6 (1062) complete.
+Total time elapsed: 29549s
+Hour 7 (1063) complete.
+Total time elapsed: 29577s
+Hour 8 (1064) complete.
+Total time elapsed: 29613s
+Hour 9 (1065) complete.
+Total time elapsed: 29649s
+Hour 10 (1066) complete.
+Total time elapsed: 29690s
+Hour 11 (1067) complete.
+Total time elapsed: 29737s
+Hour 12 (1068) complete.
+Total time elapsed: 29788s
+Hour 13 (1069) complete.
+Total time elapsed: 29837s
+Hour 14 (1070) complete.
+Total time elapsed: 29885s
+Hour 15 (1071) complete.
+Total time elapsed: 29934s
+Hour 16 (1072) complete.
+Total time elapsed: 29984s
+Hour 17 (1073) complete.
+Total time elapsed: 30034s
+Hour 18 (1074) complete.
+Total time elapsed: 30083s
+Hour 19 (1075) complete.
+Total time elapsed: 30124s
+Hour 20 (1076) complete.
+Total time elapsed: 30175s
+Hour 21 (1077) complete.
+Total time elapsed: 30198s
+Hour 22 (1078) complete.
+Total time elapsed: 30217s
+Hour 23 (1079) complete.
+Total time elapsed: 30232s
+Daily household transmission complete.
+Total time elapsed: 30234s
+Day 44 complete. Infection status:
+Susceptible: 90423
+Exposed: 44965
+Infected: 166327
+Recovered: 822436
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716)]
+Total ever infected: 1033728 (92% of the total population)
+
+Day 45:
+Hour 0 (1080) complete.
+Total time elapsed: 30248s
+Hour 1 (1081) complete.
+Total time elapsed: 30261s
+Hour 2 (1082) complete.
+Total time elapsed: 30274s
+Hour 3 (1083) complete.
+Total time elapsed: 30288s
+Hour 4 (1084) complete.
+Total time elapsed: 30301s
+Hour 5 (1085) complete.
+Total time elapsed: 30316s
+Hour 6 (1086) complete.
+Total time elapsed: 30335s
+Hour 7 (1087) complete.
+Total time elapsed: 30365s
+Hour 8 (1088) complete.
+Total time elapsed: 30403s
+Hour 9 (1089) complete.
+Total time elapsed: 30440s
+Hour 10 (1090) complete.
+Total time elapsed: 30481s
+Hour 11 (1091) complete.
+Total time elapsed: 30530s
+Hour 12 (1092) complete.
+Total time elapsed: 30584s
+Hour 13 (1093) complete.
+Total time elapsed: 30636s
+Hour 14 (1094) complete.
+Total time elapsed: 30684s
+Hour 15 (1095) complete.
+Total time elapsed: 30732s
+Hour 16 (1096) complete.
+Total time elapsed: 30780s
+Hour 17 (1097) complete.
+Total time elapsed: 30830s
+Hour 18 (1098) complete.
+Total time elapsed: 30878s
+Hour 19 (1099) complete.
+Total time elapsed: 30918s
+Hour 20 (1100) complete.
+Total time elapsed: 30969s
+Hour 21 (1101) complete.
+Total time elapsed: 30993s
+Hour 22 (1102) complete.
+Total time elapsed: 31012s
+Hour 23 (1103) complete.
+Total time elapsed: 31027s
+Daily household transmission complete.
+Total time elapsed: 31029s
+Day 45 complete. Infection status:
+Susceptible: 82833
+Exposed: 35664
+Infected: 141299
+Recovered: 864355
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590)]
+Total ever infected: 1041318 (92.6% of the total population)
+
+Day 46:
+Hour 0 (1104) complete.
+Total time elapsed: 31043s
+Hour 1 (1105) complete.
+Total time elapsed: 31056s
+Hour 2 (1106) complete.
+Total time elapsed: 31069s
+Hour 3 (1107) complete.
+Total time elapsed: 31082s
+Hour 4 (1108) complete.
+Total time elapsed: 31095s
+Hour 5 (1109) complete.
+Total time elapsed: 31110s
+Hour 6 (1110) complete.
+Total time elapsed: 31129s
+Hour 7 (1111) complete.
+Total time elapsed: 31158s
+Hour 8 (1112) complete.
+Total time elapsed: 31197s
+Hour 9 (1113) complete.
+Total time elapsed: 31234s
+Hour 10 (1114) complete.
+Total time elapsed: 31277s
+Hour 11 (1115) complete.
+Total time elapsed: 31325s
+Hour 12 (1116) complete.
+Total time elapsed: 31379s
+Hour 13 (1117) complete.
+Total time elapsed: 31431s
+Hour 14 (1118) complete.
+Total time elapsed: 31478s
+Hour 15 (1119) complete.
+Total time elapsed: 31524s
+Hour 16 (1120) complete.
+Total time elapsed: 31572s
+Hour 17 (1121) complete.
+Total time elapsed: 31622s
+Hour 18 (1122) complete.
+Total time elapsed: 31670s
+Hour 19 (1123) complete.
+Total time elapsed: 31710s
+Hour 20 (1124) complete.
+Total time elapsed: 31762s
+Hour 21 (1125) complete.
+Total time elapsed: 31785s
+Hour 22 (1126) complete.
+Total time elapsed: 31804s
+Hour 23 (1127) complete.
+Total time elapsed: 31819s
+Daily household transmission complete.
+Total time elapsed: 31820s
+Day 46 complete. Infection status:
+Susceptible: 76735
+Exposed: 28362
+Infected: 118405
+Recovered: 900649
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098)]
+Total ever infected: 1047416 (93.2% of the total population)
+
+Day 47:
+Hour 0 (1128) complete.
+Total time elapsed: 31835s
+Hour 1 (1129) complete.
+Total time elapsed: 31848s
+Hour 2 (1130) complete.
+Total time elapsed: 31861s
+Hour 3 (1131) complete.
+Total time elapsed: 31874s
+Hour 4 (1132) complete.
+Total time elapsed: 31888s
+Hour 5 (1133) complete.
+Total time elapsed: 31903s
+Hour 6 (1134) complete.
+Total time elapsed: 31921s
+Hour 7 (1135) complete.
+Total time elapsed: 31951s
+Hour 8 (1136) complete.
+Total time elapsed: 31989s
+Hour 9 (1137) complete.
+Total time elapsed: 32026s
+Hour 10 (1138) complete.
+Total time elapsed: 32068s
+Hour 11 (1139) complete.
+Total time elapsed: 32115s
+Hour 12 (1140) complete.
+Total time elapsed: 32167s
+Hour 13 (1141) complete.
+Total time elapsed: 32219s
+Hour 14 (1142) complete.
+Total time elapsed: 32265s
+Hour 15 (1143) complete.
+Total time elapsed: 32312s
+Hour 16 (1144) complete.
+Total time elapsed: 32359s
+Hour 17 (1145) complete.
+Total time elapsed: 32408s
+Hour 18 (1146) complete.
+Total time elapsed: 32455s
+Hour 19 (1147) complete.
+Total time elapsed: 32496s
+Hour 20 (1148) complete.
+Total time elapsed: 32547s
+Hour 21 (1149) complete.
+Total time elapsed: 32570s
+Hour 22 (1150) complete.
+Total time elapsed: 32588s
+Hour 23 (1151) complete.
+Total time elapsed: 32604s
+Daily household transmission complete.
+Total time elapsed: 32605s
+Day 47 complete. Infection status:
+Susceptible: 71943
+Exposed: 22371
+Infected: 98083
+Recovered: 931754
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792)]
+Total ever infected: 1052208 (93.6% of the total population)
+
+Day 48:
+Hour 0 (1152) complete.
+Total time elapsed: 32619s
+Hour 1 (1153) complete.
+Total time elapsed: 32632s
+Hour 2 (1154) complete.
+Total time elapsed: 32645s
+Hour 3 (1155) complete.
+Total time elapsed: 32658s
+Hour 4 (1156) complete.
+Total time elapsed: 32671s
+Hour 5 (1157) complete.
+Total time elapsed: 32686s
+Hour 6 (1158) complete.
+Total time elapsed: 32704s
+Hour 7 (1159) complete.
+Total time elapsed: 32733s
+Hour 8 (1160) complete.
+Total time elapsed: 32770s
+Hour 9 (1161) complete.
+Total time elapsed: 32807s
+Hour 10 (1162) complete.
+Total time elapsed: 32848s
+Hour 11 (1163) complete.
+Total time elapsed: 32895s
+Hour 12 (1164) complete.
+Total time elapsed: 32946s
+Hour 13 (1165) complete.
+Total time elapsed: 32997s
+Hour 14 (1166) complete.
+Total time elapsed: 33044s
+Hour 15 (1167) complete.
+Total time elapsed: 33091s
+Hour 16 (1168) complete.
+Total time elapsed: 33140s
+Hour 17 (1169) complete.
+Total time elapsed: 33189s
+Hour 18 (1170) complete.
+Total time elapsed: 33236s
+Hour 19 (1171) complete.
+Total time elapsed: 33276s
+Hour 20 (1172) complete.
+Total time elapsed: 33326s
+Hour 21 (1173) complete.
+Total time elapsed: 33348s
+Hour 22 (1174) complete.
+Total time elapsed: 33366s
+Hour 23 (1175) complete.
+Total time elapsed: 33381s
+Daily household transmission complete.
+Total time elapsed: 33383s
+Day 48 complete. Infection status:
+Susceptible: 68030
+Exposed: 17838
+Infected: 80492
+Recovered: 957791
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913)]
+Total ever infected: 1056121 (93.9% of the total population)
+
+Day 49:
+Hour 0 (1176) complete.
+Total time elapsed: 33396s
+Hour 1 (1177) complete.
+Total time elapsed: 33410s
+Hour 2 (1178) complete.
+Total time elapsed: 33422s
+Hour 3 (1179) complete.
+Total time elapsed: 33435s
+Hour 4 (1180) complete.
+Total time elapsed: 33448s
+Hour 5 (1181) complete.
+Total time elapsed: 33463s
+Hour 6 (1182) complete.
+Total time elapsed: 33481s
+Hour 7 (1183) complete.
+Total time elapsed: 33510s
+Hour 8 (1184) complete.
+Total time elapsed: 33547s
+Hour 9 (1185) complete.
+Total time elapsed: 33584s
+Hour 10 (1186) complete.
+Total time elapsed: 33625s
+Hour 11 (1187) complete.
+Total time elapsed: 33673s
+Hour 12 (1188) complete.
+Total time elapsed: 33725s
+Hour 13 (1189) complete.
+Total time elapsed: 33777s
+Hour 14 (1190) complete.
+Total time elapsed: 33823s
+Hour 15 (1191) complete.
+Total time elapsed: 33870s
+Hour 16 (1192) complete.
+Total time elapsed: 33918s
+Hour 17 (1193) complete.
+Total time elapsed: 33966s
+Hour 18 (1194) complete.
+Total time elapsed: 34012s
+Hour 19 (1195) complete.
+Total time elapsed: 34051s
+Hour 20 (1196) complete.
+Total time elapsed: 34100s
+Hour 21 (1197) complete.
+Total time elapsed: 34123s
+Hour 22 (1198) complete.
+Total time elapsed: 34141s
+Hour 23 (1199) complete.
+Total time elapsed: 34156s
+Daily household transmission complete.
+Total time elapsed: 34157s
+Day 49 complete. Infection status:
+Susceptible: 64973
+Exposed: 14263
+Infected: 65407
+Recovered: 979508
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057)]
+Total ever infected: 1059178 (94.2% of the total population)
+
+Day 50:
+Hour 0 (1200) complete.
+Total time elapsed: 34171s
+Hour 1 (1201) complete.
+Total time elapsed: 34184s
+Hour 2 (1202) complete.
+Total time elapsed: 34197s
+Hour 3 (1203) complete.
+Total time elapsed: 34209s
+Hour 4 (1204) complete.
+Total time elapsed: 34221s
+Hour 5 (1205) complete.
+Total time elapsed: 34235s
+Hour 6 (1206) complete.
+Total time elapsed: 34253s
+Hour 7 (1207) complete.
+Total time elapsed: 34280s
+Hour 8 (1208) complete.
+Total time elapsed: 34316s
+Hour 9 (1209) complete.
+Total time elapsed: 34350s
+Hour 10 (1210) complete.
+Total time elapsed: 34388s
+Hour 11 (1211) complete.
+Total time elapsed: 34433s
+Hour 12 (1212) complete.
+Total time elapsed: 34481s
+Hour 13 (1213) complete.
+Total time elapsed: 34529s
+Hour 14 (1214) complete.
+Total time elapsed: 34572s
+Hour 15 (1215) complete.
+Total time elapsed: 34615s
+Hour 16 (1216) complete.
+Total time elapsed: 34658s
+Hour 17 (1217) complete.
+Total time elapsed: 34702s
+Hour 18 (1218) complete.
+Total time elapsed: 34745s
+Hour 19 (1219) complete.
+Total time elapsed: 34782s
+Hour 20 (1220) complete.
+Total time elapsed: 34831s
+Hour 21 (1221) complete.
+Total time elapsed: 34851s
+Hour 22 (1222) complete.
+Total time elapsed: 34867s
+Hour 23 (1223) complete.
+Total time elapsed: 34880s
+Daily household transmission complete.
+Total time elapsed: 34881s
+Day 50 complete. Infection status:
+Susceptible: 62686
+Exposed: 11196
+Infected: 52571
+Recovered: 997698
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287)]
+Total ever infected: 1061465 (94.4% of the total population)
+
+Day 51:
+Hour 0 (1224) complete.
+Total time elapsed: 34893s
+Hour 1 (1225) complete.
+Total time elapsed: 34905s
+Hour 2 (1226) complete.
+Total time elapsed: 34916s
+Hour 3 (1227) complete.
+Total time elapsed: 34928s
+Hour 4 (1228) complete.
+Total time elapsed: 34940s
+Hour 5 (1229) complete.
+Total time elapsed: 34953s
+Hour 6 (1230) complete.
+Total time elapsed: 34970s
+Hour 7 (1231) complete.
+Total time elapsed: 34995s
+Hour 8 (1232) complete.
+Total time elapsed: 35029s
+Hour 9 (1233) complete.
+Total time elapsed: 35061s
+Hour 10 (1234) complete.
+Total time elapsed: 35097s
+Hour 11 (1235) complete.
+Total time elapsed: 35139s
+Hour 12 (1236) complete.
+Total time elapsed: 35184s
+Hour 13 (1237) complete.
+Total time elapsed: 35228s
+Hour 14 (1238) complete.
+Total time elapsed: 35267s
+Hour 15 (1239) complete.
+Total time elapsed: 35308s
+Hour 16 (1240) complete.
+Total time elapsed: 35350s
+Hour 17 (1241) complete.
+Total time elapsed: 35399s
+Hour 18 (1242) complete.
+Total time elapsed: 35441s
+Hour 19 (1243) complete.
+Total time elapsed: 35476s
+Hour 20 (1244) complete.
+Total time elapsed: 35519s
+Hour 21 (1245) complete.
+Total time elapsed: 35538s
+Hour 22 (1246) complete.
+Total time elapsed: 35552s
+Hour 23 (1247) complete.
+Total time elapsed: 35564s
+Daily household transmission complete.
+Total time elapsed: 35565s
+Day 51 complete. Infection status:
+Susceptible: 60873
+Exposed: 8661
+Infected: 42365
+Recovered: 1012252
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813)]
+Total ever infected: 1063278 (94.6% of the total population)
+
+Day 52:
+Hour 0 (1248) complete.
+Total time elapsed: 35575s
+Hour 1 (1249) complete.
+Total time elapsed: 35585s
+Hour 2 (1250) complete.
+Total time elapsed: 35595s
+Hour 3 (1251) complete.
+Total time elapsed: 35605s
+Hour 4 (1252) complete.
+Total time elapsed: 35615s
+Hour 5 (1253) complete.
+Total time elapsed: 35626s
+Hour 6 (1254) complete.
+Total time elapsed: 35640s
+Hour 7 (1255) complete.
+Total time elapsed: 35662s
+Hour 8 (1256) complete.
+Total time elapsed: 35690s
+Hour 9 (1257) complete.
+Total time elapsed: 35717s
+Hour 10 (1258) complete.
+Total time elapsed: 35745s
+Hour 11 (1259) complete.
+Total time elapsed: 35780s
+Hour 12 (1260) complete.
+Total time elapsed: 35818s
+Hour 13 (1261) complete.
+Total time elapsed: 35856s
+Hour 14 (1262) complete.
+Total time elapsed: 35892s
+Hour 15 (1263) complete.
+Total time elapsed: 35926s
+Hour 16 (1264) complete.
+Total time elapsed: 35959s
+Hour 17 (1265) complete.
+Total time elapsed: 35993s
+Hour 18 (1266) complete.
+Total time elapsed: 36025s
+Hour 19 (1267) complete.
+Total time elapsed: 36051s
+Hour 20 (1268) complete.
+Total time elapsed: 36086s
+Hour 21 (1269) complete.
+Total time elapsed: 36101s
+Hour 22 (1270) complete.
+Total time elapsed: 36113s
+Hour 23 (1271) complete.
+Total time elapsed: 36123s
+Daily household transmission complete.
+Total time elapsed: 36124s
+Day 52 complete. Infection status:
+Susceptible: 59404
+Exposed: 6866
+Infected: 33740
+Recovered: 1024141
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469)]
+Total ever infected: 1064747 (94.7% of the total population)
+
+Day 53:
+Hour 0 (1272) complete.
+Total time elapsed: 36134s
+Hour 1 (1273) complete.
+Total time elapsed: 36143s
+Hour 2 (1274) complete.
+Total time elapsed: 36151s
+Hour 3 (1275) complete.
+Total time elapsed: 36160s
+Hour 4 (1276) complete.
+Total time elapsed: 36169s
+Hour 5 (1277) complete.
+Total time elapsed: 36179s
+Hour 6 (1278) complete.
+Total time elapsed: 36192s
+Hour 7 (1279) complete.
+Total time elapsed: 36211s
+Hour 8 (1280) complete.
+Total time elapsed: 36236s
+Hour 9 (1281) complete.
+Total time elapsed: 36260s
+Hour 10 (1282) complete.
+Total time elapsed: 36287s
+Hour 11 (1283) complete.
+Total time elapsed: 36319s
+Hour 12 (1284) complete.
+Total time elapsed: 36354s
+Hour 13 (1285) complete.
+Total time elapsed: 36389s
+Hour 14 (1286) complete.
+Total time elapsed: 36420s
+Hour 15 (1287) complete.
+Total time elapsed: 36451s
+Hour 16 (1288) complete.
+Total time elapsed: 36483s
+Hour 17 (1289) complete.
+Total time elapsed: 36516s
+Hour 18 (1290) complete.
+Total time elapsed: 36548s
+Hour 19 (1291) complete.
+Total time elapsed: 36575s
+Hour 20 (1292) complete.
+Total time elapsed: 36607s
+Hour 21 (1293) complete.
+Total time elapsed: 36622s
+Hour 22 (1294) complete.
+Total time elapsed: 36634s
+Hour 23 (1295) complete.
+Total time elapsed: 36644s
+Daily household transmission complete.
+Total time elapsed: 36645s
+Day 53 complete. Infection status:
+Susceptible: 58282
+Exposed: 5376
+Infected: 26928
+Recovered: 1033565
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122)]
+Total ever infected: 1065869 (94.8% of the total population)
+
+Day 54:
+Hour 0 (1296) complete.
+Total time elapsed: 36654s
+Hour 1 (1297) complete.
+Total time elapsed: 36663s
+Hour 2 (1298) complete.
+Total time elapsed: 36672s
+Hour 3 (1299) complete.
+Total time elapsed: 36681s
+Hour 4 (1300) complete.
+Total time elapsed: 36690s
+Hour 5 (1301) complete.
+Total time elapsed: 36700s
+Hour 6 (1302) complete.
+Total time elapsed: 36712s
+Hour 7 (1303) complete.
+Total time elapsed: 36732s
+Hour 8 (1304) complete.
+Total time elapsed: 36758s
+Hour 9 (1305) complete.
+Total time elapsed: 36782s
+Hour 10 (1306) complete.
+Total time elapsed: 36810s
+Hour 11 (1307) complete.
+Total time elapsed: 36839s
+Hour 12 (1308) complete.
+Total time elapsed: 36871s
+Hour 13 (1309) complete.
+Total time elapsed: 36902s
+Hour 14 (1310) complete.
+Total time elapsed: 36930s
+Hour 15 (1311) complete.
+Total time elapsed: 36959s
+Hour 16 (1312) complete.
+Total time elapsed: 36987s
+Hour 17 (1313) complete.
+Total time elapsed: 37016s
+Hour 18 (1314) complete.
+Total time elapsed: 37043s
+Hour 19 (1315) complete.
+Total time elapsed: 37066s
+Hour 20 (1316) complete.
+Total time elapsed: 37096s
+Hour 21 (1317) complete.
+Total time elapsed: 37109s
+Hour 22 (1318) complete.
+Total time elapsed: 37119s
+Hour 23 (1319) complete.
+Total time elapsed: 37128s
+Daily household transmission complete.
+Total time elapsed: 37129s
+Day 54 complete. Infection status:
+Susceptible: 57382
+Exposed: 4288
+Infected: 21156
+Recovered: 1041325
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900)]
+Total ever infected: 1066769 (94.9% of the total population)
+
+Day 55:
+Hour 0 (1320) complete.
+Total time elapsed: 37137s
+Hour 1 (1321) complete.
+Total time elapsed: 37145s
+Hour 2 (1322) complete.
+Total time elapsed: 37153s
+Hour 3 (1323) complete.
+Total time elapsed: 37161s
+Hour 4 (1324) complete.
+Total time elapsed: 37169s
+Hour 5 (1325) complete.
+Total time elapsed: 37179s
+Hour 6 (1326) complete.
+Total time elapsed: 37190s
+Hour 7 (1327) complete.
+Total time elapsed: 37207s
+Hour 8 (1328) complete.
+Total time elapsed: 37229s
+Hour 9 (1329) complete.
+Total time elapsed: 37250s
+Hour 10 (1330) complete.
+Total time elapsed: 37274s
+Hour 11 (1331) complete.
+Total time elapsed: 37302s
+Hour 12 (1332) complete.
+Total time elapsed: 37332s
+Hour 13 (1333) complete.
+Total time elapsed: 37362s
+Hour 14 (1334) complete.
+Total time elapsed: 37389s
+Hour 15 (1335) complete.
+Total time elapsed: 37414s
+Hour 16 (1336) complete.
+Total time elapsed: 37440s
+Hour 17 (1337) complete.
+Total time elapsed: 37467s
+Hour 18 (1338) complete.
+Total time elapsed: 37493s
+Hour 19 (1339) complete.
+Total time elapsed: 37514s
+Hour 20 (1340) complete.
+Total time elapsed: 37542s
+Hour 21 (1341) complete.
+Total time elapsed: 37554s
+Hour 22 (1342) complete.
+Total time elapsed: 37564s
+Hour 23 (1343) complete.
+Total time elapsed: 37573s
+Daily household transmission complete.
+Total time elapsed: 37573s
+Day 55 complete. Infection status:
+Susceptible: 56688
+Exposed: 3356
+Infected: 16563
+Recovered: 1047544
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694)]
+Total ever infected: 1067463 (95% of the total population)
+
+Day 56:
+Hour 0 (1344) complete.
+Total time elapsed: 37581s
+Hour 1 (1345) complete.
+Total time elapsed: 37589s
+Hour 2 (1346) complete.
+Total time elapsed: 37596s
+Hour 3 (1347) complete.
+Total time elapsed: 37603s
+Hour 4 (1348) complete.
+Total time elapsed: 37611s
+Hour 5 (1349) complete.
+Total time elapsed: 37619s
+Hour 6 (1350) complete.
+Total time elapsed: 37630s
+Hour 7 (1351) complete.
+Total time elapsed: 37646s
+Hour 8 (1352) complete.
+Total time elapsed: 37667s
+Hour 9 (1353) complete.
+Total time elapsed: 37687s
+Hour 10 (1354) complete.
+Total time elapsed: 37709s
+Hour 11 (1355) complete.
+Total time elapsed: 37736s
+Hour 12 (1356) complete.
+Total time elapsed: 37764s
+Hour 13 (1357) complete.
+Total time elapsed: 37792s
+Hour 14 (1358) complete.
+Total time elapsed: 37818s
+Hour 15 (1359) complete.
+Total time elapsed: 37843s
+Hour 16 (1360) complete.
+Total time elapsed: 37870s
+Hour 17 (1361) complete.
+Total time elapsed: 37897s
+Hour 18 (1362) complete.
+Total time elapsed: 37922s
+Hour 19 (1363) complete.
+Total time elapsed: 37944s
+Hour 20 (1364) complete.
+Total time elapsed: 37972s
+Hour 21 (1365) complete.
+Total time elapsed: 37984s
+Hour 22 (1366) complete.
+Total time elapsed: 37994s
+Hour 23 (1367) complete.
+Total time elapsed: 38003s
+Daily household transmission complete.
+Total time elapsed: 38003s
+Day 56 complete. Infection status:
+Susceptible: 56148
+Exposed: 2643
+Infected: 13002
+Recovered: 1052358
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540)]
+Total ever infected: 1068003 (95% of the total population)
+
+Day 57:
+Hour 0 (1368) complete.
+Total time elapsed: 38011s
+Hour 1 (1369) complete.
+Total time elapsed: 38018s
+Hour 2 (1370) complete.
+Total time elapsed: 38026s
+Hour 3 (1371) complete.
+Total time elapsed: 38033s
+Hour 4 (1372) complete.
+Total time elapsed: 38041s
+Hour 5 (1373) complete.
+Total time elapsed: 38049s
+Hour 6 (1374) complete.
+Total time elapsed: 38059s
+Hour 7 (1375) complete.
+Total time elapsed: 38075s
+Hour 8 (1376) complete.
+Total time elapsed: 38096s
+Hour 9 (1377) complete.
+Total time elapsed: 38116s
+Hour 10 (1378) complete.
+Total time elapsed: 38138s
+Hour 11 (1379) complete.
+Total time elapsed: 38164s
+Hour 12 (1380) complete.
+Total time elapsed: 38193s
+Hour 13 (1381) complete.
+Total time elapsed: 38221s
+Hour 14 (1382) complete.
+Total time elapsed: 38247s
+Hour 15 (1383) complete.
+Total time elapsed: 38272s
+Hour 16 (1384) complete.
+Total time elapsed: 38298s
+Hour 17 (1385) complete.
+Total time elapsed: 38325s
+Hour 18 (1386) complete.
+Total time elapsed: 38351s
+Hour 19 (1387) complete.
+Total time elapsed: 38372s
+Hour 20 (1388) complete.
+Total time elapsed: 38400s
+Hour 21 (1389) complete.
+Total time elapsed: 38413s
+Hour 22 (1390) complete.
+Total time elapsed: 38422s
+Hour 23 (1391) complete.
+Total time elapsed: 38431s
+Daily household transmission complete.
+Total time elapsed: 38431s
+Day 57 complete. Infection status:
+Susceptible: 55706
+Exposed: 2081
+Infected: 10268
+Recovered: 1056096
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442)]
+Total ever infected: 1068445 (95% of the total population)
+
+Day 58:
+Hour 0 (1392) complete.
+Total time elapsed: 38439s
+Hour 1 (1393) complete.
+Total time elapsed: 38447s
+Hour 2 (1394) complete.
+Total time elapsed: 38454s
+Hour 3 (1395) complete.
+Total time elapsed: 38461s
+Hour 4 (1396) complete.
+Total time elapsed: 38469s
+Hour 5 (1397) complete.
+Total time elapsed: 38477s
+Hour 6 (1398) complete.
+Total time elapsed: 38487s
+Hour 7 (1399) complete.
+Total time elapsed: 38503s
+Hour 8 (1400) complete.
+Total time elapsed: 38524s
+Hour 9 (1401) complete.
+Total time elapsed: 38544s
+Hour 10 (1402) complete.
+Total time elapsed: 38566s
+Hour 11 (1403) complete.
+Total time elapsed: 38592s
+Hour 12 (1404) complete.
+Total time elapsed: 38620s
+Hour 13 (1405) complete.
+Total time elapsed: 38649s
+Hour 14 (1406) complete.
+Total time elapsed: 38674s
+Hour 15 (1407) complete.
+Total time elapsed: 38700s
+Hour 16 (1408) complete.
+Total time elapsed: 38726s
+Hour 17 (1409) complete.
+Total time elapsed: 38753s
+Hour 18 (1410) complete.
+Total time elapsed: 38779s
+Hour 19 (1411) complete.
+Total time elapsed: 38800s
+Hour 20 (1412) complete.
+Total time elapsed: 38828s
+Hour 21 (1413) complete.
+Total time elapsed: 38840s
+Hour 22 (1414) complete.
+Total time elapsed: 38850s
+Hour 23 (1415) complete.
+Total time elapsed: 38858s
+Daily household transmission complete.
+Total time elapsed: 38859s
+Day 58 complete. Infection status:
+Susceptible: 55353
+Exposed: 1645
+Infected: 8160
+Recovered: 1058993
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353)]
+Total ever infected: 1068798 (95.1% of the total population)
+
+Day 59:
+Hour 0 (1416) complete.
+Total time elapsed: 38867s
+Hour 1 (1417) complete.
+Total time elapsed: 38874s
+Hour 2 (1418) complete.
+Total time elapsed: 38881s
+Hour 3 (1419) complete.
+Total time elapsed: 38889s
+Hour 4 (1420) complete.
+Total time elapsed: 38896s
+Hour 5 (1421) complete.
+Total time elapsed: 38905s
+Hour 6 (1422) complete.
+Total time elapsed: 38915s
+Hour 7 (1423) complete.
+Total time elapsed: 38931s
+Hour 8 (1424) complete.
+Total time elapsed: 38952s
+Hour 9 (1425) complete.
+Total time elapsed: 38972s
+Hour 10 (1426) complete.
+Total time elapsed: 38995s
+Hour 11 (1427) complete.
+Total time elapsed: 39021s
+Hour 12 (1428) complete.
+Total time elapsed: 39050s
+Hour 13 (1429) complete.
+Total time elapsed: 39077s
+Hour 14 (1430) complete.
+Total time elapsed: 39103s
+Hour 15 (1431) complete.
+Total time elapsed: 39128s
+Hour 16 (1432) complete.
+Total time elapsed: 39154s
+Hour 17 (1433) complete.
+Total time elapsed: 39181s
+Hour 18 (1434) complete.
+Total time elapsed: 39207s
+Hour 19 (1435) complete.
+Total time elapsed: 39228s
+Hour 20 (1436) complete.
+Total time elapsed: 39256s
+Hour 21 (1437) complete.
+Total time elapsed: 39269s
+Hour 22 (1438) complete.
+Total time elapsed: 39279s
+Hour 23 (1439) complete.
+Total time elapsed: 39287s
+Daily household transmission complete.
+Total time elapsed: 39287s
+Day 59 complete. Infection status:
+Susceptible: 55090
+Exposed: 1287
+Infected: 6534
+Recovered: 1061240
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263)]
+Total ever infected: 1069061 (95.1% of the total population)
+
+Day 60:
+Hour 0 (1440) complete.
+Total time elapsed: 39295s
+Hour 1 (1441) complete.
+Total time elapsed: 39303s
+Hour 2 (1442) complete.
+Total time elapsed: 39310s
+Hour 3 (1443) complete.
+Total time elapsed: 39317s
+Hour 4 (1444) complete.
+Total time elapsed: 39325s
+Hour 5 (1445) complete.
+Total time elapsed: 39333s
+Hour 6 (1446) complete.
+Total time elapsed: 39344s
+Hour 7 (1447) complete.
+Total time elapsed: 39360s
+Hour 8 (1448) complete.
+Total time elapsed: 39380s
+Hour 9 (1449) complete.
+Total time elapsed: 39400s
+Hour 10 (1450) complete.
+Total time elapsed: 39423s
+Hour 11 (1451) complete.
+Total time elapsed: 39448s
+Hour 12 (1452) complete.
+Total time elapsed: 39478s
+Hour 13 (1453) complete.
+Total time elapsed: 39506s
+Hour 14 (1454) complete.
+Total time elapsed: 39532s
+Hour 15 (1455) complete.
+Total time elapsed: 39557s
+Hour 16 (1456) complete.
+Total time elapsed: 39583s
+Hour 17 (1457) complete.
+Total time elapsed: 39610s
+Hour 18 (1458) complete.
+Total time elapsed: 39636s
+Hour 19 (1459) complete.
+Total time elapsed: 39658s
+Hour 20 (1460) complete.
+Total time elapsed: 39686s
+Hour 21 (1461) complete.
+Total time elapsed: 39698s
+Hour 22 (1462) complete.
+Total time elapsed: 39708s
+Hour 23 (1463) complete.
+Total time elapsed: 39716s
+Daily household transmission complete.
+Total time elapsed: 39716s
+Day 60 complete. Infection status:
+Susceptible: 54894
+Exposed: 994
+Infected: 5157
+Recovered: 1063106
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196)]
+Total ever infected: 1069257 (95.1% of the total population)
+
+Day 61:
+Hour 0 (1464) complete.
+Total time elapsed: 39724s
+Hour 1 (1465) complete.
+Total time elapsed: 39731s
+Hour 2 (1466) complete.
+Total time elapsed: 39739s
+Hour 3 (1467) complete.
+Total time elapsed: 39746s
+Hour 4 (1468) complete.
+Total time elapsed: 39754s
+Hour 5 (1469) complete.
+Total time elapsed: 39762s
+Hour 6 (1470) complete.
+Total time elapsed: 39772s
+Hour 7 (1471) complete.
+Total time elapsed: 39788s
+Hour 8 (1472) complete.
+Total time elapsed: 39809s
+Hour 9 (1473) complete.
+Total time elapsed: 39829s
+Hour 10 (1474) complete.
+Total time elapsed: 39851s
+Hour 11 (1475) complete.
+Total time elapsed: 39877s
+Hour 12 (1476) complete.
+Total time elapsed: 39905s
+Hour 13 (1477) complete.
+Total time elapsed: 39933s
+Hour 14 (1478) complete.
+Total time elapsed: 39958s
+Hour 15 (1479) complete.
+Total time elapsed: 39984s
+Hour 16 (1480) complete.
+Total time elapsed: 40010s
+Hour 17 (1481) complete.
+Total time elapsed: 40036s
+Hour 18 (1482) complete.
+Total time elapsed: 40062s
+Hour 19 (1483) complete.
+Total time elapsed: 40084s
+Hour 20 (1484) complete.
+Total time elapsed: 40112s
+Hour 21 (1485) complete.
+Total time elapsed: 40124s
+Hour 22 (1486) complete.
+Total time elapsed: 40134s
+Hour 23 (1487) complete.
+Total time elapsed: 40142s
+Daily household transmission complete.
+Total time elapsed: 40142s
+Day 61 complete. Infection status:
+Susceptible: 54736
+Exposed: 774
+Infected: 4036
+Recovered: 1064605
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158)]
+Total ever infected: 1069415 (95.1% of the total population)
+
+Day 62:
+Hour 0 (1488) complete.
+Total time elapsed: 40150s
+Hour 1 (1489) complete.
+Total time elapsed: 40158s
+Hour 2 (1490) complete.
+Total time elapsed: 40165s
+Hour 3 (1491) complete.
+Total time elapsed: 40172s
+Hour 4 (1492) complete.
+Total time elapsed: 40180s
+Hour 5 (1493) complete.
+Total time elapsed: 40188s
+Hour 6 (1494) complete.
+Total time elapsed: 40198s
+Hour 7 (1495) complete.
+Total time elapsed: 40214s
+Hour 8 (1496) complete.
+Total time elapsed: 40235s
+Hour 9 (1497) complete.
+Total time elapsed: 40256s
+Hour 10 (1498) complete.
+Total time elapsed: 40280s
+Hour 11 (1499) complete.
+Total time elapsed: 40310s
+Hour 12 (1500) complete.
+Total time elapsed: 40344s
+Hour 13 (1501) complete.
+Total time elapsed: 40377s
+Hour 14 (1502) complete.
+Total time elapsed: 40409s
+Hour 15 (1503) complete.
+Total time elapsed: 40442s
+Hour 16 (1504) complete.
+Total time elapsed: 40477s
+Hour 17 (1505) complete.
+Total time elapsed: 40515s
+Hour 18 (1506) complete.
+Total time elapsed: 40554s
+Hour 19 (1507) complete.
+Total time elapsed: 40587s
+Hour 20 (1508) complete.
+Total time elapsed: 40630s
+Hour 21 (1509) complete.
+Total time elapsed: 40651s
+Hour 22 (1510) complete.
+Total time elapsed: 40667s
+Hour 23 (1511) complete.
+Total time elapsed: 40681s
+Daily household transmission complete.
+Total time elapsed: 40682s
+Day 62 complete. Infection status:
+Susceptible: 54620
+Exposed: 597
+Infected: 3167
+Recovered: 1065767
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116)]
+Total ever infected: 1069531 (95.1% of the total population)
+
+Day 63:
+Hour 0 (1512) complete.
+Total time elapsed: 40695s
+Hour 1 (1513) complete.
+Total time elapsed: 40709s
+Hour 2 (1514) complete.
+Total time elapsed: 40722s
+Hour 3 (1515) complete.
+Total time elapsed: 40735s
+Hour 4 (1516) complete.
+Total time elapsed: 40748s
+Hour 5 (1517) complete.
+Total time elapsed: 40765s
+Hour 6 (1518) complete.
+Total time elapsed: 40786s
+Hour 7 (1519) complete.
+Total time elapsed: 40816s
+Hour 8 (1520) complete.
+Total time elapsed: 40851s
+Hour 9 (1521) complete.
+Total time elapsed: 40884s
+Hour 10 (1522) complete.
+Total time elapsed: 40921s
+Hour 11 (1523) complete.
+Total time elapsed: 40964s
+Hour 12 (1524) complete.
+Total time elapsed: 41012s
+Hour 13 (1525) complete.
+Total time elapsed: 41057s
+Hour 14 (1526) complete.
+Total time elapsed: 41099s
+Hour 15 (1527) complete.
+Total time elapsed: 41139s
+Hour 16 (1528) complete.
+Total time elapsed: 41181s
+Hour 17 (1529) complete.
+Total time elapsed: 41224s
+Hour 18 (1530) complete.
+Total time elapsed: 41265s
+Hour 19 (1531) complete.
+Total time elapsed: 41300s
+Hour 20 (1532) complete.
+Total time elapsed: 41346s
+Hour 21 (1533) complete.
+Total time elapsed: 41365s
+Hour 22 (1534) complete.
+Total time elapsed: 41381s
+Hour 23 (1535) complete.
+Total time elapsed: 41394s
+Daily household transmission complete.
+Total time elapsed: 41395s
+Day 63 complete. Infection status:
+Susceptible: 54554
+Exposed: 440
+Infected: 2447
+Recovered: 1066710
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66)]
+Total ever infected: 1069597 (95.1% of the total population)
+
+Day 64:
+Hour 0 (1536) complete.
+Total time elapsed: 41408s
+Hour 1 (1537) complete.
+Total time elapsed: 41419s
+Hour 2 (1538) complete.
+Total time elapsed: 41431s
+Hour 3 (1539) complete.
+Total time elapsed: 41443s
+Hour 4 (1540) complete.
+Total time elapsed: 41455s
+Hour 5 (1541) complete.
+Total time elapsed: 41469s
+Hour 6 (1542) complete.
+Total time elapsed: 41486s
+Hour 7 (1543) complete.
+Total time elapsed: 41513s
+Hour 8 (1544) complete.
+Total time elapsed: 41548s
+Hour 9 (1545) complete.
+Total time elapsed: 41581s
+Hour 10 (1546) complete.
+Total time elapsed: 41618s
+Hour 11 (1547) complete.
+Total time elapsed: 41661s
+Hour 12 (1548) complete.
+Total time elapsed: 41709s
+Hour 13 (1549) complete.
+Total time elapsed: 41756s
+Hour 14 (1550) complete.
+Total time elapsed: 41799s
+Hour 15 (1551) complete.
+Total time elapsed: 41843s
+Hour 16 (1552) complete.
+Total time elapsed: 41889s
+Hour 17 (1553) complete.
+Total time elapsed: 41934s
+Hour 18 (1554) complete.
+Total time elapsed: 41978s
+Hour 19 (1555) complete.
+Total time elapsed: 42015s
+Hour 20 (1556) complete.
+Total time elapsed: 42062s
+Hour 21 (1557) complete.
+Total time elapsed: 42084s
+Hour 22 (1558) complete.
+Total time elapsed: 42101s
+Hour 23 (1559) complete.
+Total time elapsed: 42115s
+Daily household transmission complete.
+Total time elapsed: 42116s
+Day 64 complete. Infection status:
+Susceptible: 54481
+Exposed: 323
+Infected: 1913
+Recovered: 1067434
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73)]
+Total ever infected: 1069670 (95.2% of the total population)
+
+Day 65:
+Hour 0 (1560) complete.
+Total time elapsed: 42130s
+Hour 1 (1561) complete.
+Total time elapsed: 42143s
+Hour 2 (1562) complete.
+Total time elapsed: 42155s
+Hour 3 (1563) complete.
+Total time elapsed: 42167s
+Hour 4 (1564) complete.
+Total time elapsed: 42180s
+Hour 5 (1565) complete.
+Total time elapsed: 42195s
+Hour 6 (1566) complete.
+Total time elapsed: 42212s
+Hour 7 (1567) complete.
+Total time elapsed: 42241s
+Hour 8 (1568) complete.
+Total time elapsed: 42276s
+Hour 9 (1569) complete.
+Total time elapsed: 42311s
+Hour 10 (1570) complete.
+Total time elapsed: 42349s
+Hour 11 (1571) complete.
+Total time elapsed: 42393s
+Hour 12 (1572) complete.
+Total time elapsed: 42443s
+Hour 13 (1573) complete.
+Total time elapsed: 42491s
+Hour 14 (1574) complete.
+Total time elapsed: 42535s
+Hour 15 (1575) complete.
+Total time elapsed: 42578s
+Hour 16 (1576) complete.
+Total time elapsed: 42623s
+Hour 17 (1577) complete.
+Total time elapsed: 42669s
+Hour 18 (1578) complete.
+Total time elapsed: 42713s
+Hour 19 (1579) complete.
+Total time elapsed: 42750s
+Hour 20 (1580) complete.
+Total time elapsed: 42798s
+Hour 21 (1581) complete.
+Total time elapsed: 42820s
+Hour 22 (1582) complete.
+Total time elapsed: 42837s
+Hour 23 (1583) complete.
+Total time elapsed: 42851s
+Daily household transmission complete.
+Total time elapsed: 42852s
+Day 65 complete. Infection status:
+Susceptible: 54424
+Exposed: 260
+Infected: 1478
+Recovered: 1067989
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57)]
+Total ever infected: 1069727 (95.2% of the total population)
+
+Day 66:
+Hour 0 (1584) complete.
+Total time elapsed: 42865s
+Hour 1 (1585) complete.
+Total time elapsed: 42877s
+Hour 2 (1586) complete.
+Total time elapsed: 42889s
+Hour 3 (1587) complete.
+Total time elapsed: 42901s
+Hour 4 (1588) complete.
+Total time elapsed: 42914s
+Hour 5 (1589) complete.
+Total time elapsed: 42928s
+Hour 6 (1590) complete.
+Total time elapsed: 42946s
+Hour 7 (1591) complete.
+Total time elapsed: 42973s
+Hour 8 (1592) complete.
+Total time elapsed: 43009s
+Hour 9 (1593) complete.
+Total time elapsed: 43043s
+Hour 10 (1594) complete.
+Total time elapsed: 43082s
+Hour 11 (1595) complete.
+Total time elapsed: 43127s
+Hour 12 (1596) complete.
+Total time elapsed: 43175s
+Hour 13 (1597) complete.
+Total time elapsed: 43222s
+Hour 14 (1598) complete.
+Total time elapsed: 43266s
+Hour 15 (1599) complete.
+Total time elapsed: 43311s
+Hour 16 (1600) complete.
+Total time elapsed: 43356s
+Hour 17 (1601) complete.
+Total time elapsed: 43402s
+Hour 18 (1602) complete.
+Total time elapsed: 43447s
+Hour 19 (1603) complete.
+Total time elapsed: 43483s
+Hour 20 (1604) complete.
+Total time elapsed: 43531s
+Hour 21 (1605) complete.
+Total time elapsed: 43552s
+Hour 22 (1606) complete.
+Total time elapsed: 43569s
+Hour 23 (1607) complete.
+Total time elapsed: 43584s
+Daily household transmission complete.
+Total time elapsed: 43585s
+Day 66 complete. Infection status:
+Susceptible: 54368
+Exposed: 207
+Infected: 1179
+Recovered: 1068397
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56)]
+Total ever infected: 1069783 (95.2% of the total population)
+
+Day 67:
+Hour 0 (1608) complete.
+Total time elapsed: 43598s
+Hour 1 (1609) complete.
+Total time elapsed: 43611s
+Hour 2 (1610) complete.
+Total time elapsed: 43623s
+Hour 3 (1611) complete.
+Total time elapsed: 43636s
+Hour 4 (1612) complete.
+Total time elapsed: 43648s
+Hour 5 (1613) complete.
+Total time elapsed: 43663s
+Hour 6 (1614) complete.
+Total time elapsed: 43680s
+Hour 7 (1615) complete.
+Total time elapsed: 43709s
+Hour 8 (1616) complete.
+Total time elapsed: 43745s
+Hour 9 (1617) complete.
+Total time elapsed: 43780s
+Hour 10 (1618) complete.
+Total time elapsed: 43817s
+Hour 11 (1619) complete.
+Total time elapsed: 43862s
+Hour 12 (1620) complete.
+Total time elapsed: 43910s
+Hour 13 (1621) complete.
+Total time elapsed: 43958s
+Hour 14 (1622) complete.
+Total time elapsed: 44003s
+Hour 15 (1623) complete.
+Total time elapsed: 44047s
+Hour 16 (1624) complete.
+Total time elapsed: 44090s
+Hour 17 (1625) complete.
+Total time elapsed: 44136s
+Hour 18 (1626) complete.
+Total time elapsed: 44181s
+Hour 19 (1627) complete.
+Total time elapsed: 44219s
+Hour 20 (1628) complete.
+Total time elapsed: 44267s
+Hour 21 (1629) complete.
+Total time elapsed: 44288s
+Hour 22 (1630) complete.
+Total time elapsed: 44305s
+Hour 23 (1631) complete.
+Total time elapsed: 44319s
+Daily household transmission complete.
+Total time elapsed: 44320s
+Day 67 complete. Infection status:
+Susceptible: 54336
+Exposed: 168
+Infected: 901
+Recovered: 1068746
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32)]
+Total ever infected: 1069815 (95.2% of the total population)
+
+Day 68:
+Hour 0 (1632) complete.
+Total time elapsed: 44334s
+Hour 1 (1633) complete.
+Total time elapsed: 44347s
+Hour 2 (1634) complete.
+Total time elapsed: 44359s
+Hour 3 (1635) complete.
+Total time elapsed: 44371s
+Hour 4 (1636) complete.
+Total time elapsed: 44384s
+Hour 5 (1637) complete.
+Total time elapsed: 44399s
+Hour 6 (1638) complete.
+Total time elapsed: 44416s
+Hour 7 (1639) complete.
+Total time elapsed: 44444s
+Hour 8 (1640) complete.
+Total time elapsed: 44480s
+Hour 9 (1641) complete.
+Total time elapsed: 44514s
+Hour 10 (1642) complete.
+Total time elapsed: 44553s
+Hour 11 (1643) complete.
+Total time elapsed: 44598s
+Hour 12 (1644) complete.
+Total time elapsed: 44647s
+Hour 13 (1645) complete.
+Total time elapsed: 44694s
+Hour 14 (1646) complete.
+Total time elapsed: 44738s
+Hour 15 (1647) complete.
+Total time elapsed: 44782s
+Hour 16 (1648) complete.
+Total time elapsed: 44827s
+Hour 17 (1649) complete.
+Total time elapsed: 44874s
+Hour 18 (1650) complete.
+Total time elapsed: 44919s
+Hour 19 (1651) complete.
+Total time elapsed: 44956s
+Hour 20 (1652) complete.
+Total time elapsed: 45004s
+Hour 21 (1653) complete.
+Total time elapsed: 45025s
+Hour 22 (1654) complete.
+Total time elapsed: 45041s
+Hour 23 (1655) complete.
+Total time elapsed: 45056s
+Daily household transmission complete.
+Total time elapsed: 45056s
+Day 68 complete. Infection status:
+Susceptible: 54299
+Exposed: 139
+Infected: 700
+Recovered: 1069013
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37)]
+Total ever infected: 1069852 (95.2% of the total population)
+
+Day 69:
+Hour 0 (1656) complete.
+Total time elapsed: 45070s
+Hour 1 (1657) complete.
+Total time elapsed: 45082s
+Hour 2 (1658) complete.
+Total time elapsed: 45095s
+Hour 3 (1659) complete.
+Total time elapsed: 45107s
+Hour 4 (1660) complete.
+Total time elapsed: 45120s
+Hour 5 (1661) complete.
+Total time elapsed: 45134s
+Hour 6 (1662) complete.
+Total time elapsed: 45152s
+Hour 7 (1663) complete.
+Total time elapsed: 45180s
+Hour 8 (1664) complete.
+Total time elapsed: 45217s
+Hour 9 (1665) complete.
+Total time elapsed: 45251s
+Hour 10 (1666) complete.
+Total time elapsed: 45289s
+Hour 11 (1667) complete.
+Total time elapsed: 45333s
+Hour 12 (1668) complete.
+Total time elapsed: 45382s
+Hour 13 (1669) complete.
+Total time elapsed: 45430s
+Hour 14 (1670) complete.
+Total time elapsed: 45474s
+Hour 15 (1671) complete.
+Total time elapsed: 45519s
+Hour 16 (1672) complete.
+Total time elapsed: 45563s
+Hour 17 (1673) complete.
+Total time elapsed: 45609s
+Hour 18 (1674) complete.
+Total time elapsed: 45652s
+Hour 19 (1675) complete.
+Total time elapsed: 45689s
+Hour 20 (1676) complete.
+Total time elapsed: 45736s
+Hour 21 (1677) complete.
+Total time elapsed: 45757s
+Hour 22 (1678) complete.
+Total time elapsed: 45774s
+Hour 23 (1679) complete.
+Total time elapsed: 45788s
+Daily household transmission complete.
+Total time elapsed: 45789s
+Day 69 complete. Infection status:
+Susceptible: 54268
+Exposed: 120
+Infected: 532
+Recovered: 1069231
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31)]
+Total ever infected: 1069883 (95.2% of the total population)
+
+Day 70:
+Hour 0 (1680) complete.
+Total time elapsed: 45802s
+Hour 1 (1681) complete.
+Total time elapsed: 45815s
+Hour 2 (1682) complete.
+Total time elapsed: 45827s
+Hour 3 (1683) complete.
+Total time elapsed: 45839s
+Hour 4 (1684) complete.
+Total time elapsed: 45852s
+Hour 5 (1685) complete.
+Total time elapsed: 45865s
+Hour 6 (1686) complete.
+Total time elapsed: 45883s
+Hour 7 (1687) complete.
+Total time elapsed: 45910s
+Hour 8 (1688) complete.
+Total time elapsed: 45946s
+Hour 9 (1689) complete.
+Total time elapsed: 45980s
+Hour 10 (1690) complete.
+Total time elapsed: 46018s
+Hour 11 (1691) complete.
+Total time elapsed: 46063s
+Hour 12 (1692) complete.
+Total time elapsed: 46112s
+Hour 13 (1693) complete.
+Total time elapsed: 46160s
+Hour 14 (1694) complete.
+Total time elapsed: 46211s
+Hour 15 (1695) complete.
+Total time elapsed: 46254s
+Hour 16 (1696) complete.
+Total time elapsed: 46299s
+Hour 17 (1697) complete.
+Total time elapsed: 46344s
+Hour 18 (1698) complete.
+Total time elapsed: 46388s
+Hour 19 (1699) complete.
+Total time elapsed: 46426s
+Hour 20 (1700) complete.
+Total time elapsed: 46473s
+Hour 21 (1701) complete.
+Total time elapsed: 46494s
+Hour 22 (1702) complete.
+Total time elapsed: 46511s
+Hour 23 (1703) complete.
+Total time elapsed: 46525s
+Daily household transmission complete.
+Total time elapsed: 46526s
+Day 70 complete. Infection status:
+Susceptible: 54247
+Exposed: 95
+Infected: 416
+Recovered: 1069393
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21)]
+Total ever infected: 1069904 (95.2% of the total population)
+
+Day 71:
+Hour 0 (1704) complete.
+Total time elapsed: 46540s
+Hour 1 (1705) complete.
+Total time elapsed: 46553s
+Hour 2 (1706) complete.
+Total time elapsed: 46565s
+Hour 3 (1707) complete.
+Total time elapsed: 46577s
+Hour 4 (1708) complete.
+Total time elapsed: 46590s
+Hour 5 (1709) complete.
+Total time elapsed: 46605s
+Hour 6 (1710) complete.
+Total time elapsed: 46623s
+Hour 7 (1711) complete.
+Total time elapsed: 46651s
+Hour 8 (1712) complete.
+Total time elapsed: 46687s
+Hour 9 (1713) complete.
+Total time elapsed: 46722s
+Hour 10 (1714) complete.
+Total time elapsed: 46762s
+Hour 11 (1715) complete.
+Total time elapsed: 46807s
+Hour 12 (1716) complete.
+Total time elapsed: 46856s
+Hour 13 (1717) complete.
+Total time elapsed: 46903s
+Hour 14 (1718) complete.
+Total time elapsed: 46947s
+Hour 15 (1719) complete.
+Total time elapsed: 46990s
+Hour 16 (1720) complete.
+Total time elapsed: 47034s
+Hour 17 (1721) complete.
+Total time elapsed: 47079s
+Hour 18 (1722) complete.
+Total time elapsed: 47123s
+Hour 19 (1723) complete.
+Total time elapsed: 47160s
+Hour 20 (1724) complete.
+Total time elapsed: 47208s
+Hour 21 (1725) complete.
+Total time elapsed: 47230s
+Hour 22 (1726) complete.
+Total time elapsed: 47246s
+Hour 23 (1727) complete.
+Total time elapsed: 47261s
+Daily household transmission complete.
+Total time elapsed: 47262s
+Day 71 complete. Infection status:
+Susceptible: 54240
+Exposed: 64
+Infected: 334
+Recovered: 1069513
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7)]
+Total ever infected: 1069911 (95.2% of the total population)
+
+Day 72:
+Hour 0 (1728) complete.
+Total time elapsed: 47276s
+Hour 1 (1729) complete.
+Total time elapsed: 47290s
+Hour 2 (1730) complete.
+Total time elapsed: 47302s
+Hour 3 (1731) complete.
+Total time elapsed: 47314s
+Hour 4 (1732) complete.
+Total time elapsed: 47327s
+Hour 5 (1733) complete.
+Total time elapsed: 47342s
+Hour 6 (1734) complete.
+Total time elapsed: 47360s
+Hour 7 (1735) complete.
+Total time elapsed: 47389s
+Hour 8 (1736) complete.
+Total time elapsed: 47427s
+Hour 9 (1737) complete.
+Total time elapsed: 47462s
+Hour 10 (1738) complete.
+Total time elapsed: 47502s
+Hour 11 (1739) complete.
+Total time elapsed: 47547s
+Hour 12 (1740) complete.
+Total time elapsed: 47597s
+Hour 13 (1741) complete.
+Total time elapsed: 47646s
+Hour 14 (1742) complete.
+Total time elapsed: 47691s
+Hour 15 (1743) complete.
+Total time elapsed: 47736s
+Hour 16 (1744) complete.
+Total time elapsed: 47782s
+Hour 17 (1745) complete.
+Total time elapsed: 47830s
+Hour 18 (1746) complete.
+Total time elapsed: 47877s
+Hour 19 (1747) complete.
+Total time elapsed: 47915s
+Hour 20 (1748) complete.
+Total time elapsed: 47964s
+Hour 21 (1749) complete.
+Total time elapsed: 47987s
+Hour 22 (1750) complete.
+Total time elapsed: 48005s
+Hour 23 (1751) complete.
+Total time elapsed: 48021s
+Daily household transmission complete.
+Total time elapsed: 48021s
+Day 72 complete. Infection status:
+Susceptible: 54232
+Exposed: 46
+Infected: 272
+Recovered: 1069601
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8)]
+Total ever infected: 1069919 (95.2% of the total population)
+
+Day 73:
+Hour 0 (1752) complete.
+Total time elapsed: 48035s
+Hour 1 (1753) complete.
+Total time elapsed: 48048s
+Hour 2 (1754) complete.
+Total time elapsed: 48061s
+Hour 3 (1755) complete.
+Total time elapsed: 48074s
+Hour 4 (1756) complete.
+Total time elapsed: 48087s
+Hour 5 (1757) complete.
+Total time elapsed: 48101s
+Hour 6 (1758) complete.
+Total time elapsed: 48119s
+Hour 7 (1759) complete.
+Total time elapsed: 48148s
+Hour 8 (1760) complete.
+Total time elapsed: 48183s
+Hour 9 (1761) complete.
+Total time elapsed: 48218s
+Hour 10 (1762) complete.
+Total time elapsed: 48257s
+Hour 11 (1763) complete.
+Total time elapsed: 48303s
+Hour 12 (1764) complete.
+Total time elapsed: 48352s
+Hour 13 (1765) complete.
+Total time elapsed: 48401s
+Hour 14 (1766) complete.
+Total time elapsed: 48447s
+Hour 15 (1767) complete.
+Total time elapsed: 48493s
+Hour 16 (1768) complete.
+Total time elapsed: 48540s
+Hour 17 (1769) complete.
+Total time elapsed: 48587s
+Hour 18 (1770) complete.
+Total time elapsed: 48634s
+Hour 19 (1771) complete.
+Total time elapsed: 48673s
+Hour 20 (1772) complete.
+Total time elapsed: 48722s
+Hour 21 (1773) complete.
+Total time elapsed: 48744s
+Hour 22 (1774) complete.
+Total time elapsed: 48761s
+Hour 23 (1775) complete.
+Total time elapsed: 48776s
+Daily household transmission complete.
+Total time elapsed: 48776s
+Day 73 complete. Infection status:
+Susceptible: 54225
+Exposed: 33
+Infected: 214
+Recovered: 1069679
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7)]
+Total ever infected: 1069926 (95.2% of the total population)
+
+Day 74:
+Hour 0 (1776) complete.
+Total time elapsed: 48790s
+Hour 1 (1777) complete.
+Total time elapsed: 48803s
+Hour 2 (1778) complete.
+Total time elapsed: 48816s
+Hour 3 (1779) complete.
+Total time elapsed: 48829s
+Hour 4 (1780) complete.
+Total time elapsed: 48842s
+Hour 5 (1781) complete.
+Total time elapsed: 48856s
+Hour 6 (1782) complete.
+Total time elapsed: 48874s
+Hour 7 (1783) complete.
+Total time elapsed: 48902s
+Hour 8 (1784) complete.
+Total time elapsed: 48939s
+Hour 9 (1785) complete.
+Total time elapsed: 48973s
+Hour 10 (1786) complete.
+Total time elapsed: 49013s
+Hour 11 (1787) complete.
+Total time elapsed: 49059s
+Hour 12 (1788) complete.
+Total time elapsed: 49110s
+Hour 13 (1789) complete.
+Total time elapsed: 49159s
+Hour 14 (1790) complete.
+Total time elapsed: 49205s
+Hour 15 (1791) complete.
+Total time elapsed: 49251s
+Hour 16 (1792) complete.
+Total time elapsed: 49298s
+Hour 17 (1793) complete.
+Total time elapsed: 49344s
+Hour 18 (1794) complete.
+Total time elapsed: 49390s
+Hour 19 (1795) complete.
+Total time elapsed: 49428s
+Hour 20 (1796) complete.
+Total time elapsed: 49476s
+Hour 21 (1797) complete.
+Total time elapsed: 49498s
+Hour 22 (1798) complete.
+Total time elapsed: 49514s
+Hour 23 (1799) complete.
+Total time elapsed: 49529s
+Daily household transmission complete.
+Total time elapsed: 49530s
+Day 74 complete. Infection status:
+Susceptible: 54220
+Exposed: 28
+Infected: 170
+Recovered: 1069733
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5)]
+Total ever infected: 1069931 (95.2% of the total population)
+
+Day 75:
+Hour 0 (1800) complete.
+Total time elapsed: 49544s
+Hour 1 (1801) complete.
+Total time elapsed: 49557s
+Hour 2 (1802) complete.
+Total time elapsed: 49569s
+Hour 3 (1803) complete.
+Total time elapsed: 49582s
+Hour 4 (1804) complete.
+Total time elapsed: 49595s
+Hour 5 (1805) complete.
+Total time elapsed: 49610s
+Hour 6 (1806) complete.
+Total time elapsed: 49628s
+Hour 7 (1807) complete.
+Total time elapsed: 49657s
+Hour 8 (1808) complete.
+Total time elapsed: 49694s
+Hour 9 (1809) complete.
+Total time elapsed: 49730s
+Hour 10 (1810) complete.
+Total time elapsed: 49770s
+Hour 11 (1811) complete.
+Total time elapsed: 49817s
+Hour 12 (1812) complete.
+Total time elapsed: 49868s
+Hour 13 (1813) complete.
+Total time elapsed: 49918s
+Hour 14 (1814) complete.
+Total time elapsed: 49965s
+Hour 15 (1815) complete.
+Total time elapsed: 50010s
+Hour 16 (1816) complete.
+Total time elapsed: 50055s
+Hour 17 (1817) complete.
+Total time elapsed: 50100s
+Hour 18 (1818) complete.
+Total time elapsed: 50141s
+Hour 19 (1819) complete.
+Total time elapsed: 50176s
+Hour 20 (1820) complete.
+Total time elapsed: 50219s
+Hour 21 (1821) complete.
+Total time elapsed: 50239s
+Hour 22 (1822) complete.
+Total time elapsed: 50253s
+Hour 23 (1823) complete.
+Total time elapsed: 50266s
+Daily household transmission complete.
+Total time elapsed: 50266s
+Day 75 complete. Infection status:
+Susceptible: 54215
+Exposed: 23
+Infected: 131
+Recovered: 1069782
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5)]
+Total ever infected: 1069936 (95.2% of the total population)
+
+Day 76:
+Hour 0 (1824) complete.
+Total time elapsed: 50278s
+Hour 1 (1825) complete.
+Total time elapsed: 50289s
+Hour 2 (1826) complete.
+Total time elapsed: 50300s
+Hour 3 (1827) complete.
+Total time elapsed: 50310s
+Hour 4 (1828) complete.
+Total time elapsed: 50321s
+Hour 5 (1829) complete.
+Total time elapsed: 50333s
+Hour 6 (1830) complete.
+Total time elapsed: 50348s
+Hour 7 (1831) complete.
+Total time elapsed: 50372s
+Hour 8 (1832) complete.
+Total time elapsed: 50402s
+Hour 9 (1833) complete.
+Total time elapsed: 50432s
+Hour 10 (1834) complete.
+Total time elapsed: 50464s
+Hour 11 (1835) complete.
+Total time elapsed: 50502s
+Hour 12 (1836) complete.
+Total time elapsed: 50544s
+Hour 13 (1837) complete.
+Total time elapsed: 50584s
+Hour 14 (1838) complete.
+Total time elapsed: 50620s
+Hour 15 (1839) complete.
+Total time elapsed: 50656s
+Hour 16 (1840) complete.
+Total time elapsed: 50693s
+Hour 17 (1841) complete.
+Total time elapsed: 50732s
+Hour 18 (1842) complete.
+Total time elapsed: 50770s
+Hour 19 (1843) complete.
+Total time elapsed: 50802s
+Hour 20 (1844) complete.
+Total time elapsed: 50839s
+Hour 21 (1845) complete.
+Total time elapsed: 50856s
+Hour 22 (1846) complete.
+Total time elapsed: 50869s
+Hour 23 (1847) complete.
+Total time elapsed: 50880s
+Daily household transmission complete.
+Total time elapsed: 50881s
+Day 76 complete. Infection status:
+Susceptible: 54210
+Exposed: 17
+Infected: 105
+Recovered: 1069819
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5), (76, 5)]
+Total ever infected: 1069941 (95.2% of the total population)
+
+Day 77:
+Hour 0 (1848) complete.
+Total time elapsed: 50892s
+Hour 1 (1849) complete.
+Total time elapsed: 50902s
+Hour 2 (1850) complete.
+Total time elapsed: 50912s
+Hour 3 (1851) complete.
+Total time elapsed: 50922s
+Hour 4 (1852) complete.
+Total time elapsed: 50932s
+Hour 5 (1853) complete.
+Total time elapsed: 50943s
+Hour 6 (1854) complete.
+Total time elapsed: 50957s
+Hour 7 (1855) complete.
+Total time elapsed: 50979s
+Hour 8 (1856) complete.
+Total time elapsed: 51008s
+Hour 9 (1857) complete.
+Total time elapsed: 51034s
+Hour 10 (1858) complete.
+Total time elapsed: 51064s
+Hour 11 (1859) complete.
+Total time elapsed: 51096s
+Hour 12 (1860) complete.
+Total time elapsed: 51130s
+Hour 13 (1861) complete.
+Total time elapsed: 51164s
+Hour 14 (1862) complete.
+Total time elapsed: 51196s
+Hour 15 (1863) complete.
+Total time elapsed: 51227s
+Hour 16 (1864) complete.
+Total time elapsed: 51259s
+Hour 17 (1865) complete.
+Total time elapsed: 51292s
+Hour 18 (1866) complete.
+Total time elapsed: 51323s
+Hour 19 (1867) complete.
+Total time elapsed: 51350s
+Hour 20 (1868) complete.
+Total time elapsed: 51384s
+Hour 21 (1869) complete.
+Total time elapsed: 51399s
+Hour 22 (1870) complete.
+Total time elapsed: 51411s
+Hour 23 (1871) complete.
+Total time elapsed: 51422s
+Daily household transmission complete.
+Total time elapsed: 51422s
+Day 77 complete. Infection status:
+Susceptible: 54205
+Exposed: 16
+Infected: 82
+Recovered: 1069848
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5), (76, 5), (77, 5)]
+Total ever infected: 1069946 (95.2% of the total population)
+
+Day 78:
+Hour 0 (1872) complete.
+Total time elapsed: 51432s
+Hour 1 (1873) complete.
+Total time elapsed: 51441s
+Hour 2 (1874) complete.
+Total time elapsed: 51450s
+Hour 3 (1875) complete.
+Total time elapsed: 51460s
+Hour 4 (1876) complete.
+Total time elapsed: 51469s
+Hour 5 (1877) complete.
+Total time elapsed: 51479s
+Hour 6 (1878) complete.
+Total time elapsed: 51491s
+Hour 7 (1879) complete.
+Total time elapsed: 51510s
+Hour 8 (1880) complete.
+Total time elapsed: 51535s
+Hour 9 (1881) complete.
+Total time elapsed: 51560s
+Hour 10 (1882) complete.
+Total time elapsed: 51587s
+Hour 11 (1883) complete.
+Total time elapsed: 51619s
+Hour 12 (1884) complete.
+Total time elapsed: 51655s
+Hour 13 (1885) complete.
+Total time elapsed: 51686s
+Hour 14 (1886) complete.
+Total time elapsed: 51715s
+Hour 15 (1887) complete.
+Total time elapsed: 51744s
+Hour 16 (1888) complete.
+Total time elapsed: 51774s
+Hour 17 (1889) complete.
+Total time elapsed: 51804s
+Hour 18 (1890) complete.
+Total time elapsed: 51833s
+Hour 19 (1891) complete.
+Total time elapsed: 51858s
+Hour 20 (1892) complete.
+Total time elapsed: 51889s
+Hour 21 (1893) complete.
+Total time elapsed: 51903s
+Hour 22 (1894) complete.
+Total time elapsed: 51914s
+Hour 23 (1895) complete.
+Total time elapsed: 51923s
+Daily household transmission complete.
+Total time elapsed: 51924s
+Day 78 complete. Infection status:
+Susceptible: 54202
+Exposed: 13
+Infected: 62
+Recovered: 1069874
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5), (76, 5), (77, 5), (78, 3)]
+Total ever infected: 1069949 (95.2% of the total population)
+
+Day 79:
+Hour 0 (1896) complete.
+Total time elapsed: 51932s
+Hour 1 (1897) complete.
+Total time elapsed: 51941s
+Hour 2 (1898) complete.
+Total time elapsed: 51949s
+Hour 3 (1899) complete.
+Total time elapsed: 51956s
+Hour 4 (1900) complete.
+Total time elapsed: 51965s
+Hour 5 (1901) complete.
+Total time elapsed: 51974s
+Hour 6 (1902) complete.
+Total time elapsed: 51985s
+Hour 7 (1903) complete.
+Total time elapsed: 52004s
+Hour 8 (1904) complete.
+Total time elapsed: 52027s
+Hour 9 (1905) complete.
+Total time elapsed: 52049s
+Hour 10 (1906) complete.
+Total time elapsed: 52074s
+Hour 11 (1907) complete.
+Total time elapsed: 52103s
+Hour 12 (1908) complete.
+Total time elapsed: 52134s
+Hour 13 (1909) complete.
+Total time elapsed: 52166s
+Hour 14 (1910) complete.
+Total time elapsed: 52195s
+Hour 15 (1911) complete.
+Total time elapsed: 52224s
+Hour 16 (1912) complete.
+Total time elapsed: 52253s
+Hour 17 (1913) complete.
+Total time elapsed: 52283s
+Hour 18 (1914) complete.
+Total time elapsed: 52312s
+Hour 19 (1915) complete.
+Total time elapsed: 52336s
+Hour 20 (1916) complete.
+Total time elapsed: 52367s
+Hour 21 (1917) complete.
+Total time elapsed: 52380s
+Hour 22 (1918) complete.
+Total time elapsed: 52392s
+Hour 23 (1919) complete.
+Total time elapsed: 52401s
+Daily household transmission complete.
+Total time elapsed: 52402s
+Day 79 complete. Infection status:
+Susceptible: 54200
+Exposed: 10
+Infected: 51
+Recovered: 1069890
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5), (76, 5), (77, 5), (78, 3), (79, 2)]
+Total ever infected: 1069951 (95.2% of the total population)
+
+Day 80:
+Hour 0 (1920) complete.
+Total time elapsed: 52411s
+Hour 1 (1921) complete.
+Total time elapsed: 52419s
+Hour 2 (1922) complete.
+Total time elapsed: 52427s
+Hour 3 (1923) complete.
+Total time elapsed: 52436s
+Hour 4 (1924) complete.
+Total time elapsed: 52444s
+Hour 5 (1925) complete.
+Total time elapsed: 52453s
+Hour 6 (1926) complete.
+Total time elapsed: 52465s
+Hour 7 (1927) complete.
+Total time elapsed: 52483s
+Hour 8 (1928) complete.
+Total time elapsed: 52507s
+Hour 9 (1929) complete.
+Total time elapsed: 52529s
+Hour 10 (1930) complete.
+Total time elapsed: 52555s
+Hour 11 (1931) complete.
+Total time elapsed: 52584s
+Hour 12 (1932) complete.
+Total time elapsed: 52615s
+Hour 13 (1933) complete.
+Total time elapsed: 52645s
+Hour 14 (1934) complete.
+Total time elapsed: 52678s
+Hour 15 (1935) complete.
+Total time elapsed: 52709s
+Hour 16 (1936) complete.
+Total time elapsed: 52743s
+Hour 17 (1937) complete.
+Total time elapsed: 52781s
+Hour 18 (1938) complete.
+Total time elapsed: 52819s
+Hour 19 (1939) complete.
+Total time elapsed: 52852s
+Hour 20 (1940) complete.
+Total time elapsed: 52895s
+Hour 21 (1941) complete.
+Total time elapsed: 52916s
+Hour 22 (1942) complete.
+Total time elapsed: 52932s
+Hour 23 (1943) complete.
+Total time elapsed: 52946s
+Daily household transmission complete.
+Total time elapsed: 52947s
+Day 80 complete. Infection status:
+Susceptible: 54198
+Exposed: 10
+Infected: 41
+Recovered: 1069902
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5), (76, 5), (77, 5), (78, 3), (79, 2), (80, 2)]
+Total ever infected: 1069953 (95.2% of the total population)
+
+Day 81:
+Hour 0 (1944) complete.
+Total time elapsed: 52961s
+Hour 1 (1945) complete.
+Total time elapsed: 52974s
+Hour 2 (1946) complete.
+Total time elapsed: 52987s
+Hour 3 (1947) complete.
+Total time elapsed: 53000s
+Hour 4 (1948) complete.
+Total time elapsed: 53013s
+Hour 5 (1949) complete.
+Total time elapsed: 53029s
+Hour 6 (1950) complete.
+Total time elapsed: 53049s
+Hour 7 (1951) complete.
+Total time elapsed: 53079s
+Hour 8 (1952) complete.
+Total time elapsed: 53121s
+Hour 9 (1953) complete.
+Total time elapsed: 53162s
+Hour 10 (1954) complete.
+Total time elapsed: 53209s
+Hour 11 (1955) complete.
+Total time elapsed: 53269s
+Hour 12 (1956) complete.
+Total time elapsed: 53323s
+Hour 13 (1957) complete.
+Total time elapsed: 53380s
+Hour 14 (1958) complete.
+Total time elapsed: 53432s
+Hour 15 (1959) complete.
+Total time elapsed: 53477s
+Hour 16 (1960) complete.
+Total time elapsed: 53518s
+Hour 17 (1961) complete.
+Total time elapsed: 53564s
+Hour 18 (1962) complete.
+Total time elapsed: 53607s
+Hour 19 (1963) complete.
+Total time elapsed: 53646s
+Hour 20 (1964) complete.
+Total time elapsed: 53693s
+Hour 21 (1965) complete.
+Total time elapsed: 53713s
+Hour 22 (1966) complete.
+Total time elapsed: 53732s
+Hour 23 (1967) complete.
+Total time elapsed: 53746s
+Daily household transmission complete.
+Total time elapsed: 53746s
+Day 81 complete. Infection status:
+Susceptible: 54196
+Exposed: 10
+Infected: 36
+Recovered: 1069909
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5), (76, 5), (77, 5), (78, 3), (79, 2), (80, 2), (81, 2)]
+Total ever infected: 1069955 (95.2% of the total population)
+
+Day 82:
+Hour 0 (1968) complete.
+Total time elapsed: 53760s
+Hour 1 (1969) complete.
+Total time elapsed: 53777s
+Hour 2 (1970) complete.
+Total time elapsed: 53788s
+Hour 3 (1971) complete.
+Total time elapsed: 53800s
+Hour 4 (1972) complete.
+Total time elapsed: 53813s
+Hour 5 (1973) complete.
+Total time elapsed: 53827s
+Hour 6 (1974) complete.
+Total time elapsed: 53844s
+Hour 7 (1975) complete.
+Total time elapsed: 53871s
+Hour 8 (1976) complete.
+Total time elapsed: 53904s
+Hour 9 (1977) complete.
+Total time elapsed: 53935s
+Hour 10 (1978) complete.
+Total time elapsed: 53970s
+Hour 11 (1979) complete.
+Total time elapsed: 54012s
+Hour 12 (1980) complete.
+Total time elapsed: 54058s
+Hour 13 (1981) complete.
+Total time elapsed: 54104s
+Hour 14 (1982) complete.
+Total time elapsed: 54146s
+Hour 15 (1983) complete.
+Total time elapsed: 54188s
+Hour 16 (1984) complete.
+Total time elapsed: 54234s
+Hour 17 (1985) complete.
+Total time elapsed: 54279s
+Hour 18 (1986) complete.
+Total time elapsed: 54323s
+Hour 19 (1987) complete.
+Total time elapsed: 54360s
+Hour 20 (1988) complete.
+Total time elapsed: 54407s
+Hour 21 (1989) complete.
+Total time elapsed: 54428s
+Hour 22 (1990) complete.
+Total time elapsed: 54445s
+Hour 23 (1991) complete.
+Total time elapsed: 54459s
+Daily household transmission complete.
+Total time elapsed: 54460s
+Day 82 complete. Infection status:
+Susceptible: 54196
+Exposed: 8
+Infected: 25
+Recovered: 1069922
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5), (76, 5), (77, 5), (78, 3), (79, 2), (80, 2), (81, 2), (82, 0)]
+Total ever infected: 1069955 (95.2% of the total population)
+
+Day 83:
+Hour 0 (1992) complete.
+Total time elapsed: 54473s
+Hour 1 (1993) complete.
+Total time elapsed: 54486s
+Hour 2 (1994) complete.
+Total time elapsed: 54498s
+Hour 3 (1995) complete.
+Total time elapsed: 54510s
+Hour 4 (1996) complete.
+Total time elapsed: 54523s
+Hour 5 (1997) complete.
+Total time elapsed: 54537s
+Hour 6 (1998) complete.
+Total time elapsed: 54554s
+Hour 7 (1999) complete.
+Total time elapsed: 54582s
+Hour 8 (2000) complete.
+Total time elapsed: 54617s
+Hour 9 (2001) complete.
+Total time elapsed: 54650s
+Hour 10 (2002) complete.
+Total time elapsed: 54687s
+Hour 11 (2003) complete.
+Total time elapsed: 54731s
+Hour 12 (2004) complete.
+Total time elapsed: 54780s
+Hour 13 (2005) complete.
+Total time elapsed: 54826s
+Hour 14 (2006) complete.
+Total time elapsed: 54871s
+Hour 15 (2007) complete.
+Total time elapsed: 54914s
+Hour 16 (2008) complete.
+Total time elapsed: 54960s
+Hour 17 (2009) complete.
+Total time elapsed: 55005s
+Hour 18 (2010) complete.
+Total time elapsed: 55050s
+Hour 19 (2011) complete.
+Total time elapsed: 55087s
+Hour 20 (2012) complete.
+Total time elapsed: 55134s
+Hour 21 (2013) complete.
+Total time elapsed: 55154s
+Hour 22 (2014) complete.
+Total time elapsed: 55171s
+Hour 23 (2015) complete.
+Total time elapsed: 55186s
+Daily household transmission complete.
+Total time elapsed: 55186s
+Day 83 complete. Infection status:
+Susceptible: 54196
+Exposed: 3
+Infected: 20
+Recovered: 1069932
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5), (76, 5), (77, 5), (78, 3), (79, 2), (80, 2), (81, 2), (82, 0), (83, 0)]
+Total ever infected: 1069955 (95.2% of the total population)
+
+Day 84:
+Hour 0 (2016) complete.
+Total time elapsed: 55200s
+Hour 1 (2017) complete.
+Total time elapsed: 55212s
+Hour 2 (2018) complete.
+Total time elapsed: 55224s
+Hour 3 (2019) complete.
+Total time elapsed: 55236s
+Hour 4 (2020) complete.
+Total time elapsed: 55252s
+Hour 5 (2021) complete.
+Total time elapsed: 55266s
+Hour 6 (2022) complete.
+Total time elapsed: 55285s
+Hour 7 (2023) complete.
+Total time elapsed: 55313s
+Hour 8 (2024) complete.
+Total time elapsed: 55349s
+Hour 9 (2025) complete.
+Total time elapsed: 55383s
+Hour 10 (2026) complete.
+Total time elapsed: 55421s
+Hour 11 (2027) complete.
+Total time elapsed: 55464s
+Hour 12 (2028) complete.
+Total time elapsed: 55514s
+Hour 13 (2029) complete.
+Total time elapsed: 55560s
+Hour 14 (2030) complete.
+Total time elapsed: 55604s
+Hour 15 (2031) complete.
+Total time elapsed: 55647s
+Hour 16 (2032) complete.
+Total time elapsed: 55689s
+Hour 17 (2033) complete.
+Total time elapsed: 55734s
+Hour 18 (2034) complete.
+Total time elapsed: 55777s
+Hour 19 (2035) complete.
+Total time elapsed: 55813s
+Hour 20 (2036) complete.
+Total time elapsed: 55861s
+Hour 21 (2037) complete.
+Total time elapsed: 55883s
+Hour 22 (2038) complete.
+Total time elapsed: 55900s
+Hour 23 (2039) complete.
+Total time elapsed: 55915s
+Daily household transmission complete.
+Total time elapsed: 55915s
+Day 84 complete. Infection status:
+Susceptible: 54196
+Exposed: 1
+Infected: 14
+Recovered: 1069940
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5), (76, 5), (77, 5), (78, 3), (79, 2), (80, 2), (81, 2), (82, 0), (83, 0), (84, 0)]
+Total ever infected: 1069955 (95.2% of the total population)
+
+Day 85:
+Hour 0 (2040) complete.
+Total time elapsed: 55928s
+Hour 1 (2041) complete.
+Total time elapsed: 55941s
+Hour 2 (2042) complete.
+Total time elapsed: 55954s
+Hour 3 (2043) complete.
+Total time elapsed: 55968s
+Hour 4 (2044) complete.
+Total time elapsed: 55982s
+Hour 5 (2045) complete.
+Total time elapsed: 55997s
+Hour 6 (2046) complete.
+Total time elapsed: 56015s
+Hour 7 (2047) complete.
+Total time elapsed: 56043s
+Hour 8 (2048) complete.
+Total time elapsed: 56079s
+Hour 9 (2049) complete.
+Total time elapsed: 56113s
+Hour 10 (2050) complete.
+Total time elapsed: 56151s
+Hour 11 (2051) complete.
+Total time elapsed: 56195s
+Hour 12 (2052) complete.
+Total time elapsed: 56242s
+Hour 13 (2053) complete.
+Total time elapsed: 56289s
+Hour 14 (2054) complete.
+Total time elapsed: 56332s
+Hour 15 (2055) complete.
+Total time elapsed: 56376s
+Hour 16 (2056) complete.
+Total time elapsed: 56422s
+Hour 17 (2057) complete.
+Total time elapsed: 56467s
+Hour 18 (2058) complete.
+Total time elapsed: 56511s
+Hour 19 (2059) complete.
+Total time elapsed: 56549s
+Hour 20 (2060) complete.
+Total time elapsed: 56596s
+Hour 21 (2061) complete.
+Total time elapsed: 56618s
+Hour 22 (2062) complete.
+Total time elapsed: 56636s
+Hour 23 (2063) complete.
+Total time elapsed: 56651s
+Daily household transmission complete.
+Total time elapsed: 56652s
+Day 85 complete. Infection status:
+Susceptible: 54196
+Exposed: 0
+Infected: 11
+Recovered: 1069944
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5), (76, 5), (77, 5), (78, 3), (79, 2), (80, 2), (81, 2), (82, 0), (83, 0), (84, 0), (85, 0)]
+Total ever infected: 1069955 (95.2% of the total population)
+
+Day 86:
+Hour 0 (2064) complete.
+Total time elapsed: 56666s
+Hour 1 (2065) complete.
+Total time elapsed: 56679s
+Hour 2 (2066) complete.
+Total time elapsed: 56692s
+Hour 3 (2067) complete.
+Total time elapsed: 56705s
+Hour 4 (2068) complete.
+Total time elapsed: 56718s
+Hour 5 (2069) complete.
+Total time elapsed: 56732s
+Hour 6 (2070) complete.
+Total time elapsed: 56749s
+Hour 7 (2071) complete.
+Total time elapsed: 56778s
+Hour 8 (2072) complete.
+Total time elapsed: 56813s
+Hour 9 (2073) complete.
+Total time elapsed: 56847s
+Hour 10 (2074) complete.
+Total time elapsed: 56885s
+Hour 11 (2075) complete.
+Total time elapsed: 56928s
+Hour 12 (2076) complete.
+Total time elapsed: 56977s
+Hour 13 (2077) complete.
+Total time elapsed: 57024s
+Hour 14 (2078) complete.
+Total time elapsed: 57073s
+Hour 15 (2079) complete.
+Total time elapsed: 57117s
+Hour 16 (2080) complete.
+Total time elapsed: 57162s
+Hour 17 (2081) complete.
+Total time elapsed: 57207s
+Hour 18 (2082) complete.
+Total time elapsed: 57251s
+Hour 19 (2083) complete.
+Total time elapsed: 57287s
+Hour 20 (2084) complete.
+Total time elapsed: 57334s
+Hour 21 (2085) complete.
+Total time elapsed: 57358s
+Hour 22 (2086) complete.
+Total time elapsed: 57375s
+Hour 23 (2087) complete.
+Total time elapsed: 57389s
+Daily household transmission complete.
+Total time elapsed: 57390s
+Day 86 complete. Infection status:
+Susceptible: 54196
+Exposed: 0
+Infected: 8
+Recovered: 1069947
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5), (76, 5), (77, 5), (78, 3), (79, 2), (80, 2), (81, 2), (82, 0), (83, 0), (84, 0), (85, 0), (86, 0)]
+Total ever infected: 1069955 (95.2% of the total population)
+
+Day 87:
+Hour 0 (2088) complete.
+Total time elapsed: 57404s
+Hour 1 (2089) complete.
+Total time elapsed: 57417s
+Hour 2 (2090) complete.
+Total time elapsed: 57430s
+Hour 3 (2091) complete.
+Total time elapsed: 57443s
+Hour 4 (2092) complete.
+Total time elapsed: 57456s
+Hour 5 (2093) complete.
+Total time elapsed: 57471s
+Hour 6 (2094) complete.
+Total time elapsed: 57488s
+Hour 7 (2095) complete.
+Total time elapsed: 57515s
+Hour 8 (2096) complete.
+Total time elapsed: 57549s
+Hour 9 (2097) complete.
+Total time elapsed: 57583s
+Hour 10 (2098) complete.
+Total time elapsed: 57621s
+Hour 11 (2099) complete.
+Total time elapsed: 57665s
+Hour 12 (2100) complete.
+Total time elapsed: 57714s
+Hour 13 (2101) complete.
+Total time elapsed: 57762s
+Hour 14 (2102) complete.
+Total time elapsed: 57806s
+Hour 15 (2103) complete.
+Total time elapsed: 57849s
+Hour 16 (2104) complete.
+Total time elapsed: 57893s
+Hour 17 (2105) complete.
+Total time elapsed: 57939s
+Hour 18 (2106) complete.
+Total time elapsed: 57982s
+Hour 19 (2107) complete.
+Total time elapsed: 58018s
+Hour 20 (2108) complete.
+Total time elapsed: 58064s
+Hour 21 (2109) complete.
+Total time elapsed: 58085s
+Hour 22 (2110) complete.
+Total time elapsed: 58102s
+Hour 23 (2111) complete.
+Total time elapsed: 58117s
+Daily household transmission complete.
+Total time elapsed: 58117s
+Day 87 complete. Infection status:
+Susceptible: 54196
+Exposed: 0
+Infected: 6
+Recovered: 1069949
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5), (76, 5), (77, 5), (78, 3), (79, 2), (80, 2), (81, 2), (82, 0), (83, 0), (84, 0), (85, 0), (86, 0), (87, 0)]
+Total ever infected: 1069955 (95.2% of the total population)
+
+Day 88:
+Hour 0 (2112) complete.
+Total time elapsed: 58131s
+Hour 1 (2113) complete.
+Total time elapsed: 58144s
+Hour 2 (2114) complete.
+Total time elapsed: 58157s
+Hour 3 (2115) complete.
+Total time elapsed: 58169s
+Hour 4 (2116) complete.
+Total time elapsed: 58182s
+Hour 5 (2117) complete.
+Total time elapsed: 58196s
+Hour 6 (2118) complete.
+Total time elapsed: 58213s
+Hour 7 (2119) complete.
+Total time elapsed: 58240s
+Hour 8 (2120) complete.
+Total time elapsed: 58276s
+Hour 9 (2121) complete.
+Total time elapsed: 58310s
+Hour 10 (2122) complete.
+Total time elapsed: 58347s
+Hour 11 (2123) complete.
+Total time elapsed: 58391s
+Hour 12 (2124) complete.
+Total time elapsed: 58438s
+Hour 13 (2125) complete.
+Total time elapsed: 58486s
+Hour 14 (2126) complete.
+Total time elapsed: 58528s
+Hour 15 (2127) complete.
+Total time elapsed: 58572s
+Hour 16 (2128) complete.
+Total time elapsed: 58616s
+Hour 17 (2129) complete.
+Total time elapsed: 58659s
+Hour 18 (2130) complete.
+Total time elapsed: 58702s
+Hour 19 (2131) complete.
+Total time elapsed: 58739s
+Hour 20 (2132) complete.
+Total time elapsed: 58787s
+Hour 21 (2133) complete.
+Total time elapsed: 58807s
+Hour 22 (2134) complete.
+Total time elapsed: 58824s
+Hour 23 (2135) complete.
+Total time elapsed: 58839s
+Daily household transmission complete.
+Total time elapsed: 58840s
+Day 88 complete. Infection status:
+Susceptible: 54196
+Exposed: 0
+Infected: 5
+Recovered: 1069950
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5), (76, 5), (77, 5), (78, 3), (79, 2), (80, 2), (81, 2), (82, 0), (83, 0), (84, 0), (85, 0), (86, 0), (87, 0), (88, 0)]
+Total ever infected: 1069955 (95.2% of the total population)
+
+Day 89:
+Hour 0 (2136) complete.
+Total time elapsed: 58853s
+Hour 1 (2137) complete.
+Total time elapsed: 58868s
+Hour 2 (2138) complete.
+Total time elapsed: 58879s
+Hour 3 (2139) complete.
+Total time elapsed: 58892s
+Hour 4 (2140) complete.
+Total time elapsed: 58905s
+Hour 5 (2141) complete.
+Total time elapsed: 58921s
+Hour 6 (2142) complete.
+Total time elapsed: 58938s
+Hour 7 (2143) complete.
+Total time elapsed: 58968s
+Hour 8 (2144) complete.
+Total time elapsed: 59003s
+Hour 9 (2145) complete.
+Total time elapsed: 59036s
+Hour 10 (2146) complete.
+Total time elapsed: 59073s
+Hour 11 (2147) complete.
+Total time elapsed: 59117s
+Hour 12 (2148) complete.
+Total time elapsed: 59164s
+Hour 13 (2149) complete.
+Total time elapsed: 59211s
+Hour 14 (2150) complete.
+Total time elapsed: 59254s
+Hour 15 (2151) complete.
+Total time elapsed: 59296s
+Hour 16 (2152) complete.
+Total time elapsed: 59341s
+Hour 17 (2153) complete.
+Total time elapsed: 59386s
+Hour 18 (2154) complete.
+Total time elapsed: 59430s
+Hour 19 (2155) complete.
+Total time elapsed: 59467s
+Hour 20 (2156) complete.
+Total time elapsed: 59514s
+Hour 21 (2157) complete.
+Total time elapsed: 59537s
+Hour 22 (2158) complete.
+Total time elapsed: 59554s
+Hour 23 (2159) complete.
+Total time elapsed: 59569s
+Daily household transmission complete.
+Total time elapsed: 59569s
+Day 89 complete. Infection status:
+Susceptible: 54196
+Exposed: 0
+Infected: 4
+Recovered: 1069951
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5), (76, 5), (77, 5), (78, 3), (79, 2), (80, 2), (81, 2), (82, 0), (83, 0), (84, 0), (85, 0), (86, 0), (87, 0), (88, 0), (89, 0)]
+Total ever infected: 1069955 (95.2% of the total population)
+
+Day 90:
+Hour 0 (2160) complete.
+Total time elapsed: 59584s
+Hour 1 (2161) complete.
+Total time elapsed: 59597s
+Hour 2 (2162) complete.
+Total time elapsed: 59609s
+Hour 3 (2163) complete.
+Total time elapsed: 59621s
+Hour 4 (2164) complete.
+Total time elapsed: 59634s
+Hour 5 (2165) complete.
+Total time elapsed: 59648s
+Hour 6 (2166) complete.
+Total time elapsed: 59667s
+Hour 7 (2167) complete.
+Total time elapsed: 59694s
+Hour 8 (2168) complete.
+Total time elapsed: 59730s
+Hour 9 (2169) complete.
+Total time elapsed: 59763s
+Hour 10 (2170) complete.
+Total time elapsed: 59800s
+Hour 11 (2171) complete.
+Total time elapsed: 59843s
+Hour 12 (2172) complete.
+Total time elapsed: 59890s
+Hour 13 (2173) complete.
+Total time elapsed: 59938s
+Hour 14 (2174) complete.
+Total time elapsed: 59981s
+Hour 15 (2175) complete.
+Total time elapsed: 60024s
+Hour 16 (2176) complete.
+Total time elapsed: 60068s
+Hour 17 (2177) complete.
+Total time elapsed: 60112s
+Hour 18 (2178) complete.
+Total time elapsed: 60157s
+Hour 19 (2179) complete.
+Total time elapsed: 60193s
+Hour 20 (2180) complete.
+Total time elapsed: 60242s
+Hour 21 (2181) complete.
+Total time elapsed: 60263s
+Hour 22 (2182) complete.
+Total time elapsed: 60280s
+Hour 23 (2183) complete.
+Total time elapsed: 60294s
+Daily household transmission complete.
+Total time elapsed: 60294s
+Day 90 complete. Infection status:
+Susceptible: 54196
+Exposed: 0
+Infected: 2
+Recovered: 1069953
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5), (76, 5), (77, 5), (78, 3), (79, 2), (80, 2), (81, 2), (82, 0), (83, 0), (84, 0), (85, 0), (86, 0), (87, 0), (88, 0), (89, 0), (90, 0)]
+Total ever infected: 1069955 (95.2% of the total population)
+
+Day 91:
+Hour 0 (2184) complete.
+Total time elapsed: 60308s
+Hour 1 (2185) complete.
+Total time elapsed: 60321s
+Hour 2 (2186) complete.
+Total time elapsed: 60335s
+Hour 3 (2187) complete.
+Total time elapsed: 60347s
+Hour 4 (2188) complete.
+Total time elapsed: 60359s
+Hour 5 (2189) complete.
+Total time elapsed: 60376s
+Hour 6 (2190) complete.
+Total time elapsed: 60394s
+Hour 7 (2191) complete.
+Total time elapsed: 60420s
+Hour 8 (2192) complete.
+Total time elapsed: 60456s
+Hour 9 (2193) complete.
+Total time elapsed: 60488s
+Hour 10 (2194) complete.
+Total time elapsed: 60525s
+Hour 11 (2195) complete.
+Total time elapsed: 60571s
+Hour 12 (2196) complete.
+Total time elapsed: 60618s
+Hour 13 (2197) complete.
+Total time elapsed: 60667s
+Hour 14 (2198) complete.
+Total time elapsed: 60710s
+Hour 15 (2199) complete.
+Total time elapsed: 60755s
+Hour 16 (2200) complete.
+Total time elapsed: 60799s
+Hour 17 (2201) complete.
+Total time elapsed: 60844s
+Hour 18 (2202) complete.
+Total time elapsed: 60888s
+Hour 19 (2203) complete.
+Total time elapsed: 60925s
+Hour 20 (2204) complete.
+Total time elapsed: 60970s
+Hour 21 (2205) complete.
+Total time elapsed: 60991s
+Hour 22 (2206) complete.
+Total time elapsed: 61008s
+Hour 23 (2207) complete.
+Total time elapsed: 61022s
+Daily household transmission complete.
+Total time elapsed: 61022s
+Day 91 complete. Infection status:
+Susceptible: 54196
+Exposed: 0
+Infected: 1
+Recovered: 1069954
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5), (76, 5), (77, 5), (78, 3), (79, 2), (80, 2), (81, 2), (82, 0), (83, 0), (84, 0), (85, 0), (86, 0), (87, 0), (88, 0), (89, 0), (90, 0), (91, 0)]
+Total ever infected: 1069955 (95.2% of the total population)
+
+Day 92:
+Hour 0 (2208) complete.
+Total time elapsed: 61035s
+Hour 1 (2209) complete.
+Total time elapsed: 61048s
+Hour 2 (2210) complete.
+Total time elapsed: 61060s
+Hour 3 (2211) complete.
+Total time elapsed: 61072s
+Hour 4 (2212) complete.
+Total time elapsed: 61084s
+Hour 5 (2213) complete.
+Total time elapsed: 61099s
+Hour 6 (2214) complete.
+Total time elapsed: 61116s
+Hour 7 (2215) complete.
+Total time elapsed: 61143s
+Hour 8 (2216) complete.
+Total time elapsed: 61178s
+Hour 9 (2217) complete.
+Total time elapsed: 61211s
+Hour 10 (2218) complete.
+Total time elapsed: 61249s
+Hour 11 (2219) complete.
+Total time elapsed: 61292s
+Hour 12 (2220) complete.
+Total time elapsed: 61340s
+Hour 13 (2221) complete.
+Total time elapsed: 61387s
+Hour 14 (2222) complete.
+Total time elapsed: 61429s
+Hour 15 (2223) complete.
+Total time elapsed: 61473s
+Hour 16 (2224) complete.
+Total time elapsed: 61518s
+Hour 17 (2225) complete.
+Total time elapsed: 61563s
+Hour 18 (2226) complete.
+Total time elapsed: 61605s
+Hour 19 (2227) complete.
+Total time elapsed: 61642s
+Hour 20 (2228) complete.
+Total time elapsed: 61688s
+Hour 21 (2229) complete.
+Total time elapsed: 61708s
+Hour 22 (2230) complete.
+Total time elapsed: 61724s
+Hour 23 (2231) complete.
+Total time elapsed: 61739s
+Daily household transmission complete.
+Total time elapsed: 61740s
+Day 92 complete. Infection status:
+Susceptible: 54196
+Exposed: 0
+Infected: 1
+Recovered: 1069954
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5), (76, 5), (77, 5), (78, 3), (79, 2), (80, 2), (81, 2), (82, 0), (83, 0), (84, 0), (85, 0), (86, 0), (87, 0), (88, 0), (89, 0), (90, 0), (91, 0), (92, 0)]
+Total ever infected: 1069955 (95.2% of the total population)
+
+Day 93:
+Hour 0 (2232) complete.
+Total time elapsed: 61754s
+Hour 1 (2233) complete.
+Total time elapsed: 61766s
+Hour 2 (2234) complete.
+Total time elapsed: 61779s
+Hour 3 (2235) complete.
+Total time elapsed: 61791s
+Hour 4 (2236) complete.
+Total time elapsed: 61803s
+Hour 5 (2237) complete.
+Total time elapsed: 61818s
+Hour 6 (2238) complete.
+Total time elapsed: 61836s
+Hour 7 (2239) complete.
+Total time elapsed: 61863s
+Hour 8 (2240) complete.
+Total time elapsed: 61899s
+
+Nobody is exposed or infected, simulation complete!
+Final statistics:
+Susceptible: 54196
+Exposed: 0
+Infected: 0
+Recovered: 1069955
+New cases per day: [(0, 114), (1, 168), (2, 118), (3, 207), (4, 206), (5, 400), (6, 455), (7, 535), (8, 639), (9, 1004), (10, 1175), (11, 1542), (12, 2095), (13, 2506), (14, 3118), (15, 4126), (16, 5508), (17, 6878), (18, 8712), (19, 10801), (20, 13581), (21, 17726), (22, 21627), (23, 26472), (24, 31701), (25, 38575), (26, 44891), (27, 51699), (28, 57883), (29, 62412), (30, 66722), (31, 67744), (32, 67461), (33, 65275), (34, 60340), (35, 55044), (36, 48349), (37, 41555), (38, 34820), (39, 29108), (40, 23450), (41, 19203), (42, 15495), (43, 12341), (44, 9716), (45, 7590), (46, 6098), (47, 4792), (48, 3913), (49, 3057), (50, 2287), (51, 1813), (52, 1469), (53, 1122), (54, 900), (55, 694), (56, 540), (57, 442), (58, 353), (59, 263), (60, 196), (61, 158), (62, 116), (63, 66), (64, 73), (65, 57), (66, 56), (67, 32), (68, 37), (69, 31), (70, 21), (71, 7), (72, 8), (73, 7), (74, 5), (75, 5), (76, 5), (77, 5), (78, 3), (79, 2), (80, 2), (81, 2), (82, 0), (83, 0), (84, 0), (85, 0), (86, 0), (87, 0), (88, 0), (89, 0), (90, 0), (91, 0), (92, 0), (93, 0)]
+Total ever infected: 1069955 (95.2% of the total population)
+
+Total time elapsed: 61924s
+
