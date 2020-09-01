@@ -183,10 +183,8 @@ lda_dictionary = gensim.corpora.dictionary.Dictionary(lda_documents)  # generate
 lda_corpus = [lda_dictionary.doc2bow(cbg) for cbg in lda_documents]  # generate "words" for gensim
 
 cbgs_to_topics = dict(zip(cbg_ids, [[(0, 1)] for _ in cbg_ids]))  # {'510594301011': [(0, 5.5570694e-05), (1, 5.5570694e-05), (2, 5.5570694e-05), (3, 5.5570694e-05), ...], ...}
-topics_to_pois = [[list(poi_set), [1.0 / len(poi_set) for _ in cbg_ids]]]  # [[poi id list, probability dist]]
-
 topic_hour_distributions = [[1.0 / 24 for _ in range(24)]]  # topic: [0.014925373134328358, 0.0, 0.014925373134328358, 0.014925373134328358, 0.014925373134328358, 0.014925373134328358, 0.014925373134328358, 0.08955223880597014, 0.029850746268656716, 0.0, 0.04477611940298507, 0.029850746268656716, 0.029850746268656716, 0.04477611940298507, 0.11940298507462686, 0.04477611940298507, 0.05970149253731343, 0.1044776119402985, 0.04477611940298507, 0.05970149253731343, 0.07462686567164178, 0.08955223880597014, 0.014925373134328358, 0.029850746268656716] (chance of leaving by hour, adds up to 1)
-topics_to_pois_by_hour = [[topics_to_pois[0] for _ in range(24)]]  # topic: [hour: poi info lists, hour: poi info lists, ...] (topics_to_pois but weighted per hour)
+topics_to_pois_by_hour = [[[list(poi_set), [1.0 / len(poi_set) for _ in poi_set]] for _ in range(24)]] # topic: [hour: poi info lists, hour: poi info lists, ...] (topics_to_pois but weighted per hour)
 
 print_elapsed_time()
 print('Reading CBG population data...')
