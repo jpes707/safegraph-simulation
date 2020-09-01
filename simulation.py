@@ -377,7 +377,7 @@ else:  # loads and caches data from files depending on user input
     cbgs_leaving_probs = {}  # probability that a member of a cbg will leave their house each tick
     for cbg in cbg_device_counts:
         cbgs_leaving_probs[cbg] = (1 - (cbg_device_counts[cbg][0] / cbg_device_counts[cbg][1])) * PROPENSITY_TO_LEAVE
-    print('Average percentage of population tracked per day: {}%'.format(adj_sig_figs(100 * total_devices_tracked / (total_population * 7))))
+    print('Average percentage of simulated population tracked per day: {}%'.format(adj_sig_figs(100 * total_devices_tracked / (total_population * 7))))
 
     print_elapsed_time()
     print('Caching raw data...')
