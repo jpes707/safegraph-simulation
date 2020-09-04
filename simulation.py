@@ -133,8 +133,6 @@ if use_raw_cache.lower() == 'y':  # obtains cached variables from the file data 
     median_infectious_duration = preclinical_median + clinical_median
     daily_chance_of_small_household_transmission = TOTAL_CHANCE_OF_SMALL_HOUSEHOLD_TRANSMISSION / median_infectious_duration
     daily_chance_of_large_household_transmission = TOTAL_CHANCE_OF_LARGE_HOUSEHOLD_TRANSMISSION / median_infectious_duration
-    mallet_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mallet-2.0.8', 'bin', 'mallet')
-    os.environ['MALLET_HOME'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mallet-2.0.8')
     if os.path.exists(agents_cache_path):
         use_agents_cache = input('Use agents cache (y/[n])? ')  # obtains cached variables from agent file data cache
     else:
@@ -175,8 +173,8 @@ else:  # loads and caches data from files depending on user input
     median_infectious_duration = preclinical_median + clinical_median
     daily_chance_of_small_household_transmission = TOTAL_CHANCE_OF_SMALL_HOUSEHOLD_TRANSMISSION / median_infectious_duration
     daily_chance_of_large_household_transmission = TOTAL_CHANCE_OF_LARGE_HOUSEHOLD_TRANSMISSION / median_infectious_duration
-    mallet_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mallet-2.0.8', 'bin', 'mallet')
-    os.environ['MALLET_HOME'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mallet-2.0.8')
+    mallet_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Mallet', 'bin', 'mallet')
+    os.environ['MALLET_HOME'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Mallet')
     
     # checks locality type, independent cities (e.g. Baltimore City) are not currently compatible
     if STATE_ABBR == 'AK':
