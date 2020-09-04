@@ -1,0 +1,6 @@
+pandas
+gensim
+numpy
+scipy
+folium
+distfit

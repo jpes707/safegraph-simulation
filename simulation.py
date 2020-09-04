@@ -44,7 +44,7 @@ MINIMUM_INTERVENTION_PROPORTION = 0  # 0.1 => all below interventions begin when
 SYMPTOMATIC_QUARANTINES = False  # if True, quarantines all newly-infected agents upon showing symptoms after the MINIMUM_INTERVENTION_PROPORTION is reached
 HOUSEHOLD_QUARANTINES = False  # if True, all household members will quarantine if an agent in their household also quarantines due to symptoms
 QUARANTINE_DURATION = 10  # number of days a symptomatic-induced quarantine lasts
-CLOSED_POI_TYPES = {}  # closes the following POI types (from SafeGraph Core Places "sub_category") after the MINIMUM_INTERVENTION_PROPORTION is reached
+CLOSED_poi_typesS = {}  # closes the following POI types (from SafeGraph Core Places "sub_category") after the MINIMUM_INTERVENTION_PROPORTION is reached
 
 # virus parameters
 # For COVID-19, a close contact is defined as ay individual who was within 6 feet of an infected person for at least 15 minutes starting from 2 days before illness onset (or, for asymptomatic patients, 2 days prior to positive specimen collection) until the time the patient is isolated. (https://www.cdc.gov/coronavirus/2019-ncov/php/contact-tracing/contact-tracing-plan/contact-tracing.html)
@@ -113,7 +113,7 @@ if isint(trial) and trial != -1:
     RANDOM_SEED = trial
 if use_raw_cache.lower() == 'y':  # obtains cached variables from the file data cache
     raw_cache_file = open(raw_cache_path, 'rb')
-    (config_file_name, cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour) = pickle.load(raw_cache_file)
+    (config_file_name, cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_types, topic_hour_distributions, topics_to_pois_by_hour) = pickle.load(raw_cache_file)
     config_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config-files', '{}.cfg'.format(config_file_name))
     cfg = configparser.RawConfigParser()
     cfg.read(config_file_path)
@@ -207,26 +207,28 @@ else:  # loads and caches data from files depending on user input
     cbgs_to_pois = {}
     dwell_distributions = {}
     poi_set = set()
-    poi_type = {}
+    poi_types = {}
     poi_hour_counts = {}  # poi id: length 24 list of poi visits by hour
     coords = {}
+    poi_names = {}
     for row in usable_data.itertuples():
-        place_id = str(row.safegraph_place_id)
-        poi_set.add(place_id)
-        dwell_distributions[place_id] = eval(row.dwell_distribution)
+        poi_id = str(row.safegraph_place_id)
+        poi_set.add(poi_id)
+        poi_names[poi_id] = str(row.location_name)
+        dwell_distributions[poi_id] = eval(row.dwell_distribution)
         lati, longi = float(row.latitude), float(row.longitude)
         if not math.isnan(lati) and not math.isnan(longi):
-            coords[place_id] = [lati, longi]
-        place_type = str(row.sub_category)
-        if place_type not in poi_type:
-            poi_type[place_type] = {place_id}
+            coords[poi_id] = [lati, longi]
+        poi_type = str(row.sub_category)
+        if poi_type not in poi_types:
+            poi_types[poi_type] = {poi_id}
         else:
-            poi_type[place_type].add(place_id)
+            poi_types[poi_type].add(poi_id)
         weekly_hours_info = json.loads(row.visits_by_each_hour)
         hourly_poi = [0] * 24
         for idx, num in enumerate(weekly_hours_info):
             hourly_poi[idx % 24] += num
-        poi_hour_counts[place_id] = hourly_poi
+        poi_hour_counts[poi_id] = hourly_poi
         cbgs = json.loads(row.visitor_home_cbgs)
         lda_words = []
         cbg_frequencies = {}
@@ -241,7 +243,7 @@ else:  # loads and caches data from files depending on user input
             cbg_frequencies[cbg] = cbg_frequency
         raw_visit_count = float(row.raw_visit_counts)
         for cbg in cbg_frequencies:
-            cbgs_to_pois[cbg].extend([place_id] * int(round(cbg_frequencies[cbg] / total_cbg_frequency * raw_visit_count)))  # generate POIs as "words" and multiply by the amount that CBG visited    
+            cbgs_to_pois[cbg].extend([poi_id] * int(round(cbg_frequencies[cbg] / total_cbg_frequency * raw_visit_count)))  # generate POIs as "words" and multiply by the amount that CBG visited    
 
     print_elapsed_time()
     print('Running LDA and creating initial distributions...')
@@ -299,7 +301,20 @@ else:  # loads and caches data from files depending on user input
             current_probabilities.append(0)
             count += 1
         cbg_topic_probabilities[cbg] = current_probabilities
-    
+
+    print_elapsed_time()
+    print('Writing top 100 POIs...')
+
+    print_str = '{'
+    for topic in range(NUM_TOPICS):
+        print_list = [(poi_names[topics_to_pois[topic][0][idx]], topics_to_pois[topic][1][idx]) for idx in range(min(len(topics_to_pois[topic][0]), 100))]
+        print_str += '\n    {}: {},'.format(topic, print_list)
+    print_str = print_str[:-1] + '\n}\n'
+    top_100_pois_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results', 'top-100-pois', config_file_name + '.txt')
+    top_100_pois_file = open(top_100_pois_path, 'w+')
+    top_100_pois_file.write(print_str)
+    top_100_pois_file.close()
+
     print_elapsed_time()
     print('Creating topic to POI map...')
 
@@ -382,7 +397,7 @@ else:  # loads and caches data from files depending on user input
     print_elapsed_time()
     print('Caching raw data...')
 
-    raw_cache_data = (config_file_name, cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_type, topic_hour_distributions, topics_to_pois_by_hour)
+    raw_cache_data = (config_file_name, cbg_ids, lda_documents, cbgs_to_households, cbg_topic_probabilities, topics_to_pois, cbgs_leaving_probs, dwell_distributions, poi_types, topic_hour_distributions, topics_to_pois_by_hour)
     raw_cache_file = open(raw_cache_path, 'wb')
     pickle.dump(raw_cache_data, raw_cache_file)
 
@@ -584,8 +599,8 @@ def check_interventions(current_time):  # checks if the intervention threshold h
     if not interventions_deployed and total_ever_infected / len(agents) >= MINIMUM_INTERVENTION_PROPORTION:
         print('THE POPULATION THRESHOLD FOR INTERVENTIONS HAS BEEN MET! DEPLOYING INTERVENTIONS...')
         interventions_deployed = True
-        for current_poi_type in CLOSED_POI_TYPES:  # e.g. "Restaurants and Other Eating Places"
-            closed_pois |= poi_type[current_poi_type]
+        for current_poi_types in CLOSED_poi_typesS:  # e.g. "Restaurants and Other Eating Places"
+            closed_pois |= poi_types[current_poi_types]
         if SYMPTOMATIC_QUARANTINES:  # symptomatic quarantines
             do_quarantines = True
 
