@@ -22,9 +22,9 @@ Parameters
 3.2. 50%
 4. propensity to leave (% of normal likelihood to leave the house)
 4.1. 25%
-4.2. 75%
+4.2. 50%
+4.3 75% (added because the R0 in 4.1 was too low to sustain the virus / result in a curve)
 -- 100% (default)
-4.3 50% (added because the R0 in 4.1 was too low to sustain the virus / result in a curve)
 
 Interventions
 5. generic quarantines (other household members still leave)
