@@ -34,7 +34,6 @@ PROPENSITY_TO_LEAVE = 1  # 0.2 => people are only 20% as likely to leave the hou
 SIMULATION_TICKS_PER_HOUR = 4  # integer, number of ticks per simulation "hour"
 ORIGIN_CBG = '510594804023'  # only agents in this CBG will begin with the virus, to include all CBGs use 'random'
 PROPORTION_INITIALLY_INFECTED = 0.25  # 0.05 => 5% of the origin CBG (or the entire population if ORIGIN_CBG == 'random') is initially infected or exposed
-ALPHA = 0  # 0.4 => 40% of the population is quarantined in their house for the duration of the simulation
 
 # runtime parameters
 MAX_DWELL_TIME = 16  # maximum dwell time at any POI (hours)
@@ -44,7 +43,7 @@ MINIMUM_INTERVENTION_PROPORTION = 0  # 0.1 => all below interventions begin when
 SYMPTOMATIC_QUARANTINES = False  # if True, quarantines all newly-infected agents upon showing symptoms after the MINIMUM_INTERVENTION_PROPORTION is reached
 HOUSEHOLD_QUARANTINES = False  # if True, all household members will quarantine if an agent in their household also quarantines due to symptoms
 QUARANTINE_DURATION = 10  # number of days a symptomatic-induced quarantine lasts
-CLOSED_poi_typesS = {}  # closes the following POI types (from SafeGraph Core Places "sub_category") after the MINIMUM_INTERVENTION_PROPORTION is reached
+CLOSED_POI_TYPES = {}  # closes the following POI types (from SafeGraph Core Places "sub_category") after the MINIMUM_INTERVENTION_PROPORTION is reached
 
 # virus parameters
 # For COVID-19, a close contact is defined as ay individual who was within 6 feet of an infected person for at least 15 minutes starting from 2 days before illness onset (or, for asymptomatic patients, 2 days prior to positive specimen collection) until the time the patient is isolated. (https://www.cdc.gov/coronavirus/2019-ncov/php/contact-tracing/contact-tracing-plan/contact-tracing.html)
@@ -438,9 +437,8 @@ if not agents_loaded:
         agent_count += 1
         agent_topic = numpy.random.choice(topic_numbers, 1, p=probs)[0]
         agent_status = 'S'
-        permanently_quarantined = numpy.random.rand() < ALPHA  # prohibits agent from ever leaving their house and ensures they are not initially infected if True
         parameter_2 = None
-        if ORIGIN_CBG.lower() in {current_cbg, 'random'} and not permanently_quarantined:
+        if ORIGIN_CBG.lower() in {current_cbg, 'random'}:
             rand = numpy.random.rand()
             if rand < PROPORTION_INITIALLY_INFECTED:
                 rand /= PROPORTION_INITIALLY_INFECTED
@@ -597,7 +595,7 @@ def check_interventions(current_time):  # checks if the intervention threshold h
     if not interventions_deployed and total_ever_infected / len(agents) >= MINIMUM_INTERVENTION_PROPORTION:
         print('THE POPULATION THRESHOLD FOR INTERVENTIONS HAS BEEN MET! DEPLOYING INTERVENTIONS...')
         interventions_deployed = True
-        for current_poi_types in CLOSED_poi_typesS:  # e.g. "Restaurants and Other Eating Places"
+        for current_poi_types in CLOSED_POI_TYPES:  # e.g. "Restaurants and Other Eating Places"
             closed_pois |= poi_types[current_poi_types]
         if SYMPTOMATIC_QUARANTINES:  # symptomatic quarantines
             do_quarantines = True
