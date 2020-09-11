@@ -1,6 +1,6 @@
 # safegraph-simulation
 
-Codebase for SIGSPATIAL ARIC 2020: Foot-Traffic Informed COVID-19 Simulation and Mitigation
+Codebase for SIGSPATIAL ARIC 2020: Data Driven Mobility Models for COVID-19 Simulation
 
 ## Installation
 

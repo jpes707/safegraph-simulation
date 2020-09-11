@@ -39,7 +39,3 @@ Interventions
 7.1. schools closed
 7.2. restaurants closed
 7.3. nonessentials closed
-8. mandatory quarantines/alpha (% of population is forced to stay in the house for the duration of the simulation)
-8.1. 25%
-8.2. 50%
-8.3. 75%
