@@ -1,6 +1,6 @@
 # safegraph-simulation
 
-Codebase for SIGSPATIAL ARIC 2020: Data-Driven Mobility Models for COVID-19 Simulation (https://doi.org/10.1145/3423455.3430305/)
+Codebase for SIGSPATIAL ARIC 2020: Data-Driven Mobility Models for COVID-19 Simulation (https://doi.org/10.1145/3423455.3430305)
 
 ## Abstract
 
@@ -38,6 +38,6 @@ Agent-based models (ABM) play a prominent role in guiding critical decision-maki
 
 ## Links
 
-* DOI: https://dl.acm.org/doi/proceedings/10.1145/3356395/
+* DOI: https://dl.acm.org/doi/proceedings/10.1145/3356395
 * Paper: https://urbands.github.io/aric2020/ARIC2020_Paper4.pdf
-* Interactive visualizations: https://jpes707.github.io/safegraph-simulation/
+* Interactive visualizations: https://jpes707.github.io/safegraph-simulation
