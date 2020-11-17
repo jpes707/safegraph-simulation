@@ -39,5 +39,5 @@ Agent-based models (ABM) play a prominent role in guiding critical decision-maki
 ## Links
 
 * DOI: https://dl.acm.org/doi/proceedings/10.1145/3356395/
-* Paper: https://urbands.github.io/aric2020/ARIC2020_Paper4.pdf
+* Paper: https://urbands.github.io/aric2020/ARIC2020_Paper4.pdf/
 * Interactive visualizations: https://jpes707.github.io/safegraph-simulation/
